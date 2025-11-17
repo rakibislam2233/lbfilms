@@ -1,11 +1,14 @@
 "use client";
 
-"use client";
-
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { useInView } from "framer-motion";
+import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqs = [
   {
@@ -47,20 +50,15 @@ const faqs = [
 ];
 
 const FAQ = () => {
-  const [openId, setOpenId] = useState<number | null>(null);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const toggleFAQ = (id: number) => {
-    setOpenId(openId === id ? null : id);
-  };
 
   return (
     <section className="section bg-primary-50">
       <div ref={ref} className="container mx-auto px-4 md:px-8 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-16"
         >
@@ -70,47 +68,26 @@ const FAQ = () => {
           </p>
         </motion.div>
 
-        <div className="space-y-3 md:space-y-4">
+        <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
-            <motion.div
+            <AccordionItem
               key={faq.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden border border-primary-100"
+              value={`item-${faq.id}`}
+              className={cn(
+                "rounded-xl mb-3 bg-white",
+                "transition-all duration-200",
+                "hover:border-primary-300" // Only change border color on hover, no shadow
+              )}
             >
-              <motion.button
-                className="w-full flex justify-between items-center p-5 md:p-6 text-left"
-                onClick={() => toggleFAQ(faq.id)}
-                whileHover={{ backgroundColor: "#fff5f7" }}
-                transition={{ duration: 0.2 }}
-              >
-                <h3 className="text-base md:text-lg font-semibold text-secondary-800">
-                  {faq.question}
-                </h3>
-                <motion.div
-                  animate={{ rotate: openId === faq.id ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="h-5 w-5 text-primary-500" />
-                </motion.div>
-              </motion.button>
-              <motion.div
-                initial={false}
-                animate={{
-                  height: openId === faq.id ? "auto" : 0,
-                  opacity: openId === faq.id ? 1 : 0,
-                }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="px-5 pb-5 md:px-6 md:pb-6 text-sm md:text-base text-secondary-600">
-                  {faq.answer}
-                </div>
-              </motion.div>
-            </motion.div>
+              <AccordionTrigger className="px-6 py-4 text-left text-secondary-800 hover:no-underline">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 text-secondary-600">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );

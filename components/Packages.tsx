@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { useInView } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 const packages = [
   {
@@ -72,7 +73,7 @@ const Packages = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
           {packages.map((pkg, index) => (
             <motion.div
               key={pkg.id}
@@ -80,24 +81,24 @@ const Packages = () => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`relative rounded-2xl shadow-lg overflow-hidden ${
-                pkg.popular
-                  ? 'ring-2 ring-primary-500 transform -translate-y-2 md:-translate-y-3'
-                  : 'bg-white'
+                pkg.popular 
+                  ? 'ring-2 ring-primary-500 transform -translate-y-3 md:-translate-y-3' 
+                  : 'transform transition-transform hover:-translate-y-2'
               }`}
             >
               {pkg.popular && (
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-xs font-bold z-10">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-bold z-10">
                   MOST POPULAR
                 </div>
               )}
-
+              
               <div className="relative h-48 overflow-hidden">
-                <img
-                  src={pkg.image}
-                  alt={pkg.name}
+                <img 
+                  src={pkg.image} 
+                  alt={pkg.name} 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className={`text-xl md:text-2xl font-bold ${
                     pkg.popular ? 'text-primary-300' : 'text-white'
@@ -107,28 +108,28 @@ const Packages = () => {
                   <span className="text-2xl md:text-3xl font-bold">{pkg.price}</span>
                 </div>
               </div>
-
-              <div className="p-5 md:p-6">
-                <p className="text-xs md:text-sm text-secondary-600 mb-4">{pkg.description}</p>
-
-                <ul className="space-y-2 mb-6">
+              
+              <div className="bg-white p-6">
+                <p className="text-secondary-600 mb-6">{pkg.description}</p>
+                
+                <ul className="space-y-3 mb-8">
                   {pkg.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
-                      <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs md:text-sm text-secondary-700">{feature}</span>
+                      <CheckCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-secondary-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
-
-                <button
-                  className={`w-full py-2 md:py-3 rounded-full font-semibold transition-all text-sm md:text-base ${
-                    pkg.popular
-                      ? 'bg-gradient-to-r from-primary-500 to-primary-700 text-white hover:from-primary-600 hover:to-primary-800'
-                      : 'bg-gradient-to-r from-primary-400 to-primary-600 text-white hover:from-primary-500 hover:to-primary-700'
+                
+                <Button 
+                  className={`w-full py-3 rounded-full font-semibold transition-all ${
+                    pkg.popular 
+                      ? 'bg-gradient-to-r from-primary-500 to-primary-700 text-white hover:from-primary-600 hover:to-primary-800' 
+                      : 'border-2 border-primary-500 text-primary-500 hover:bg-primary-50'
                   }`}
                 >
                   Select Package
-                </button>
+                </Button>
               </div>
             </motion.div>
           ))}
