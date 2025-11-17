@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +12,7 @@ import {
   Youtube,
 } from "lucide-react";
 import { useInView } from "framer-motion";
+import Link from "next/link";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -75,24 +74,24 @@ const Contact = () => {
               </div>
 
               <div className="flex justify-center md:justify-start space-x-3 md:space-x-4 mt-6">
-                <a
+                <Link
                   href="#"
                   className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
                 >
                   <Facebook className="h-4 w-4 md:h-5 md:w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
                 >
                   <Instagram className="h-4 w-4 md:h-5 md:w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
                 >
                   <Youtube className="h-4 w-4 md:h-5 md:w-5" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -107,6 +106,16 @@ const Contact = () => {
                 loading="lazy"
               ></iframe>
             </div>
+
+            <Link
+              href="https://wa.me/8801234567890"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-whatsapp w-full flex items-center justify-center py-3 md:py-4 text-base md:text-lg"
+            >
+              <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
+              WhatsApp Us
+            </Link>
           </div>
         </div>
       </div>

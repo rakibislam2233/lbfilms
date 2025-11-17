@@ -20,15 +20,15 @@ const Footer = () => {
               Capturing your precious moments with professional photography and videography services.
             </p>
             <div className="flex space-x-3 md:space-x-4">
-              <a href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
+              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
                 <Facebook className="h-4 w-4 md:h-5 md:w-5" />
-              </a>
-              <a href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
+              </Link>
+              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
                 <Instagram className="h-4 w-4 md:h-5 md:w-5" />
-              </a>
-              <a href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
+              </Link>
+              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
                 <Youtube className="h-4 w-4 md:h-5 md:w-5" />
-              </a>
+              </Link>
             </div>
           </div>
 

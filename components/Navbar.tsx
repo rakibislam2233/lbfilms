@@ -109,7 +109,7 @@ const Navbar = () => {
             href="https://wa.me/8801234567890"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-whatsapp text-xs px-3 py-2"
+            className="btn-whatsapp text-xs px-3 py-2 rounded-full"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -162,7 +162,7 @@ const Navbar = () => {
                 >
                   <Link
                     href="/login"
-                    className="btn-outline w-full text-center rounded-lg"
+                    className="btn-outline w-full text-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Login
@@ -174,7 +174,7 @@ const Navbar = () => {
                 >
                   <Link
                     href="/signup"
-                    className="btn-primary w-full rounded-lg"
+                    className="btn-primary w-full"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign Up

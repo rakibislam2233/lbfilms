@@ -8,18 +8,50 @@ import Link from "next/link";
 const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Hero images
-  const heroImages = [
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=1920&q=80",
+  // Hero images with corresponding text content
+  const heroContent = [
+    {
+      image:
+        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80",
+      heading:
+        "Capturing Your <span class='pink-gradient-text'>Precious Moments</span>",
+      description:
+        "Professional Photography & Videography Services in Bangladesh",
+      button: "View Our Work",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80",
+      heading:
+        "Creating <span class='pink-gradient-text'>Timeless Memories</span>",
+      description:
+        "Award-winning photography with artistic vision and professional service",
+      button: "Explore Services",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80",
+      heading:
+        "Your <span class='pink-gradient-text'>Perfect Day</span>, Preserved Forever",
+      description:
+        "Specializing in weddings, corporate events, and lifestyle photography",
+      button: "Book Now",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=1920&q=80",
+      heading:
+        "Professional <span class='pink-gradient-text'>Storytelling</span> Through Lenses",
+      description:
+        "High-quality videography and photography for all your special occasions",
+      button: "See Gallery",
+    },
   ];
 
   // Auto-rotate images
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroContent.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -27,12 +59,12 @@ const Hero = () => {
 
   // Navigation to next/previous image
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroContent?.length);
   };
 
   const prevImage = () => {
     setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + heroImages.length) % heroImages.length
+      (prevIndex) => (prevIndex - 1 + heroContent?.length) % heroContent?.length
     );
   };
 
@@ -64,14 +96,14 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Images with Swipe Effect */}
       <div className="absolute inset-0 z-0">
-        {heroImages.map((image, index) => (
+        {heroContent.map((content, index) => (
           <motion.div
             key={index}
             className={`absolute inset-0 bg-cover bg-center ${
               index === currentImageIndex ? "z-10" : "z-0"
             }`}
             style={{
-              backgroundImage: `url(${image})`,
+              backgroundImage: `url(${content.image})`,
               backgroundAttachment: "fixed",
             }}
             initial={{ opacity: 0 }}
@@ -129,7 +161,7 @@ const Hero = () => {
 
       {/* Image Indicators */}
       <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
-        {heroImages.map((_, index) => (
+        {heroContent?.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
@@ -149,21 +181,21 @@ const Hero = () => {
       >
         <motion.div variants={itemVariants}>
           <motion.h1
-            className="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Capturing Your{" "}
-            <span className="pink-gradient-text">Precious Moments</span>
-          </motion.h1>
+            dangerouslySetInnerHTML={{
+              __html: heroContent[currentImageIndex].heading,
+            }}
+          ></motion.h1>
           <motion.p
-            className="text-lg md:text-xl lg:text-2xl max-w-2xl md:max-w-3xl mx-auto mb-6 md:mb-10 text-secondary-200"
+            className="text-base md:text-lg  max-w-2xl md:max-w-3xl mx-auto mb-6 md:mb-10 text-secondary-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Professional Photography & Videography Services in Bangladesh
+            {heroContent[currentImageIndex].description}
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row justify-center items-center gap-8 "
@@ -172,18 +204,15 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <motion.div>
-              <Link
-                href="#gallery"
-                className="btn-primary bg-gradient-to-r from-primary-500 to-primary-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-800 transition-all duration-300 shadow-pink text-base md:text-lg"
-              >
-                View Our Work
+              <Link href="#gallery" className="btn-primary">
+                {heroContent[currentImageIndex].button}
               </Link>
             </motion.div>
             <motion.a
               href="https://wa.me/8801234567890"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline  px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center gap-2 text-base md:text-lg"
+              className="btn-outline flex items-center justify-center gap-2"
             >
               <Phone className="h-4 w-4 md:h-5 md:w-5" />
               Book Now
