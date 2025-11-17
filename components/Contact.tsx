@@ -106,16 +106,6 @@ const Contact = () => {
                 loading="lazy"
               ></iframe>
             </div>
-
-            <Link
-              href="https://wa.me/8801234567890"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp w-full flex items-center justify-center py-3 md:py-4 text-base md:text-lg"
-            >
-              <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
-              WhatsApp Us
-            </Link>
           </div>
         </div>
       </div>

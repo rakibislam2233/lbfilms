@@ -112,10 +112,9 @@ const UserDashboard = () => {
 
   return (
     <div className="min-h-screen bg-secondary-50">
-      <UserNavbar />
       {/* User Dashboard Header */}
       <div className="bg-gradient-to-r from-primary-500 to-primary-700 text-white pt-16">
-        <div className="container mx-auto px-4 md:px-8 py-8">
+        <div className="container mx-auto px-4 md:px-8 py-10 md:py-16">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center">
               <User className="h-12 w-12 text-white" />
@@ -131,7 +130,7 @@ const UserDashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="container mx-auto px-4 md:px-8 -mt-8">
+      <div className="container mx-auto px-4 md:px-8 pt-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <motion.div
             className="bg-white p-6 rounded-2xl shadow-lg"
