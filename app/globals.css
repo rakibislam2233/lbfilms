@@ -22,7 +22,7 @@
   }
 
   .btn-whatsapp {
-    @apply bg-pink-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2;
+    @apply bg-whatsapp text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2;
   }
 
   .section {

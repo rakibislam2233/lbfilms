@@ -1,15 +1,13 @@
 'use client';
 
-'use client';
-
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Camera,
-  Video,
-  Sparkles,
-  Clock,
-  Gift,
+import { 
+  Camera, 
+  Video, 
+  Sparkles, 
+  Clock, 
+  Gift, 
   Star,
   Camera as CameraIcon,
   Video as VideoIcon,
@@ -19,49 +17,50 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useInView } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 const services = [
   {
     id: 1,
     icon: <CameraIcon className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
     title: "Professional Equipment",
-    description: "High-end cameras and professional gear for crystal clear photos and videos"
+    description: "High-end cameras and professional gear for crystal clear photos and videos",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 2,
     icon: <VideoIcon className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1574717024456-7aef8a6171ff?auto=format&fit=crop&w=600&q=80",
     title: "4K Video Quality",
-    description: "Ultra high-definition video recording to capture every detail"
+    description: "Ultra high-definition video recording to capture every detail",
+    image: "https://images.unsplash.com/photo-1574717024456-7aef8a6171ff?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 3,
     icon: <Sparkles className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
     title: "Creative Editing",
-    description: "Cinematic post-production with artistic touch and professional editing"
+    description: "Cinematic post-production with artistic touch and professional editing",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 4,
     icon: <Clock className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
     title: "Quick Delivery",
-    description: "Photos and videos delivered within 7 days without compromising quality"
+    description: "Photos and videos delivered within 7 days without compromising quality",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 5,
     icon: <Gift className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
     title: "Customized Packages",
-    description: "Tailored packages to meet your unique photography and videography needs"
+    description: "Tailored packages to meet your unique photography and videography needs",
+    image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 6,
     icon: <Star className="h-8 w-8 md:h-10 md:w-10" />,
-    image: "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=600&q=80",
     title: "5+ Years Experience",
-    description: "Trusted by 500+ clients with extensive experience in the field"
+    description: "Trusted by 500+ clients with extensive experience in the field",
+    image: "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=600&q=80"
   }
 ];
 
@@ -95,9 +94,9 @@ const Services = () => {
               className="bg-white rounded-2xl shadow-lg hover:shadow-pink-lg transition-all duration-300 overflow-hidden border border-primary-100"
             >
               <div className="relative h-40 overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
+                <img 
+                  src={service.image} 
+                  alt={service.title} 
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -110,6 +109,9 @@ const Services = () => {
               <div className="p-6">
                 <h3 className="text-lg md:text-xl font-bold text-secondary-800 mb-2">{service.title}</h3>
                 <p className="text-sm md:text-base text-secondary-600">{service.description}</p>
+                <Button className="mt-4 w-full bg-gradient-to-r from-primary-500 to-primary-700 text-white hover:from-primary-600 hover:to-primary-800">
+                  Learn More
+                </Button>
               </div>
             </motion.div>
           ))}

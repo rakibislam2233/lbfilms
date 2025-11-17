@@ -87,7 +87,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="/login" className="btn-outline rounded-lg">
+                <Link href="/login" className="btn-outline">
                   Login
                 </Link>
               </motion.div>
@@ -95,7 +95,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="/signup" className="btn-primary rounded-lg">
+                <Link href="/signup" className="btn-primary">
                   Sign Up
                 </Link>
               </motion.div>
