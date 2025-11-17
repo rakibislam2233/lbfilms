@@ -1,11 +1,19 @@
-'use client';
+"use client";
 
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, MessageCircle, Facebook, Instagram, Youtube } from 'lucide-react';
-import { useInView } from 'framer-motion';
+import { useRef } from "react";
+import { motion } from "framer-motion";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Facebook,
+  Instagram,
+  Youtube,
+} from "lucide-react";
+import { useInView } from "framer-motion";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -29,7 +37,9 @@ const Contact = () => {
         <div className="grid grid-cols-1 gap-8 md:gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
           <div className="text-center md:text-left">
-            <h3 className="text-xl md:text-2xl font-bold text-secondary-800 mb-6">Get in Touch</h3>
+            <h3 className="text-xl md:text-2xl font-bold text-secondary-800 mb-6">
+              Get in Touch
+            </h3>
 
             <div className="space-y-4 md:space-y-6">
               <div className="flex flex-col md:flex-row items-center md:items-start">
@@ -58,18 +68,29 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-secondary-800">Office</h4>
-                  <p className="text-secondary-600">123 Photography Street, Dhaka, Bangladesh</p>
+                  <p className="text-secondary-600">
+                    123 Photography Street, Dhaka, Bangladesh
+                  </p>
                 </div>
               </div>
 
               <div className="flex justify-center md:justify-start space-x-3 md:space-x-4 mt-6">
-                <a href="#" className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors">
+                <a
+                  href="#"
+                  className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
+                >
                   <Facebook className="h-4 w-4 md:h-5 md:w-5" />
                 </a>
-                <a href="#" className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors">
+                <a
+                  href="#"
+                  className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
+                >
                   <Instagram className="h-4 w-4 md:h-5 md:w-5" />
                 </a>
-                <a href="#" className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors">
+                <a
+                  href="#"
+                  className="bg-primary-100 p-2.5 md:p-3 rounded-full text-primary-600 hover:bg-primary-200 transition-colors"
+                >
                   <Youtube className="h-4 w-4 md:h-5 md:w-5" />
                 </a>
               </div>
@@ -86,16 +107,6 @@ const Contact = () => {
                 loading="lazy"
               ></iframe>
             </div>
-
-            <a
-              href="https://wa.me/8801234567890"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp w-full flex items-center justify-center py-3 md:py-4 text-base md:text-lg"
-            >
-              <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
-              WhatsApp Us
-            </a>
           </div>
         </div>
       </div>
