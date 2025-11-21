@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Phone, Mail, MapPin, Send, Facebook, Instagram, Youtube, MessageCircle } from 'lucide-react';
-import Link from 'next/link';
+import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Youtube } from 'lucide-react';
+import { useRef } from 'react';
 
 const Contact = () => {
   const ref = useRef(null);
@@ -55,7 +54,7 @@ const Contact = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Let's Create{' '}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Magic Together
             </span>
           </h2>

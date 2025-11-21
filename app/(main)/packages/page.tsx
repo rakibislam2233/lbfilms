@@ -1,10 +1,10 @@
 'use client';
 
+import { packages } from '@/data';
 import { motion } from 'framer-motion';
-import { Check, Sparkles, Clock, Camera } from 'lucide-react';
+import { Camera, Check, Clock, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { packages } from '@/data';
 
 export default function PackagesPage() {
   return (
@@ -28,7 +28,7 @@ export default function PackagesPage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               Photography{' '}
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
                 Packages
               </span>
             </h1>
@@ -101,7 +101,7 @@ export default function PackagesPage() {
 
                     <div className="flex items-center justify-center mb-6">
                       <div className="inline-flex items-baseline gap-1 px-6 py-2 rounded-full bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 border border-white/10">
-                        <span className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                        <span className="text-3xl font-bold bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
                           {pkg.price.toLocaleString()}
                         </span>
                         <span className="text-gray-400 text-sm">TK</span>

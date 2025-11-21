@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { projects } from "@/data";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import {
-  X,
+  Calendar,
+  Camera,
   ChevronLeft,
   ChevronRight,
-  Camera,
   MapPin,
-  Calendar,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { projects } from "@/data";
+import { useRef, useState } from "react";
 
 const categories = [
   { id: "all", name: "All", icon: Camera },
@@ -69,7 +69,7 @@ const Gallery = () => {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-black via-gray-950 to-gray-900">
+    <section className="relative py-24 overflow-hidden bg-linear-to-b from-black via-gray-950 to-gray-900">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/3 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
@@ -95,7 +95,7 @@ const Gallery = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Recent{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Projects
             </span>
           </h2>
@@ -115,13 +115,13 @@ const Gallery = () => {
           {categories.map((cat) => (
             <motion.button
               key={cat.id}
-              onClick={() => setActiveFilter(cat.id)}
+              onClick={() => setActiveFilter(cat?.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all cursor-pointer duration-300 ${
                 activeFilter === cat.id
-                  ? "bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25"
-                  : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                  ? "bg-linear-to-r from-purple-500  to-pink-500 text-white shadow-lg shadow-purple-500/25"
+                  : "bg-white/5 text-gray-400  hover:bg-white/10 hover:text-white"
               }`}
             >
               {cat.name}
@@ -146,7 +146,7 @@ const Gallery = () => {
                 onClick={() => openLightbox(project)}
                 className="group relative cursor-pointer"
               >
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-800">
+                <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-gray-800">
                   <Image
                     src={project.images[0]}
                     alt={project.title}
@@ -154,11 +154,11 @@ const Gallery = () => {
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
 
                   {/* Content */}
                   <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-cyan-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
+                    <span className="inline-block px-3 py-1 rounded-full bg-linear-to-r from-purple-500/80 to-cyan-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
                       {project.category}
                     </span>
                     <h3 className="text-xl font-bold text-white mb-2">
@@ -189,7 +189,7 @@ const Gallery = () => {
 
                   {/* Featured Badge */}
                   {project.featured && (
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-linear-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
                       Featured
                     </div>
                   )}
@@ -287,7 +287,7 @@ const Gallery = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent"
+              className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black to-transparent"
             >
               <div className="max-w-5xl mx-auto">
                 <h3 className="text-2xl font-bold text-white mb-2">

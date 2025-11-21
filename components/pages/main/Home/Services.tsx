@@ -69,7 +69,7 @@ const Services = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-black to-gray-950">
+    <section className="relative py-24 overflow-hidden bg-linear-to-b from-black to-gray-950">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
@@ -90,7 +90,7 @@ const Services = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             What Makes{' '}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               LB Films Special
             </span>
           </h2>
@@ -149,7 +149,7 @@ const Services = () => {
             { value: '100%', label: 'Satisfaction' },
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+              <div className="text-3xl md:text-4xl font-bold bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent mb-2">
                 {stat.value}
               </div>
               <div className="text-gray-500 text-sm">{stat.label}</div>

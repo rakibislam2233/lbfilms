@@ -86,7 +86,7 @@ export default function GalleryPage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               Our{" "}
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Creative Work
               </span>
             </h1>
@@ -111,7 +111,7 @@ export default function GalleryPage() {
                 whileTap={{ scale: 0.95 }}
                 className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.id
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25"
+                    ? "bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25"
                     : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
                 }`}
               >
@@ -144,10 +144,10 @@ export default function GalleryPage() {
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
 
                     <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
+                      <span className="inline-block px-3 py-1 rounded-full bg-linear-to-r from-purple-500/80 to-pink-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
                         {project.category}
                       </span>
                       <h3 className="text-lg font-bold text-white mb-1">
@@ -167,7 +167,7 @@ export default function GalleryPage() {
                     )}
 
                     {project.featured && (
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-linear-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
                         Featured
                       </div>
                     )}
@@ -245,7 +245,7 @@ export default function GalleryPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent"
+              className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black to-transparent"
             >
               <div className="max-w-5xl mx-auto">
                 <h3 className="text-2xl font-bold text-white mb-2">
