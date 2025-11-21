@@ -1,280 +1,301 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Camera,
-  Calendar,
-  Tag,
   X,
   ChevronLeft,
   ChevronRight,
+  Camera,
+  MapPin,
+  Calendar,
 } from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
+import { projects } from "@/data";
 
-const DetailedGalleryPage = () => {
+const categories = [
+  { id: "all", name: "All" },
+  { id: "wedding", name: "Wedding" },
+  { id: "portrait", name: "Portrait" },
+  { id: "corporate", name: "Corporate" },
+  { id: "event", name: "Event" },
+  { id: "product", name: "Product" },
+  { id: "birthday", name: "Birthday" },
+];
+
+export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projects)[0] | null
+  >(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Sample gallery data
-  const galleryItems = [
-    {
-      id: 1,
-      src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-      title: "Wedding Ceremony",
-      category: "wedding",
-      date: "2023-05-15",
-      description:
-        "Beautiful outdoor wedding ceremony captured in golden hour light",
-    },
-    {
-      id: 2,
-      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      title: "Portrait Session",
-      category: "portrait",
-      date: "2023-06-20",
-      description: "Professional portrait session for a corporate client",
-    },
-    {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
-      title: "Corporate Event",
-      category: "corporate",
-      date: "2023-07-10",
-      description:
-        "Annual conference event with multiple speakers and attendees",
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=800&q=80",
-      title: "Engagement Shoot",
-      category: "portrait",
-      date: "2023-08-05",
-      description: "Romantic engagement session at a scenic location",
-    },
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1511798616197-f9709d7f0760?auto=format&fit=crop&w=800&q=80",
-      title: "Birthday Party",
-      category: "event",
-      date: "2023-09-12",
-      description: "Child's birthday celebration with family and friends",
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1501031191319-7a82b5a3c5a1?auto=format&fit=crop&w=800&q=80",
-      title: "Fashion Shoot",
-      category: "portrait",
-      date: "2023-10-01",
-      description: "Creative fashion photography session with models",
-    },
-    {
-      id: 7,
-      src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-      title: "Nature Photography",
-      category: "landscape",
-      date: "2023-10-15",
-      description: "Scenic landscape photography in the mountains",
-    },
-    {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80",
-      title: "Product Photography",
-      category: "commercial",
-      date: "2023-11-03",
-      description: "High-quality product photography for an e-commerce client",
-    },
-  ];
-
-  const categories = [
-    { id: "all", name: "All" },
-    { id: "wedding", name: "Wedding" },
-    { id: "portrait", name: "Portrait" },
-    { id: "corporate", name: "Corporate" },
-    { id: "event", name: "Event" },
-    { id: "landscape", name: "Landscape" },
-    { id: "commercial", name: "Commercial" },
-  ];
-
-  const filteredItems =
+  const filteredProjects =
     activeFilter === "all"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeFilter);
+      ? projects
+      : projects.filter((p) => p.category === activeFilter);
 
-  const openImageModal = (index: number) => {
-    setCurrentImageIndex(index);
-    setSelectedImage(index);
+  const openLightbox = (project: (typeof projects)[0]) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(0);
+    document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
-    setSelectedImage(null);
+  const closeLightbox = () => {
+    setSelectedProject(null);
+    document.body.style.overflow = "auto";
   };
 
   const nextImage = () => {
-    if (selectedImage === null) return;
-    const nextIndex = (currentImageIndex + 1) % filteredItems.length;
-    setCurrentImageIndex(nextIndex);
-    setSelectedImage(nextIndex);
+    if (selectedProject) {
+      setCurrentImageIndex(
+        (prev) => (prev + 1) % selectedProject.images.length
+      );
+    }
   };
 
   const prevImage = () => {
-    if (selectedImage === null) return;
-    const prevIndex =
-      (currentImageIndex - 1 + filteredItems.length) % filteredItems.length;
-    setCurrentImageIndex(prevIndex);
-    setSelectedImage(prevIndex);
+    if (selectedProject) {
+      setCurrentImageIndex(
+        (prev) =>
+          (prev - 1 + selectedProject.images.length) %
+          selectedProject.images.length
+      );
+    }
   };
 
   return (
-    <div className="min-h-screen bg-primary-50 pb-16 pt-32">
-      <div className="container mx-auto px-4 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h1 className="text-3xl md:text-4xl font-bold text-secondary-800 mb-4">
-            Our Portfolio
-          </h1>
-          <p className="text-secondary-600 max-w-2xl mx-auto">
-            Explore our latest photography and videography work across various
-            categories
-          </p>
-        </motion.div>
-
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeFilter === category.id
-                  ? "bg-gradient-to-r from-primary-500 to-primary-700 text-white"
-                  : "bg-white text-secondary-700 hover:bg-primary-100"
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
+    <main className="min-h-screen bg-black pt-24 pb-16">
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item, index) => (
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+              <Camera size={16} className="text-purple-400" />
+              <span className="text-sm font-medium text-white/80">
+                Portfolio Gallery
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              Our{" "}
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                Creative Work
+              </span>
+            </h1>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Explore our complete portfolio of photography work across
+              weddings, events, portraits, and more
+            </p>
+          </motion.div>
+
+          {/* Filters */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-3 mb-12"
+          >
+            {categories.map((cat) => (
+              <motion.button
+                key={cat.id}
+                onClick={() => setActiveFilter(cat.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeFilter === cat.id
+                    ? "bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25"
+                    : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {cat.name}
+              </motion.button>
+            ))}
+          </motion.div>
+
+          {/* Gallery Grid */}
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4, delay: index * 0.03 }}
+                  onClick={() => openLightbox(project)}
+                  className="group relative cursor-pointer"
+                >
+                  <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-800">
+                    <Image
+                      src={project.images[0]}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-cyan-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
+                        {project.category}
+                      </span>
+                      <h3 className="text-lg font-bold text-white mb-1">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm flex items-center gap-1">
+                        <MapPin size={12} />
+                        {project.location}
+                      </p>
+                    </div>
+
+                    {project.images.length > 1 && (
+                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-xs">
+                        <Camera size={12} />
+                        {project.images.length}
+                      </div>
+                    )}
+
+                    {project.featured && (
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
+                        Featured
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {filteredProjects.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-gray-500">
+                No projects found in this category
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
+            onClick={closeLightbox}
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            >
+              <X size={24} className="text-white" />
+            </button>
+
+            {selectedProject.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevImage();
+                  }}
+                  className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <ChevronLeft size={24} className="text-white" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextImage();
+                  }}
+                  className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <ChevronRight size={24} className="text-white" />
+                </button>
+              </>
+            )}
+
             <motion.div
-              key={item.id}
+              key={currentImageIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative max-w-5xl max-h-[80vh] w-full h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedProject.images[currentImageIndex]}
+                alt={selectedProject.title}
+                fill
+                className="object-contain"
+              />
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
-              onClick={() => openImageModal(index)}
+              className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent"
             >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <h3 className="text-lg font-bold text-white mb-1">
-                  {item.title}
+              <div className="max-w-5xl mx-auto">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {selectedProject.title}
                 </h3>
-                <div className="flex items-center text-secondary-200 text-sm gap-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{item.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Tag className="h-4 w-4" />
-                    <span className="capitalize">{item.category}</span>
-                  </div>
+                <p className="text-gray-300 mb-3">
+                  {selectedProject.description}
+                </p>
+                <div className="flex items-center gap-6 text-gray-400 text-sm">
+                  <span className="flex items-center gap-2">
+                    <MapPin size={16} />
+                    {selectedProject.location}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Calendar size={16} />
+                    {new Date(selectedProject.date).toLocaleDateString()}
+                  </span>
+                  {selectedProject.images.length > 1 && (
+                    <span className="text-white">
+                      {currentImageIndex + 1} / {selectedProject.images.length}
+                    </span>
+                  )}
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
 
-        {/* Load More Button */}
-        <div className="text-center mt-12">
-          <Link href="/" className="btn-outline">
-            Back to Home
-          </Link>
-        </div>
-      </div>
-
-      {/* Image Modal */}
-      {selectedImage !== null && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-          onClick={closeModal}
-        >
-          <button
-            className="absolute top-6 right-6 text-white p-2 rounded-full hover:bg-white/10"
-            onClick={closeModal}
-          >
-            <X className="h-6 w-6" />
-          </button>
-
-          <button
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full hover:bg-white/10"
-            onClick={(e) => {
-              e.stopPropagation();
-              prevImage();
-            }}
-          >
-            <ChevronLeft className="h-8 w-8" />
-          </button>
-
-          <button
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full hover:bg-white/10"
-            onClick={(e) => {
-              e.stopPropagation();
-              nextImage();
-            }}
-          >
-            <ChevronRight className="h-8 w-8" />
-          </button>
-
-          <div
-            className="max-w-6xl w-full max-h-[90vh] flex flex-col md:flex-row items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="w-full md:w-2/3 flex justify-center">
-              <img
-                src={filteredItems[currentImageIndex]?.src}
-                alt={filteredItems[currentImageIndex]?.title}
-                className="max-h-[70vh] object-contain"
-              />
-            </div>
-            <div className="w-full md:w-1/3 p-6 text-white overflow-y-auto max-h-[70vh]">
-              <h2 className="text-2xl font-bold mb-3">
-                {filteredItems[currentImageIndex]?.title}
-              </h2>
-              <div className="flex items-center gap-4 mb-4 text-secondary-300">
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  <span>{filteredItems[currentImageIndex]?.date}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Tag className="h-4 w-4" />
-                  <span className="capitalize">
-                    {filteredItems[currentImageIndex]?.category}
-                  </span>
-                </div>
+            {selectedProject.images.length > 1 && (
+              <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-2">
+                {selectedProject.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`relative w-16 h-12 rounded-lg overflow-hidden transition-all ${
+                      idx === currentImageIndex
+                        ? "ring-2 ring-purple-500 scale-110"
+                        : "opacity-50 hover:opacity-100"
+                    }`}
+                  >
+                    <Image src={img} alt="" fill className="object-cover" />
+                  </button>
+                ))}
               </div>
-              <p className="text-secondary-200">
-                {filteredItems[currentImageIndex]?.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   );
-};
-
-export default DetailedGalleryPage;
+}

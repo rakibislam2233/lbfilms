@@ -1,223 +1,272 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Phone, MessageCircle } from "lucide-react";
-import Link from "next/link";
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Play, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+
+const heroContent = [
+  {
+    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80',
+    subtitle: 'Wedding Photography',
+    heading: 'Capturing Your',
+    highlight: 'Precious Moments',
+    description: 'Transform your special day into timeless memories with our award-winning photography team',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80',
+    subtitle: 'Cinematic Films',
+    heading: 'Creating',
+    highlight: 'Timeless Stories',
+    description: 'Cinematic wedding films that capture every emotion, every tear, every smile',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1920&q=80',
+    subtitle: 'Corporate Events',
+    heading: 'Professional',
+    highlight: 'Event Coverage',
+    description: 'Elevate your corporate events with stunning photography and video production',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1920&q=80',
+    subtitle: 'Portrait Sessions',
+    heading: 'Revealing Your',
+    highlight: 'True Beauty',
+    description: 'Professional portrait sessions that showcase your personality and style',
+  },
+];
 
 const Hero = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Hero images with corresponding text content
-  const heroContent = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80",
-      heading:
-        "Capturing Your <span class='pink-gradient-text'>Precious Moments</span>",
-      description:
-        "Professional Photography & Videography Services in Bangladesh",
-      button: "View Our Work",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80",
-      heading:
-        "Creating <span class='pink-gradient-text'>Timeless Memories</span>",
-      description:
-        "Award-winning photography with artistic vision and professional service",
-      button: "Explore Services",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80",
-      heading:
-        "Your <span class='pink-gradient-text'>Perfect Day</span>, Preserved Forever",
-      description:
-        "Specializing in weddings, corporate events, and lifestyle photography",
-      button: "Book Now",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=1920&q=80",
-      heading:
-        "Professional <span class='pink-gradient-text'>Storytelling</span> Through Lenses",
-      description:
-        "High-quality videography and photography for all your special occasions",
-      button: "See Gallery",
-    },
-  ];
-
-  // Auto-rotate images
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroContent.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % heroContent.length);
   }, []);
 
-  // Navigation to next/previous image
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroContent?.length);
-  };
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + heroContent.length) % heroContent.length);
+  }, []);
 
-  const prevImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + heroContent?.length) % heroContent?.length
-    );
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, nextSlide]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Images with Swipe Effect */}
-      <div className="absolute inset-0 z-0">
-        {heroContent.map((content, index) => (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Background Images with Parallax */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          className="absolute inset-0"
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroContent[currentIndex].image})` }}
+          />
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-transparent to-cyan-900/30" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Animated Particles/Bokeh Effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
           <motion.div
-            key={index}
-            className={`absolute inset-0 bg-cover bg-center ${
-              index === currentImageIndex ? "z-10" : "z-0"
-            }`}
-            style={{
-              backgroundImage: `url(${content.image})`,
-              backgroundAttachment: "fixed",
+            key={i}
+            className="absolute w-2 h-2 rounded-full bg-white/20"
+            initial={{
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
             }}
-            initial={{ opacity: 0 }}
             animate={{
-              opacity: index === currentImageIndex ? 1 : 0,
-              scale: index === currentImageIndex ? 1 : 1.1,
+              y: [null, Math.random() * -500],
+              opacity: [0, 1, 0],
             }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40"></div>
-          </motion.div>
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              ease: 'linear',
+              delay: Math.random() * 5,
+            }}
+          />
         ))}
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="text-center">
+          {/* Subtitle Badge */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`subtitle-${currentIndex}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6"
+            >
+              <Sparkles size={16} className="text-purple-400" />
+              <span className="text-sm font-medium text-white/90">
+                {heroContent[currentIndex].subtitle}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Main Heading */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`heading-${currentIndex}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-2 tracking-tight">
+                {heroContent[currentIndex].heading}
+              </h1>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                  {heroContent[currentIndex].highlight}
+                </span>
+              </h1>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Description */}
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`desc-${currentIndex}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10"
+            >
+              {heroContent[currentIndex].description}
+            </motion.p>
+          </AnimatePresence>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link href="/booking">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(168, 85, 247, 0.5)' }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-8 py-4 text-lg font-semibold text-white rounded-full overflow-hidden group"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                <span className="relative flex items-center gap-2">
+                  Book Your Session
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+              </motion.button>
+            </Link>
+
+            <Link href="/gallery">
+              <motion.button
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white rounded-full border border-white/30 bg-white/5 backdrop-blur-sm transition-all"
+              >
+                <Play size={20} className="fill-white" />
+                View Portfolio
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
       </div>
 
       {/* Navigation Arrows */}
-      <button
-        onClick={prevImage}
-        className="absolute left-4 md:left-8 z-30 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 flex justify-between z-20 pointer-events-none">
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.2)' }}
+          whileTap={{ scale: 0.9 }}
+          onClick={prevSlide}
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+          className="pointer-events-auto p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white transition-all"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-      </button>
-
-      <button
-        onClick={nextImage}
-        className="absolute right-4 md:right-8 z-30 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+          <ChevronLeft size={24} />
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.2)' }}
+          whileTap={{ scale: 0.9 }}
+          onClick={nextSlide}
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+          className="pointer-events-auto p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white transition-all"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </button>
+          <ChevronRight size={24} />
+        </motion.button>
+      </div>
 
-      {/* Image Indicators */}
-      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
-        {heroContent?.map((_, index) => (
+      {/* Progress Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+        {heroContent.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`w-3 h-3 rounded-full ${
-              index === currentImageIndex ? "bg-white" : "bg-white/50"
-            }`}
-          />
+            onClick={() => setCurrentIndex(index)}
+            className="group relative"
+          >
+            <div
+              className={`h-1 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? 'w-12 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500'
+                  : 'w-6 bg-white/30 group-hover:bg-white/50'
+              }`}
+            />
+            {index === currentIndex && (
+              <motion.div
+                className="absolute inset-0 h-1 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500"
+                initial={{ scaleX: 0, originX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 6, ease: 'linear' }}
+                key={`progress-${currentIndex}`}
+              />
+            )}
+          </button>
         ))}
       </div>
 
-      {/* Content */}
+      {/* Scroll Indicator */}
       <motion.div
-        className="container mx-auto px-4 md:px-8 relative z-20 text-center text-white"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20"
       >
-        <motion.div variants={itemVariants}>
-          <motion.h1
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            dangerouslySetInnerHTML={{
-              __html: heroContent[currentImageIndex].heading,
-            }}
-          ></motion.h1>
-          <motion.p
-            className="text-base md:text-lg  max-w-2xl md:max-w-3xl mx-auto mb-6 md:mb-10 text-secondary-200"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            {heroContent[currentImageIndex].description}
-          </motion.p>
-          <motion.div
-            className="flex flex-col sm:flex-row justify-center items-center gap-8 "
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.div>
-              <Link href="#gallery" className="btn-primary">
-                {heroContent[currentImageIndex].button}
-              </Link>
-            </motion.div>
-            <motion.a
-              href="https://wa.me/8801234567890"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline flex items-center justify-center gap-2"
-            >
-              <Phone className="h-4 w-4 md:h-5 md:w-5" />
-              Book Now
-            </motion.a>
-          </motion.div>
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="flex flex-col items-center gap-2 text-white/60"
+        >
+          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
+            <motion.div
+              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-1.5 h-1.5 rounded-full bg-white/60"
+            />
+          </div>
         </motion.div>
       </motion.div>
     </section>

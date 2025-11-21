@@ -1,139 +1,191 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
-import { useInView } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-
-const packages = [
-  {
-    id: 'basic',
-    name: 'Basic',
-    price: '৳15,000',
-    description: 'Perfect for small events and portrait sessions',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80',
-    features: [
-      '3 hours of coverage',
-      '50 edited photos',
-      'Basic editing',
-      'Digital delivery'
-    ],
-    popular: false
-  },
-  {
-    id: 'standard',
-    name: 'Standard',
-    price: '৳30,000',
-    description: 'Our most popular package for complete coverage',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
-    features: [
-      '6 hours of coverage',
-      '150 edited photos',
-      'Professional editing',
-      'Highlights video (30 sec)',
-      'Digital delivery'
-    ],
-    popular: true
-  },
-  {
-    id: 'premium',
-    name: 'Premium',
-    price: '৳50,000',
-    description: 'Complete experience with all features included',
-    image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
-    features: [
-      '12 hours of coverage',
-      '300+ edited photos',
-      'Advanced editing',
-      'Full event video (1-2 hrs)',
-      'Highlights video (1 min)',
-      'Physical album delivery'
-    ],
-    popular: false
-  }
-];
+import { motion, useInView } from 'framer-motion';
+import { Check, Sparkles, Clock, Camera } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { packages } from '@/data';
 
 const Packages = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="packages" className="section">
-      <div ref={ref} className="container mx-auto px-4 md:px-8">
+    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-black">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-16"
+          className="text-center mb-16"
         >
-          <h2 className="section-title">Our Service Packages</h2>
-          <p className="section-subtitle">
-            Choose the package that fits your needs
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6"
+          >
+            <Camera size={16} className="text-purple-400" />
+            <span className="text-sm font-medium text-white/80">Photography Packages</span>
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Choose Your{' '}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              Perfect Package
+            </span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Professional photography packages tailored for every occasion. From intimate portraits to grand celebrations.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+        {/* Package Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
             <motion.div
               key={pkg.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative rounded-2xl shadow-lg overflow-hidden ${
-                pkg.popular 
-                  ? 'ring-2 ring-primary-500 transform -translate-y-3 md:-translate-y-3' 
-                  : 'transform transition-transform hover:-translate-y-2'
-              }`}
+              className="group relative"
             >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-bold z-10">
-                  MOST POPULAR
+              {/* Card */}
+              <div
+                className={`relative h-full rounded-3xl overflow-hidden transition-all duration-500 ${
+                  pkg.popular
+                    ? 'bg-gradient-to-b from-gray-800/80 to-gray-900/80'
+                    : 'bg-gray-900/60'
+                }`}
+                style={{
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
+                {/* Gradient Border */}
+                <div
+                  className={`absolute inset-0 rounded-3xl p-[2px] ${
+                    pkg.popular
+                      ? 'bg-gradient-to-b from-purple-500 via-pink-500 to-cyan-500'
+                      : 'bg-gradient-to-b from-gray-700 to-gray-800 group-hover:from-purple-500/50 group-hover:via-pink-500/50 group-hover:to-cyan-500/50'
+                  } transition-all duration-500`}
+                >
+                  <div className="absolute inset-[2px] rounded-3xl bg-gray-900" />
                 </div>
-              )}
-              
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={pkg.image} 
-                  alt={pkg.name} 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className={`text-xl md:text-2xl font-bold ${
-                    pkg.popular ? 'text-primary-300' : 'text-white'
-                  }`}>
+
+                {/* Content */}
+                <div className="relative z-10 p-6">
+                  {/* Popular Badge */}
+                  {pkg.popular && (
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20">
+                      <div className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white text-xs font-bold shadow-lg">
+                        <Sparkles size={12} />
+                        MOST POPULAR
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Package Title */}
+                  <h3 className="text-2xl font-bold text-white text-center mt-4 mb-4">
                     {pkg.name}
                   </h3>
-                  <span className="text-2xl md:text-3xl font-bold">{pkg.price}</span>
+
+                  {/* Image with Gradient Border */}
+                  <div className="relative mb-6 rounded-2xl overflow-hidden p-[2px] bg-gradient-to-br from-purple-500/50 via-pink-500/50 to-cyan-500/50">
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                      <Image
+                        src={pkg.image}
+                        alt={pkg.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      {/* Duration Badge */}
+                      <div className="absolute bottom-3 right-3 flex items-center gap-1 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-sm">
+                        <Clock size={14} />
+                        {pkg.duration}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Features List */}
+                  <ul className="space-y-3 mb-6">
+                    {pkg.features.map((feature, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ delay: index * 0.1 + idx * 0.05 }}
+                        className="flex items-center gap-3 text-gray-300"
+                      >
+                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center">
+                          <Check size={12} className="text-white" />
+                        </div>
+                        <span className="text-sm">{feature}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+
+                  {/* Price */}
+                  <div className="flex items-center justify-center mb-6">
+                    <div className="inline-flex items-baseline gap-1 px-6 py-2 rounded-full bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 border border-white/10">
+                      <span className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                        {pkg.price.toLocaleString()}
+                      </span>
+                      <span className="text-gray-400 text-sm">TK</span>
+                    </div>
+                  </div>
+
+                  {/* Book Now Button */}
+                  <Link href={`/booking?package=${pkg.id}`}>
+                    <motion.button
+                      whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(168, 85, 247, 0.4)' }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 ${
+                        pkg.popular
+                          ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 shadow-lg shadow-purple-500/25'
+                          : 'bg-white/10 border border-white/20 hover:bg-white/20'
+                      }`}
+                    >
+                      Book Now
+                    </motion.button>
+                  </Link>
                 </div>
-              </div>
-              
-              <div className="bg-white p-6">
-                <p className="text-secondary-600 mb-6">{pkg.description}</p>
-                
-                <ul className="space-y-3 mb-8">
-                  {pkg.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-secondary-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  className={`w-full py-3 rounded-full font-semibold transition-all ${
-                    pkg.popular 
-                      ? 'bg-gradient-to-r from-primary-500 to-primary-700 text-white hover:from-primary-600 hover:to-primary-800' 
-                      : 'border-2 border-primary-500 text-primary-500 hover:bg-primary-50'
-                  }`}
-                >
-                  Select Package
-                </Button>
+
+                {/* Hover Glow Effect */}
+                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-purple-500/10 via-transparent to-cyan-500/10" />
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* View All Link */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <Link href="/packages">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-white hover:bg-white/5 transition-colors"
+            >
+              View All Packages
+              <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                →
+              </motion.span>
+            </motion.button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

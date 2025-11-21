@@ -1,170 +1,343 @@
 "use client";
 
-"use client";
-
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { Camera, Calendar, Tag } from "lucide-react";
-import { useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Camera,
+  MapPin,
+  Calendar,
+} from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { projects } from "@/data";
+
+const categories = [
+  { id: "all", name: "All", icon: Camera },
+  { id: "wedding", name: "Wedding" },
+  { id: "portrait", name: "Portrait" },
+  { id: "corporate", name: "Corporate" },
+  { id: "event", name: "Event" },
+  { id: "product", name: "Product" },
+  { id: "birthday", name: "Birthday" },
+];
 
 const Gallery = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projects)[0] | null
+  >(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  // Sample gallery data
-  const galleryItems = [
-    {
-      id: 1,
-      src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
-      title: "Wedding Ceremony",
-      category: "wedding",
-      date: "2023-05-15",
-    },
-    {
-      id: 2,
-      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
-      title: "Portrait Session",
-      category: "portrait",
-      date: "2023-06-20",
-    },
-    {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
-      title: "Corporate Event",
-      category: "corporate",
-      date: "2023-07-10",
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=600&q=80",
-      title: "Engagement Shoot",
-      category: "portrait",
-      date: "2023-08-05",
-    },
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1511798616197-f9709d7f0760?auto=format&fit=crop&w=600&q=80",
-      title: "Birthday Party",
-      category: "event",
-      date: "2023-09-12",
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1501031191319-7a82b5a3c5a1?auto=format&fit=crop&w=600&q=80",
-      title: "Fashion Shoot",
-      category: "portrait",
-      date: "2023-10-01",
-    },
-  ];
-
-  const categories = [
-    { id: "all", name: "All" },
-    { id: "wedding", name: "Wedding" },
-    { id: "portrait", name: "Portrait" },
-    { id: "corporate", name: "Corporate" },
-    { id: "event", name: "Event" },
-  ];
-
-  const filteredItems =
+  const filteredProjects =
     activeFilter === "all"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeFilter);
+      ? projects.slice(0, 9)
+      : projects.filter((p) => p.category === activeFilter).slice(0, 9);
+
+  const openLightbox = (project: (typeof projects)[0], index: number = 0) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(index);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = () => {
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
+    document.body.style.overflow = "auto";
+  };
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex(
+        (prev) => (prev + 1) % selectedProject.images.length
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex(
+        (prev) =>
+          (prev - 1 + selectedProject.images.length) %
+          selectedProject.images.length
+      );
+    }
+  };
 
   return (
-    <section id="gallery" className="section bg-primary-50">
-      <div ref={ref} className="container mx-auto px-4 md:px-8">
+    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-black via-gray-950 to-gray-900">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div
+        ref={ref}
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
+          className="text-center mb-12"
         >
-          <h2 className="section-title">Recent Projects</h2>
-          <p className="section-subtitle">
-            Explore our latest photography and videography work
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+            <Camera size={16} className="text-purple-400" />
+            <span className="text-sm font-medium text-white/80">
+              Our Portfolio
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Recent{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              Projects
+            </span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Explore our latest photography work capturing beautiful moments
+            across different occasions
           </p>
         </motion.div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12">
-          {categories.map((category) => (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {categories.map((cat) => (
             <motion.button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
+              key={cat.id}
+              onClick={() => setActiveFilter(cat.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-4 py-1.5 md:px-5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all ${
-                activeFilter === category.id
-                  ? "bg-gradient-to-r from-primary-500 to-primary-700 text-white shadow-pink"
-                  : "bg-white text-secondary-700 hover:bg-primary-100"
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeFilter === cat.id
+                  ? "bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white shadow-lg shadow-purple-500/25"
+                  : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
               }`}
             >
-              {category.name}
+              {cat.name}
             </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {filteredItems.map((item, index) => (
-            <Link href="/gallery" key={item.id}>
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-xl shadow-lg aspect-square border border-white/20 cursor-pointer"
-                whileHover={{ y: -10 }}
+                key={project.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                onClick={() => openLightbox(project)}
+                className="group relative cursor-pointer"
               >
-                <div className="relative w-full h-full">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-800">
+                  <Image
+                    src={project.images[0]}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
 
-                  <motion.div
-                    className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={{ y: 20 }}
-                    whileHover={{ y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2">
-                      {item.title}
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-cyan-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
+                      {project.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {project.title}
                     </h3>
-                    <div className="flex items-center text-secondary-200 text-xs md:text-sm gap-2 md:gap-4">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-                        <span>{item.date}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Tag className="h-3 w-3 md:h-4 md:w-4" />
-                        <span className="capitalize">{item.category}</span>
-                      </div>
+                    <div className="flex items-center gap-4 text-gray-300 text-sm">
+                      <span className="flex items-center gap-1">
+                        <MapPin size={14} />
+                        {project.location}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        {new Date(project.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
                     </div>
-                  </motion.div>
+                  </div>
+
+                  {/* Image Count Badge */}
+                  {project.images.length > 1 && (
+                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-xs">
+                      <Camera size={12} />
+                      {project.images.length}
+                    </div>
+                  )}
+
+                  {/* Featured Badge */}
+                  {project.featured && (
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-medium">
+                      Featured
+                    </div>
+                  )}
                 </div>
               </motion.div>
-            </Link>
-          ))}
-        </div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-        {/* View More Button */}
-        <div className="text-center mt-8 md:mt-12">
+        {/* View All Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12"
+        >
           <Link href="/gallery">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-outline text-sm md:text-base rounded-lg"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-white hover:bg-white/5 transition-colors"
             >
-              View All Projects
+              View Full Gallery
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                →
+              </motion.span>
             </motion.button>
           </Link>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            >
+              <X size={24} className="text-white" />
+            </button>
+
+            {/* Navigation */}
+            {selectedProject.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevImage();
+                  }}
+                  className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <ChevronLeft size={24} className="text-white" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextImage();
+                  }}
+                  className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <ChevronRight size={24} className="text-white" />
+                </button>
+              </>
+            )}
+
+            {/* Image */}
+            <motion.div
+              key={currentImageIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative max-w-5xl max-h-[80vh] w-full h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedProject.images[currentImageIndex]}
+                alt={selectedProject.title}
+                fill
+                className="object-contain"
+              />
+            </motion.div>
+
+            {/* Info Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent"
+            >
+              <div className="max-w-5xl mx-auto">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {selectedProject.title}
+                </h3>
+                <p className="text-gray-300 mb-3">
+                  {selectedProject.description}
+                </p>
+                <div className="flex items-center gap-6 text-gray-400 text-sm">
+                  <span className="flex items-center gap-2">
+                    <MapPin size={16} />
+                    {selectedProject.location}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Calendar size={16} />
+                    {new Date(selectedProject.date).toLocaleDateString()}
+                  </span>
+                  {selectedProject.images.length > 1 && (
+                    <span className="text-white">
+                      {currentImageIndex + 1} / {selectedProject.images.length}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Thumbnail Strip */}
+            {selectedProject.images.length > 1 && (
+              <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-2">
+                {selectedProject.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`relative w-16 h-12 rounded-lg overflow-hidden transition-all ${
+                      idx === currentImageIndex
+                        ? "ring-2 ring-purple-500 scale-110"
+                        : "opacity-50 hover:opacity-100"
+                    }`}
+                  >
+                    <Image src={img} alt="" fill className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

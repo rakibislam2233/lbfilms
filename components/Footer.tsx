@@ -1,97 +1,184 @@
-import Link from 'next/link';
-import { Camera, Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+"use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  Facebook,
+  Instagram,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+} from "lucide-react";
+import logo from "@/assets/logo/lb-films.png";
 const Footer = () => {
+  const quickLinks = [
+    { name: "Home", href: "/" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Packages", href: "/packages" },
+    { name: "Videos", href: "/videos" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const services = [
+    "Wedding Photography",
+    "Corporate Events",
+    "Portrait Sessions",
+    "Event Videography",
+    "Product Photography",
+    "Photo Editing",
+  ];
+
   return (
-    <footer className="bg-secondary-900 text-white pt-12 md:pt-16 pb-6">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-          {/* Column 1: Logo and Tagline */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-2 rounded-full">
-                <Camera className="h-5 w-5 md:h-6 md:w-6 text-white" />
+    <footer className="relative bg-black pt-20 pb-8 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
+      </div>
+
+      {/* Top Border Gradient */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          {/* Brand Column */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center space-x-3 mb-6 h-16">
+              <div className="relative">
+                <Image
+                  src={logo}
+                  alt="LB Films"
+                  width={300}
+                  height={100}
+                  className="relative rounded-full"
+                />
               </div>
-              <span className="text-xl md:text-2xl font-bold">
-                LB <span className="text-primary-400">Films</span>
-              </span>
-            </div>
-            <p className="text-secondary-400 text-sm mb-4">
-              Capturing your precious moments with professional photography and videography services.
+            </Link>
+            <p className="text-gray-400 mb-6 leading-relaxed">
+              Capturing your precious moments with professional photography and
+              videography services in Bangladesh.
             </p>
-            <div className="flex space-x-3 md:space-x-4">
-              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
-                <Facebook className="h-4 w-4 md:h-5 md:w-5" />
-              </Link>
-              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
-                <Instagram className="h-4 w-4 md:h-5 md:w-5" />
-              </Link>
-              <Link href="#" className="text-secondary-400 hover:text-primary-400 transition-colors">
-                <Youtube className="h-4 w-4 md:h-5 md:w-5" />
-              </Link>
+            <div className="flex space-x-3">
+              {[Facebook, Instagram, Youtube].map((Icon, idx) => (
+                <motion.a
+                  key={idx}
+                  href="#"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 transition-all"
+                >
+                  <Icon size={18} />
+                </motion.a>
+              ))}
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-base md:text-lg font-bold mb-4 md:mb-6">Quick Links</h3>
-            <ul className="space-y-2 md:space-y-3">
-              <li><Link href="/" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Home</Link></li>
-              <li><Link href="#gallery" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Gallery</Link></li>
-              <li><Link href="#packages" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Packages</Link></li>
-              <li><Link href="#about" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">About</Link></li>
-              <li><Link href="#contact" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Contact</Link></li>
+            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+              <span className="w-8 h-px bg-gradient-to-r from-purple-500 to-transparent" />
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Services */}
+          {/* Services */}
           <div>
-            <h3 className="text-base md:text-lg font-bold mb-4 md:mb-6">Services</h3>
-            <ul className="space-y-2 md:space-y-3">
-              <li><Link href="#" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Wedding Photography</Link></li>
-              <li><Link href="#" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Corporate Events</Link></li>
-              <li><Link href="#" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Portrait Sessions</Link></li>
-              <li><Link href="#" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Event Videography</Link></li>
-              <li><Link href="#" className="text-secondary-400 hover:text-white transition-colors text-sm md:text-base">Photo Editing</Link></li>
+            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+              <span className="w-8 h-px bg-gradient-to-r from-pink-500 to-transparent" />
+              Services
+            </h3>
+            <ul className="space-y-3">
+              {services.map((service) => (
+                <li key={service}>
+                  <span className="text-gray-400 hover:text-white transition-colors cursor-pointer">
+                    {service}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: Contact Info */}
+          {/* Contact & Newsletter */}
           <div>
-            <h3 className="text-base md:text-lg font-bold mb-4 md:mb-6">Contact Info</h3>
-            <ul className="space-y-2 md:space-y-3">
-              <li className="flex items-start">
-                <Phone className="h-4 w-4 md:h-5 md:w-5 text-primary-400 mr-2 md:mr-3 mt-0.5" />
-                <span className="text-secondary-400 text-sm md:text-base">+880 1234-567890</span>
+            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+              <span className="w-8 h-px bg-gradient-to-r from-cyan-500 to-transparent" />
+              Contact Info
+            </h3>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                  <Phone size={14} className="text-purple-400" />
+                </div>
+                <span className="text-gray-400">+880 1234-567890</span>
               </li>
-              <li className="flex items-start">
-                <Mail className="h-4 w-4 md:h-5 md:w-5 text-primary-400 mr-2 md:mr-3 mt-0.5" />
-                <span className="text-secondary-400 text-sm md:text-base">info@lbfilms.com</span>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center flex-shrink-0">
+                  <Mail size={14} className="text-pink-400" />
+                </div>
+                <span className="text-gray-400">info@lbfilms.com</span>
               </li>
-              <li className="flex items-start">
-                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary-400 mr-2 md:mr-3 mt-0.5" />
-                <span className="text-secondary-400 text-sm md:text-base">123 Photography Street, Dhaka, Bangladesh</span>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={14} className="text-cyan-400" />
+                </div>
+                <span className="text-gray-400">Dhaka, Bangladesh</span>
               </li>
             </ul>
 
-            <div className="mt-4 md:mt-6">
-              <h4 className="font-bold text-sm md:text-base mb-2 md:mb-3">Newsletter</h4>
-              <div className="flex flex-col md:flex-row gap-2">
+            {/* Newsletter */}
+            <div>
+              <p className="text-white text-sm font-medium mb-3">
+                Subscribe to Newsletter
+              </p>
+              <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="bg-secondary-800 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-500 w-full text-sm"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors text-sm"
                 />
-                <button className="bg-gradient-to-r from-primary-500 to-primary-700 px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:from-primary-600 hover:to-primary-800 transition-all text-sm">
-                  Join
-                </button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white"
+                >
+                  <Send size={18} />
+                </motion.button>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-secondary-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-secondary-500 text-sm">
-          <p>© 2025 LB Films. All Rights Reserved.</p>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-500 text-sm">
+              © 2025 LB Films. All Rights Reserved.
+            </p>
+            <div className="flex items-center gap-6 text-sm text-gray-500">
+              <Link href="#" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="#" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,127 +1,161 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import {
-  Camera,
-  Video,
-  Sparkles,
-  Clock,
-  Gift,
-  Star,
-  Camera as CameraIcon,
-  Video as VideoIcon,
-  Zap,
-  Users,
-  Award,
-  CheckCircle,
-} from "lucide-react";
-import { useInView } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Camera, Video, Sparkles, Clock, Gift, Star, Award, Heart } from 'lucide-react';
 
 const services = [
   {
-    id: 1,
-    icon: <CameraIcon className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "Professional Equipment",
-    description:
-      "High-end cameras and professional gear for crystal clear photos and videos",
-    image:
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
+    icon: Camera,
+    title: 'Professional Photography',
+    description: 'High-end cameras and professional gear for crystal clear photos',
+    color: 'purple',
   },
   {
-    id: 2,
-    icon: <VideoIcon className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "4K Video Quality",
-    description:
-      "Ultra high-definition video recording to capture every detail",
-    image:
-      "https://images.unsplash.com/photo-1574717024456-7aef8a6171ff?auto=format&fit=crop&w=600&q=80",
+    icon: Video,
+    title: '4K Cinematic Video',
+    description: 'Ultra high-definition video recording to capture every detail',
+    color: 'pink',
   },
   {
-    id: 3,
-    icon: <Sparkles className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "Creative Editing",
-    description:
-      "Cinematic post-production with artistic touch and professional editing",
-    image:
-      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
+    icon: Sparkles,
+    title: 'Creative Editing',
+    description: 'Cinematic post-production with artistic touch and professional editing',
+    color: 'cyan',
   },
   {
-    id: 4,
-    icon: <Clock className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "Quick Delivery",
-    description:
-      "Photos and videos delivered within 7 days without compromising quality",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
+    icon: Clock,
+    title: 'Quick Delivery',
+    description: 'Photos and videos delivered within 7 days without compromising quality',
+    color: 'purple',
   },
   {
-    id: 5,
-    icon: <Gift className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "Customized Packages",
-    description:
-      "Tailored packages to meet your unique photography and videography needs",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
+    icon: Gift,
+    title: 'Custom Packages',
+    description: 'Tailored packages to meet your unique photography needs',
+    color: 'pink',
   },
   {
-    id: 6,
-    icon: <Star className="h-8 w-8 md:h-10 md:w-10" />,
-    title: "5+ Years Experience",
-    description:
-      "Trusted by 500+ clients with extensive experience in the field",
-    image:
-      "https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?auto=format&fit=crop&w=600&q=80",
+    icon: Award,
+    title: '5+ Years Experience',
+    description: 'Trusted by 500+ clients with extensive industry experience',
+    color: 'cyan',
   },
 ];
 
+const colorClasses = {
+  purple: {
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+    icon: 'text-purple-400',
+    glow: 'group-hover:shadow-purple-500/20',
+  },
+  pink: {
+    bg: 'bg-pink-500/10',
+    border: 'border-pink-500/20',
+    icon: 'text-pink-400',
+    glow: 'group-hover:shadow-pink-500/20',
+  },
+  cyan: {
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+    icon: 'text-cyan-400',
+    glow: 'group-hover:shadow-cyan-500/20',
+  },
+};
+
 const Services = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="section">
-      <div ref={ref} className="container mx-auto px-4 md:px-8">
+    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-black to-gray-950">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-16"
+          className="text-center mb-16"
         >
-          <h2 className="section-title">Why Choose LB Films?</h2>
-          <p className="section-subtitle">
-            Our services are designed to exceed your expectations
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+            <Heart size={16} className="text-pink-400" />
+            <span className="text-sm font-medium text-white/80">Why Choose Us</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            What Makes{' '}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              LB Films Special
+            </span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            We combine creativity, professionalism, and cutting-edge technology to deliver exceptional results
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-pink-lg transition-all duration-300 overflow-hidden border border-primary-100"
-            >
-              <div className="relative h-40 overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover"
-                />              </div>
-              <div className="p-6">
-                <h3 className="text-lg md:text-xl font-bold text-secondary-800 mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-sm md:text-base text-secondary-600">
-                  {service.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const colors = colorClasses[service.color as keyof typeof colorClasses];
+            const Icon = service.icon;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group"
+              >
+                <div
+                  className={`relative h-full p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl ${colors.glow}`}
+                >
+                  {/* Icon */}
+                  <div
+                    className={`w-14 h-14 rounded-xl ${colors.bg} ${colors.border} border flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110`}
+                  >
+                    <Icon size={28} className={colors.icon} />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{service.description}</p>
+
+                  {/* Hover Decoration */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
+
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.6 }}
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
+        >
+          {[
+            { value: '500+', label: 'Happy Clients' },
+            { value: '1000+', label: 'Projects Done' },
+            { value: '5+', label: 'Years Experience' },
+            { value: '100%', label: 'Satisfaction' },
+          ].map((stat, index) => (
+            <div key={index} className="text-center">
+              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+                {stat.value}
+              </div>
+              <div className="text-gray-500 text-sm">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

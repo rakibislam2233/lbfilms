@@ -3,22 +3,21 @@ import Gallery from "@/components/Gallery";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import Packages from "@/components/Packages";
-import Team from "@/components/Team";
+import VideoShowcase from "@/components/VideoShowcase";
 import FAQ from "@/components/FAQ";
-import BookingForm from "@/components/BookingForm";
 import Contact from "@/components/Contact";
+
 export default function Home() {
   return (
-    <section className="min-h-screen">
+    <main className="min-h-screen bg-black">
       <Hero />
       <Services />
       <Gallery />
-      <Testimonials />
       <Packages />
-      <Team />
+      <VideoShowcase />
+      <Testimonials />
       <FAQ />
-      <BookingForm />
       <Contact />
-    </section>
+    </main>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Camera,
@@ -9,214 +8,288 @@ import {
   Users,
   Star,
   TrendingUp,
-  Calendar,
-  MessageSquare,
-  Settings,
-  Plus,
-  Edit,
-  Trash2,
-  Eye,
-  CheckCircle,
-  XCircle,
-  Clock,
-  Download,
+  ArrowUpRight,
+  ArrowDownRight,
 } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
+import { orders, reviews, projects, packages, users, getStats } from "@/data";
 
-const AdminDashboard = () => {
-  const [stats] = useState([
+const revenueData = [
+  { month: "Jan", revenue: 45000 },
+  { month: "Feb", revenue: 52000 },
+  { month: "Mar", revenue: 48000 },
+  { month: "Apr", revenue: 61000 },
+  { month: "May", revenue: 55000 },
+  { month: "Jun", revenue: 67000 },
+  { month: "Jul", revenue: 72000 },
+];
+
+const orderData = [
+  { name: "Wed", orders: 4 },
+  { name: "Thu", orders: 3 },
+  { name: "Fri", orders: 5 },
+  { name: "Sat", orders: 8 },
+  { name: "Sun", orders: 6 },
+  { name: "Mon", orders: 4 },
+  { name: "Tue", orders: 7 },
+];
+
+const categoryData = [
+  { name: "Wedding", value: 45, color: "#a855f7" },
+  { name: "Corporate", value: 20, color: "#ec4899" },
+  { name: "Portrait", value: 25, color: "#06b6d4" },
+  { name: "Event", value: 10, color: "#22c55e" },
+];
+
+export default function AdminDashboard() {
+  const stats = getStats();
+
+  const statCards = [
     {
-      id: 1,
-      title: "Total Projects",
-      value: 128,
-      icon: Camera,
-      change: "+12%",
-      color: "bg-blue-500",
+      title: "Total Revenue",
+      value: "৳4.2M",
+      change: "+12.5%",
+      up: true,
+      icon: TrendingUp,
+      color: "purple",
     },
     {
-      id: 2,
-      title: "Total Packages",
-      value: 6,
-      icon: Package,
-      change: "+2",
-      color: "bg-green-500",
-    },
-    {
-      id: 3,
       title: "Total Orders",
-      value: 42,
+      value: stats.totalOrders.toString(),
+      change: "+8.2%",
+      up: true,
       icon: ShoppingBag,
-      change: "+5",
-      color: "bg-purple-500",
+      color: "pink",
     },
     {
-      id: 4,
-      title: "Total Clients",
-      value: 317,
+      title: "Total Projects",
+      value: stats.totalProjects.toString(),
+      change: "+15.3%",
+      up: true,
+      icon: Camera,
+      color: "cyan",
+    },
+    {
+      title: "Total Users",
+      value: stats.totalUsers.toString(),
+      change: "+5.1%",
+      up: true,
       icon: Users,
-      change: "+24",
-      color: "bg-yellow-500",
+      color: "green",
     },
-  ]);
-
-  const [recentOrders] = useState([
-    {
-      id: 1,
-      client: "John Doe",
-      package: "Standard",
-      date: "2023-11-10",
-      status: "Confirmed",
-      amount: "৳30,000",
-    },
-    {
-      id: 2,
-      client: "Jane Smith",
-      package: "Premium",
-      date: "2023-11-11",
-      status: "Pending",
-      amount: "৳50,000",
-    },
-    {
-      id: 3,
-      client: "Michael Brown",
-      package: "Basic",
-      date: "2023-11-12",
-      status: "Completed",
-      amount: "৳15,000",
-    },
-    {
-      id: 4,
-      client: "Sarah Johnson",
-      package: "Standard",
-      date: "2023-11-13",
-      status: "Confirmed",
-      amount: "৳30,000",
-    },
-    {
-      id: 5,
-      client: "Robert Wilson",
-      package: "Premium",
-      date: "2023-11-14",
-      status: "Pending",
-      amount: "৳50,000",
-    },
-  ]);
-
-  const [recentReviews] = useState([
-    {
-      id: 1,
-      client: "Alice Wilson",
-      rating: 5,
-      comment: "Amazing work! Captured every moment perfectly.",
-      date: "2023-11-10",
-    },
-    {
-      id: 2,
-      client: "Bob Davis",
-      rating: 5,
-      comment: "Professional service and high-quality photos.",
-      date: "2023-11-09",
-    },
-    {
-      id: 3,
-      client: "Carol Miller",
-      rating: 4,
-      comment: "Great experience overall, very satisfied.",
-      date: "2023-11-08",
-    },
-    {
-      id: 4,
-      client: "David Taylor",
-      rating: 5,
-      comment: "The team exceeded our expectations!",
-      date: "2023-11-07",
-    },
-  ]);
+  ];
 
   return (
-    <div className="p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-secondary-800 flex items-center gap-3">
-          <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-3 rounded-lg">
-            <Camera className="h-7 w-7 text-white" />
-          </div>
-          Admin Dashboard
-        </h1>
-        <p className="text-secondary-600 mt-2">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-white">Dashboard Overview</h1>
+        <p className="text-gray-400">
           Welcome back! Here's what's happening today.
         </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-white p-6 rounded-2xl shadow-lg border border-primary-100"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-secondary-600 text-sm">{stat.title}</p>
-                <p className="text-2xl font-bold text-secondary-800 mt-1">
-                  {stat.value}
-                </p>
-                <p className="text-green-500 text-sm mt-1 font-medium">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {statCards.map((stat, index) => {
+          const Icon = stat.icon;
+          const bgGradient =
+            stat.color === "purple"
+              ? "from-purple-500/20"
+              : stat.color === "pink"
+              ? "from-pink-500/20"
+              : stat.color === "cyan"
+              ? "from-cyan-500/20"
+              : "from-green-500/20";
+          const iconColor =
+            stat.color === "purple"
+              ? "text-purple-400"
+              : stat.color === "pink"
+              ? "text-pink-400"
+              : stat.color === "cyan"
+              ? "text-cyan-400"
+              : "text-green-400";
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={`p-6 rounded-2xl bg-gradient-to-br ${bgGradient} to-transparent border border-white/10`}
+            >
+              <div className="flex items-center justify-between">
+                <Icon size={24} className={iconColor} />
+                <span
+                  className={`flex items-center gap-1 text-xs ${
+                    stat.up ? "text-green-400" : "text-red-400"
+                  }`}
+                >
+                  {stat.up ? (
+                    <ArrowUpRight size={14} />
+                  ) : (
+                    <ArrowDownRight size={14} />
+                  )}
                   {stat.change}
-                </p>
+                </span>
               </div>
-              <div className={`${stat.color} p-3 rounded-lg`}>
-                <stat.icon className="h-6 w-6 text-white" />
-              </div>
-            </div>
-          </motion.div>
-        ))}
+              <p className="text-3xl font-bold text-white mt-4">{stat.value}</p>
+              <p className="text-gray-400 text-sm">{stat.title}</p>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Charts and Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Orders */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border border-primary-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-secondary-800 flex items-center gap-2">
-              <ShoppingBag className="h-5 w-5 text-primary-500" />
-              Recent Orders
-            </h2>
-            <button className="text-primary-500 hover:text-primary-700 flex items-center gap-1 text-sm">
-              <Download className="h-4 w-4" />
-              Export
-            </button>
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Revenue Chart */}
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 className="text-lg font-bold text-white mb-6">
+            Revenue Overview
+          </h3>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={revenueData}>
+                <defs>
+                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                <XAxis dataKey="month" stroke="#666" />
+                <YAxis stroke="#666" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#a855f7"
+                  fillOpacity={1}
+                  fill="url(#colorRevenue)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
+        </div>
+
+        {/* Orders Chart */}
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 className="text-lg font-bold text-white mb-6">Weekly Orders</h3>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={orderData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                <XAxis dataKey="name" stroke="#666" />
+                <YAxis stroke="#666" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Bar dataKey="orders" fill="#ec4899" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Category Distribution */}
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 className="text-lg font-bold text-white mb-6">
+            Category Distribution
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={categoryData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex flex-wrap gap-4 justify-center mt-4">
+            {categoryData.map((item, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                <span className="text-gray-400 text-sm">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recent Orders */}
+        <div className="lg:col-span-2 p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 className="text-lg font-bold text-white mb-6">Recent Orders</h3>
           <div className="space-y-4">
-            {recentOrders.map((order) => (
+            {orders.slice(0, 5).map((order) => (
               <div
                 key={order.id}
-                className="flex items-center justify-between border-b border-secondary-100 pb-4 last:border-0 last:pb-0"
+                className="flex items-center justify-between p-4 rounded-xl bg-white/5"
               >
-                <div className="flex items-center">
-                  <div className="bg-primary-100 rounded-full p-2 mr-4">
-                    <Users className="h-4 w-4 text-primary-600" />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <ShoppingBag size={18} className="text-purple-400" />
                   </div>
                   <div>
-                    <p className="font-medium text-secondary-800">
-                      {order.client}
+                    <p className="text-white font-medium">
+                      {order.packageName}
                     </p>
-                    <p className="text-secondary-600 text-sm">
-                      {order.package} package
+                    <p className="text-gray-500 text-sm">
+                      {new Date(order.eventDate).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-secondary-600 text-sm">{order.date}</p>
-                  <p className="font-bold text-secondary-800">{order.amount}</p>
+                  <p className="text-white font-medium">
+                    {order.totalAmount.toLocaleString()} TK
+                  </p>
                   <span
-                    className={`inline-block px-2 py-1 rounded-full text-xs font-medium mt-1 ${
-                      order.status === "Confirmed"
-                        ? "bg-green-100 text-green-800"
-                        : order.status === "Pending"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-blue-100 text-blue-800"
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      order.status === "completed"
+                        ? "bg-green-500/20 text-green-400"
+                        : order.status === "confirmed"
+                        ? "bg-blue-500/20 text-blue-400"
+                        : "bg-yellow-500/20 text-yellow-400"
                     }`}
                   >
                     {order.status}
@@ -226,51 +299,7 @@ const AdminDashboard = () => {
             ))}
           </div>
         </div>
-
-        {/* Recent Reviews */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border border-primary-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-secondary-800 flex items-center gap-2">
-              <Star className="h-5 w-5 text-primary-500" />
-              Recent Reviews
-            </h2>
-          </div>
-          <div className="space-y-4">
-            {recentReviews.map((review) => (
-              <div key={review.id} className="flex items-start">
-                <div className="bg-primary-100 rounded-full p-2 mr-4">
-                  <Users className="h-4 w-4 text-primary-600" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="font-medium text-secondary-800">
-                      {review.client}
-                    </p>
-                    <span className="text-xs text-secondary-500">
-                      {review.date}
-                    </span>
-                  </div>
-                  <div className="flex mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < review.rating
-                            ? "text-yellow-400 fill-current"
-                            : "text-secondary-300"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-secondary-600 text-sm">{review.comment}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
-};
-
-export default AdminDashboard;
+}
