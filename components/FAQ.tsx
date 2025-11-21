@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { HelpCircle, ChevronDown, Plus, Minus } from "lucide-react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { HelpCircle, Minus, Plus } from "lucide-react";
+import { useRef, useState } from "react";
 
 const faqs = [
   {
@@ -111,7 +111,7 @@ const FAQ = () => {
                     transition={{ duration: 0.3 }}
                     className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
                       openId === faq.id
-                        ? "bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500"
+                        ? "bg-linear-to-r from-purple-600 to-pink-600"
                         : "bg-white/10"
                     }`}
                   >

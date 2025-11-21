@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Camera, Video, Sparkles, Clock, Gift, Star, Award, Heart } from 'lucide-react';
+import { Award, Camera, Clock, Gift, Heart, Sparkles, Video } from 'lucide-react';
+import { useRef } from 'react';
 
 const services = [
   {
@@ -128,7 +128,7 @@ const Services = () => {
                   <p className="text-gray-400 leading-relaxed">{service.description}</p>
 
                   {/* Hover Decoration */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-linear-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </motion.div>
             );

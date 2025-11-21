@@ -103,7 +103,7 @@ const Navbar = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors cursor-pointer"
               >
                 <LogIn size={18} />
                 <span>Login</span>
@@ -116,7 +116,7 @@ const Navbar = () => {
                   boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-6 py-2.5 text-sm font-semibold text-white rounded-full overflow-hidden group"
+                className="relative px-6 py-2.5 text-sm font-semibold text-white rounded-full overflow-hidden group cursor-pointer"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
                 <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />

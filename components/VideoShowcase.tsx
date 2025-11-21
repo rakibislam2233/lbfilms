@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { videos } from '@/data';
 import { motion, useInView } from 'framer-motion';
-import { Play, Eye, Clock, Film, X } from 'lucide-react';
+import { Clock, Eye, Film, Play, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { videos } from '@/data';
+import { useRef, useState } from 'react';
 
 const categories = [
   { id: 'all', name: 'All' },
@@ -161,7 +161,7 @@ const VideoShowcase = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: hoveredVideo === video.id ? 1 : 0 }}
-                  className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 pointer-events-none"
+                  className="absolute inset-0 rounded-2xl border-2 border-transparent bg-linear-to-r from-purple-600 to-pink-600 pointer-events-none"
                   style={{
                     WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                     WebkitMaskComposite: 'xor',

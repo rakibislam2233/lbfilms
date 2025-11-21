@@ -32,7 +32,7 @@ export default function ProjectsPage() {
         <motion.button
           onClick={() => setShowModal(true)}
           whileHover={{ scale: 1.02 }}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
+          className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
         >
           <Plus size={18} /> Add Project
         </motion.button>

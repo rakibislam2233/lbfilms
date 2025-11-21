@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 // Hover animation variants
 const hoverAnimation = {
   initial: { scale: 1 },
-  hover: { 
+  hover: {
     scale: 1.05,
-    transition: { 
-      type: "spring", 
-      stiffness: 400, 
-      damping: 10 
+    transition: {
+      type: "spring" as const,
+      stiffness: 400,
+      damping: 10
     }
   }
 };
@@ -137,9 +137,9 @@ export const Bounce = ({
 };
 
 // Floating animation for elements
-export const Floating = ({ 
-  children, 
-  delay = 0 
+export const Floating = ({
+  children,
+  delay = 0
 }: {
   children: React.ReactNode;
   delay?: number;
@@ -147,14 +147,10 @@ export const Floating = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: delay, duration: 0.5 }}
-      animate={{ y: [0, -10, 0] }}
-      transition={{ 
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: delay
+      animate={{ opacity: 1, y: [0, -10, 0] }}
+      transition={{
+        opacity: { delay: delay, duration: 0.5 },
+        y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: delay }
       }}
     >
       {children}

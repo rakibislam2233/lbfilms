@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Star, Quote, ChevronLeft, ChevronRight, MessageSquare } from 'lucide-react';
-import Image from 'next/image';
 import { getPublishedReviews, getUserById } from '@/data';
+import { motion, useInView } from 'framer-motion';
+import { ChevronLeft, ChevronRight, MessageSquare, Quote, Star } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -146,7 +146,7 @@ const Testimonials = () => {
               onClick={() => setCurrentIndex(index)}
               className={`h-2 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? 'w-8 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500'
+                  ? 'w-8 bg-linear-to-r from-purple-600 to-pink-600'
                   : 'w-2 bg-white/20 hover:bg-white/40'
               }`}
             />

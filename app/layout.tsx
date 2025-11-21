@@ -9,7 +9,10 @@ const poppins = Overpass({
 });
 
 export const metadata: Metadata = {
-  title: "LB Films - Photography & Videography Services",
+  title: {
+    default: "LB Films - Photography & Videography Services",
+    template: "%s | LB Films",
+  },
   description:
     "Professional photography and videography services in Bangladesh",
 };
