@@ -136,7 +136,7 @@ const Contact = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.8 }}
               whileHover={{ scale: 1.02 }}
-              className="mt-6 flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold"
+              className="mt-6 flex items-center justify-center gap-3 w-full py-4 rounded-2xl border border-white/20 text-white font-semibold"
             >
               <MessageCircle size={20} />
               Chat on WhatsApp

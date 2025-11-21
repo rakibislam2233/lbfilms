@@ -49,7 +49,7 @@ const FAQ = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <section className="relative py-24 overflow-hidden bg-linear-to-b from-gray-900 to-black">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
@@ -101,7 +101,7 @@ const FAQ = () => {
               >
                 <button
                   onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                  className="w-full flex items-center justify-between p-6 text-left"
+                  className="w-full flex items-center justify-between p-6 text-left cursor-pointer"
                 >
                   <span className="text-white font-medium pr-4">
                     {faq.question}
@@ -109,7 +109,7 @@ const FAQ = () => {
                   <motion.div
                     animate={{ rotate: openId === faq.id ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
                       openId === faq.id
                         ? "bg-linear-to-r from-purple-600 to-pink-600"
                         : "bg-white/10"
@@ -157,7 +157,7 @@ const FAQ = () => {
             href="/contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-medium"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-linear-to-r from-purple-600  to-pink-600 text-white font-medium"
           >
             Contact Us
           </motion.a>

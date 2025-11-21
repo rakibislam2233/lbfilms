@@ -41,7 +41,7 @@ const Footer = () => {
       </div>
 
       {/* Top Border Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-500 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -80,7 +80,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
-              <span className="w-8 h-px bg-gradient-to-r from-purple-500 to-transparent" />
+              <span className="w-8 h-px bg-linear-to-r from-purple-500 to-transparent" />
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -100,7 +100,7 @@ const Footer = () => {
           {/* Services */}
           <div>
             <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
-              <span className="w-8 h-px bg-gradient-to-r from-pink-500 to-transparent" />
+              <span className="w-8 h-px bg-linear-to-r from-pink-500 to-transparent" />
               Services
             </h3>
             <ul className="space-y-3">
@@ -117,24 +117,24 @@ const Footer = () => {
           {/* Contact & Newsletter */}
           <div>
             <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
-              <span className="w-8 h-px bg-gradient-to-r from-cyan-500 to-transparent" />
+              <span className="w-8 h-px bg-linear-to-r from-cyan-500 to-transparent" />
               Contact Info
             </h3>
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-purple-400" />
                 </div>
                 <span className="text-gray-400">+880 1234-567890</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center shrink-0">
                   <Mail size={14} className="text-pink-400" />
                 </div>
                 <span className="text-gray-400">info@lbfilms.com</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-cyan-400" />
                 </div>
                 <span className="text-gray-400">Dhaka, Bangladesh</span>
@@ -155,7 +155,7 @@ const Footer = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white"
+                  className="px-4 py-2.5 rounded-xl bg-linear-to-r from-purple-600  to-pink-600 text-white"
                 >
                   <Send size={18} />
                 </motion.button>
