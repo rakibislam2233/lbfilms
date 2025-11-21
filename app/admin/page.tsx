@@ -272,7 +272,7 @@ export default function AdminDashboard() {
                   </div>
                   <div>
                     <p className="text-white font-medium">
-                      {order.packageName}
+                      {order.packageId}
                     </p>
                     <p className="text-gray-500 text-sm">
                       {new Date(order.eventDate).toLocaleDateString()}
@@ -281,7 +281,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="text-right">
                   <p className="text-white font-medium">
-                    {order.totalAmount.toLocaleString()} TK
+                    {order.totalPrice} TK
                   </p>
                   <span
                     className={`text-xs px-2 py-1 rounded-full ${
