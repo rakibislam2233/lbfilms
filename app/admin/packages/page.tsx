@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Package, Plus, Edit, Trash2, Search, X, Check } from 'lucide-react';
 import { packages as demoPackages } from '@/data';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 
 export default function PackagesPage() {
   const [packageList, setPackageList] = useState(demoPackages);
@@ -34,12 +37,12 @@ export default function PackagesPage() {
 
       <div className="relative max-w-md">
         <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-        <input
+        <Input
           type="text"
           placeholder="Search packages..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+          className="pl-12 bg-white/5 border-white/10 text-white placeholder-gray-500"
         />
       </div>
 
@@ -98,18 +101,18 @@ export default function PackagesPage() {
             </div>
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">Name</label>
-                  <input type="text" placeholder="Package name" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none" />
+                <div className="space-y-2">
+                  <Label htmlFor="pkg-name">Name</Label>
+                  <Input id="pkg-name" placeholder="Package name" className="bg-white/5 border-white/10 text-white" />
                 </div>
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">Price (TK)</label>
-                  <input type="number" placeholder="50000" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none" />
+                <div className="space-y-2">
+                  <Label htmlFor="pkg-price">Price (TK)</Label>
+                  <Input id="pkg-price" type="number" placeholder="50000" className="bg-white/5 border-white/10 text-white" />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Description</label>
-                <textarea rows={3} placeholder="Package description" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none resize-none" />
+              <div className="space-y-2">
+                <Label htmlFor="pkg-desc">Description</Label>
+                <Textarea id="pkg-desc" rows={3} placeholder="Package description" className="bg-white/5 border-white/10 text-white resize-none" />
               </div>
             </div>
             <div className="flex justify-end gap-3 p-6 border-t border-white/10">

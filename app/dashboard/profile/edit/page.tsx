@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { User, Mail, Phone, MapPin, ArrowLeft, Camera } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -45,47 +47,51 @@ export default function EditProfilePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Full Name</label>
+          <div className="space-y-2">
+            <Label htmlFor="name">Full Name</Label>
             <div className="relative">
-              <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input
+              <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10" />
+              <Input
+                id="name"
                 type="text"
                 defaultValue="John Doe"
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
+                className="pl-12 bg-white/5 border-white/10 text-white"
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Email</label>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
             <div className="relative">
-              <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input
+              <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10" />
+              <Input
+                id="email"
                 type="email"
                 defaultValue="john@example.com"
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
+                className="pl-12 bg-white/5 border-white/10 text-white"
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Phone</label>
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone</Label>
             <div className="relative">
-              <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input
+              <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10" />
+              <Input
+                id="phone"
                 type="tel"
                 defaultValue="+880 1234-567890"
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
+                className="pl-12 bg-white/5 border-white/10 text-white"
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Address</label>
+          <div className="space-y-2">
+            <Label htmlFor="address">Address</Label>
             <div className="relative">
-              <MapPin size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input
+              <MapPin size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10" />
+              <Input
+                id="address"
                 type="text"
                 defaultValue="Dhaka, Bangladesh"
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
+                className="pl-12 bg-white/5 border-white/10 text-white"
               />
             </div>
           </div>

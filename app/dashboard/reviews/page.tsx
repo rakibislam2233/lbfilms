@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Plus } from 'lucide-react';
 import { reviews } from '@/data';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 
 export default function ReviewsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -37,9 +39,9 @@ export default function ReviewsPage() {
                 ))}
               </div>
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Your Review</label>
-              <textarea rows={4} placeholder="Share your experience..." className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none" />
+            <div className="space-y-2">
+              <Label>Your Review</Label>
+              <Textarea rows={4} placeholder="Share your experience..." className="bg-white/5 border-white/10 text-white placeholder-gray-500 resize-none" />
             </div>
             <div className="flex gap-3">
               <motion.button type="submit" whileHover={{ scale: 1.02 }} className="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium">
@@ -74,12 +76,12 @@ export default function ReviewsPage() {
                     <Star key={i} size={16} className={i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'} />
                   ))}
                 </div>
-                <span className={`text-xs px-3 py-1 rounded-full ${review.status === 'published' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
-                  {review.status}
+                <span className={`text-xs px-3 py-1 rounded-full ${review.published ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                  {review.published ? 'Published' : 'Pending'}
                 </span>
               </div>
               <p className="text-gray-300">{review.comment}</p>
-              <p className="text-gray-500 text-sm mt-3">{new Date(review.createdAt).toLocaleDateString()}</p>
+              <p className="text-gray-500 text-sm mt-3">{new Date(review.date).toLocaleDateString()}</p>
             </motion.div>
           ))
         )}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn } from "lucide-react";
 import logo from "@/assets/logo/lb-films.png";
+import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -81,7 +82,7 @@ const Navbar = () => {
                   {activeLink === link.href && (
                     <motion.span
                       layoutId="navbar-active"
-                      className="absolute inset-0 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-cyan-500/30 rounded-full border border-white/20"
+                      className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full border border-white/20"
                       transition={{
                         type: "spring",
                         bounce: 0.2,
@@ -97,6 +98,7 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
+            <ThemeToggle />
             <Link href="/auth/login">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -116,8 +118,8 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
                 className="relative px-6 py-2.5 text-sm font-semibold text-white rounded-full overflow-hidden group"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600" />
-                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
                 <span className="relative">Book Now</span>
               </motion.button>
             </Link>
@@ -180,7 +182,7 @@ const Navbar = () => {
                       onClick={() => setIsOpen(false)}
                       className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all ${
                         activeLink === link.href
-                          ? "bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 text-white border border-white/20"
+                          ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white border border-white/20"
                           : "text-gray-400 hover:text-white hover:bg-white/5"
                       }`}
                     >
@@ -201,7 +203,7 @@ const Navbar = () => {
                     </button>
                   </Link>
                   <Link href="/booking" onClick={() => setIsOpen(false)}>
-                    <button className="w-full px-4 py-3 mt-3 text-white font-semibold rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600">
+                    <button className="w-full px-4 py-3 mt-3 text-white font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-pink-600">
                       Book Now
                     </button>
                   </Link>

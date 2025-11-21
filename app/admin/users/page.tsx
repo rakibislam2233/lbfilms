@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Search, Filter, Eye, Edit, Trash2, Mail, Calendar } from 'lucide-react';
 import { users as demoUsers } from '@/data';
+import { Input } from '@/components/ui/input';
 
 export default function UsersPage() {
   const [userList] = useState(demoUsers);
@@ -20,7 +21,7 @@ export default function UsersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-          <Users className="text-cyan-400" /> Users
+          <Users className="text-purple-400" /> Users
         </h1>
         <p className="text-gray-400">Manage customers and admins</p>
       </div>
@@ -28,12 +29,12 @@ export default function UsersPage() {
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input
+          <Input
             type="text"
             placeholder="Search users..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+            className="pl-12 bg-white/5 border-white/10 text-white placeholder-gray-500"
           />
         </div>
         <div className="flex items-center gap-2">
@@ -75,7 +76,7 @@ export default function UsersPage() {
                       {user.role}
                     </span>
                   </td>
-                  <td className="py-4 px-6 text-gray-400">{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td className="py-4 px-6 text-gray-400">{new Date(user.joinedDate).toLocaleDateString()}</td>
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-2">
                       <button className="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"><Eye size={16} /></button>

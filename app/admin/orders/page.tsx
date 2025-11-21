@@ -14,6 +14,7 @@ import {
   Download,
 } from "lucide-react";
 import { orders as demoOrders } from "@/data";
+import { Input } from "@/components/ui/input";
 
 export default function OrdersPage() {
   const [orderList, setOrderList] = useState(demoOrders);
@@ -24,7 +25,7 @@ export default function OrdersPage() {
   >(null);
 
   const filteredOrders = orderList.filter((order) => {
-    const matchesSearch = order.packageId
+    const matchesSearch = order.id
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesFilter = filter === "all" || order.status === filter;
@@ -59,12 +60,12 @@ export default function OrdersPage() {
             size={18}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
           />
-          <input
+          <Input
             type="text"
             placeholder="Search orders..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+            className="pl-12 bg-white/5 border-white/10 text-white placeholder-gray-500"
           />
         </div>
         <div className="flex items-center gap-2">

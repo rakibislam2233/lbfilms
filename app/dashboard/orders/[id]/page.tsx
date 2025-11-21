@@ -4,11 +4,17 @@ import { motion } from 'framer-motion';
 import { Calendar, MapPin, Phone, Mail, ArrowLeft, CheckCircle, Clock, Package } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getOrderById } from '@/data';
+import { getOrderById, packages } from '@/data';
 
 export default function OrderDetailPage() {
   const { id } = useParams();
   const order = getOrderById(id as string);
+
+  // Helper to get package name
+  const getPackageName = (packageId: string) => {
+    const pkg = packages.find((p) => p.id === packageId);
+    return pkg?.name || 'Unknown Package';
+  };
 
   if (!order) {
     return (
@@ -22,7 +28,7 @@ export default function OrderDetailPage() {
   const steps = [
     { label: 'Booking Placed', completed: true },
     { label: 'Confirmed', completed: order.status !== 'pending' },
-    { label: 'In Progress', completed: order.status === 'completed' },
+    { label: 'In Progress', completed: order.status === 'completed' || order.status === 'in-progress' },
     { label: 'Completed', completed: order.status === 'completed' },
   ];
 
@@ -35,7 +41,7 @@ export default function OrderDetailPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white">Order #{order.id}</h1>
-          <p className="text-gray-400">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
+          <p className="text-gray-400">Placed on {new Date(order.date).toLocaleDateString()}</p>
         </div>
         <span className={`text-sm px-4 py-2 rounded-full ${
           order.status === 'completed' ? 'bg-green-500/20 text-green-400' :
@@ -55,9 +61,6 @@ export default function OrderDetailPage() {
                 {step.completed ? <CheckCircle size={16} className="text-white" /> : <Clock size={16} className="text-gray-500" />}
               </div>
               <p className={`text-xs mt-2 text-center ${step.completed ? 'text-white' : 'text-gray-500'}`}>{step.label}</p>
-              {index < steps.length - 1 && (
-                <div className={`absolute h-0.5 w-full ${step.completed ? 'bg-purple-500' : 'bg-white/10'}`} style={{ top: '16px', left: '50%' }} />
-              )}
             </div>
           ))}
         </div>
@@ -72,7 +75,7 @@ export default function OrderDetailPage() {
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="text-gray-400">Package</span>
-              <span className="text-white">{order.packageName}</span>
+              <span className="text-white">{getPackageName(order.packageId)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Event Date</span>
@@ -80,13 +83,13 @@ export default function OrderDetailPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Location</span>
-              <span className="text-white">{order.eventLocation}</span>
+              <span className="text-white">{order.location}</span>
             </div>
             <hr className="border-white/10" />
             <div className="flex justify-between">
               <span className="text-gray-400">Total Amount</span>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                {order.totalAmount.toLocaleString()} TK
+                {order.totalPrice.toLocaleString()} TK
               </span>
             </div>
           </div>

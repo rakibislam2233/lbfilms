@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Phone, Globe, Mail, User, Save } from 'lucide-react';
+import { Settings, Phone, Globe, User, Save } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 
 const tabs = [
   { id: 'general', name: 'General', icon: Settings },
@@ -45,51 +48,51 @@ export default function SettingsPage() {
       <div className="max-w-2xl">
         {activeTab === 'general' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Site Title</label>
-              <input type="text" defaultValue="LB Films" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="site-title">Site Title</Label>
+              <Input id="site-title" defaultValue="LB Films" className="bg-white/5 border-white/10 text-white" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Site Description</label>
-              <textarea rows={3} defaultValue="Professional Photography & Videography Services" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50 resize-none" />
+            <div className="space-y-2">
+              <Label htmlFor="site-desc">Site Description</Label>
+              <Textarea id="site-desc" rows={3} defaultValue="Professional Photography & Videography Services" className="bg-white/5 border-white/10 text-white resize-none" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Site URL</label>
-              <input type="text" defaultValue="https://lbfilms.com" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="site-url">Site URL</Label>
+              <Input id="site-url" defaultValue="https://lbfilms.com" className="bg-white/5 border-white/10 text-white" />
             </div>
           </motion.div>
         )}
 
         {activeTab === 'contact' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Phone Number</label>
-              <input type="tel" defaultValue="+880 1234-567890" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input id="phone" type="tel" defaultValue="+880 1234-567890" className="bg-white/5 border-white/10 text-white" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Email Address</label>
-              <input type="email" defaultValue="info@lbfilms.com" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input id="email" type="email" defaultValue="info@lbfilms.com" className="bg-white/5 border-white/10 text-white" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Address</label>
-              <input type="text" defaultValue="Dhaka, Bangladesh" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Input id="address" defaultValue="Dhaka, Bangladesh" className="bg-white/5 border-white/10 text-white" />
             </div>
           </motion.div>
         )}
 
         {activeTab === 'social' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Facebook URL</label>
-              <input type="url" defaultValue="https://facebook.com/lbfilms" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="facebook">Facebook URL</Label>
+              <Input id="facebook" type="url" defaultValue="https://facebook.com/lbfilms" className="bg-white/5 border-white/10 text-white" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Instagram URL</label>
-              <input type="url" defaultValue="https://instagram.com/lbfilms" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="instagram">Instagram URL</Label>
+              <Input id="instagram" type="url" defaultValue="https://instagram.com/lbfilms" className="bg-white/5 border-white/10 text-white" />
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">YouTube URL</label>
-              <input type="url" defaultValue="https://youtube.com/lbfilms" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="youtube">YouTube URL</Label>
+              <Input id="youtube" type="url" defaultValue="https://youtube.com/lbfilms" className="bg-white/5 border-white/10 text-white" />
             </div>
           </motion.div>
         )}
@@ -101,18 +104,18 @@ export default function SettingsPage() {
               <button className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10">Change Avatar</button>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">First Name</label>
-                <input type="text" defaultValue="Admin" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+              <div className="space-y-2">
+                <Label htmlFor="first-name">First Name</Label>
+                <Input id="first-name" defaultValue="Admin" className="bg-white/5 border-white/10 text-white" />
               </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Last Name</label>
-                <input type="text" defaultValue="User" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+              <div className="space-y-2">
+                <Label htmlFor="last-name">Last Name</Label>
+                <Input id="last-name" defaultValue="User" className="bg-white/5 border-white/10 text-white" />
               </div>
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Email</label>
-              <input type="email" defaultValue="admin@lbfilms.com" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50" />
+            <div className="space-y-2">
+              <Label htmlFor="admin-email">Email</Label>
+              <Input id="admin-email" type="email" defaultValue="admin@lbfilms.com" className="bg-white/5 border-white/10 text-white" />
             </div>
           </motion.div>
         )}
