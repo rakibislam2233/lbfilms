@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 type AnimatedSectionProps = {
   children: React.ReactNode;
@@ -9,10 +9,10 @@ type AnimatedSectionProps = {
   delay?: number;
 };
 
-const AnimatedSection: React.FC<AnimatedSectionProps> = ({ 
-  children, 
-  className = '',
-  delay = 0
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({
+  children,
+  className = "",
+  delay = 0,
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });

@@ -1,8 +1,8 @@
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Footer from "@/components/pages/common/Footer";
+import Navbar from "@/components/pages/common/Navbar";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
-import React from "react";
 import type { Metadata } from "next";
+import React from "react";
 
 export const metadata: Metadata = {
   title: {

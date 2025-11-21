@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/pages/common/Footer";
 import React from "react";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
