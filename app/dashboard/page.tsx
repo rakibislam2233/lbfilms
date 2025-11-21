@@ -34,7 +34,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`p-6 rounded-2xl bg-gradient-to-br ${bgColor} to-transparent border border-white/10`}
+              className={`p-6 rounded-2xl bg-linear-to-br ${bgColor} to-transparent border border-white/10`}
             >
               <Icon size={24} className={iconColor} />
               <p className="text-2xl font-bold text-white mt-3">{stat.value}</p>
@@ -54,11 +54,11 @@ export default function DashboardPage() {
           {recentOrders.map((order) => (
             <div key={order.id} className="flex items-center justify-between p-4 rounded-xl bg-white/5">
               <div>
-                <p className="text-white font-medium">{order.packageName}</p>
+                <p className="text-white font-medium">{order.packageId}</p>
                 <p className="text-gray-500 text-sm">{new Date(order.eventDate).toLocaleDateString()}</p>
               </div>
               <div className="text-right">
-                <p className="text-white font-medium">{order.totalAmount.toLocaleString()} TK</p>
+                <p className="text-white font-medium">{order.totalPrice.toLocaleString()} TK</p>
                 <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'completed' ? 'bg-green-500/20 text-green-400' : order.status === 'confirmed' ? 'bg-blue-500/20 text-blue-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
                   {order.status}
                 </span>
@@ -71,13 +71,13 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link href="/booking">
-          <motion.div whileHover={{ scale: 1.02 }} className="p-6 rounded-2xl bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 cursor-pointer">
+          <motion.div whileHover={{ scale: 1.02 }} className="p-6 rounded-2xl bg-linear-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 cursor-pointer">
             <h3 className="text-lg font-bold text-white mb-2">Book New Session</h3>
             <p className="text-gray-400 text-sm">Schedule your next photography session with us</p>
           </motion.div>
         </Link>
         <Link href="/dashboard/reviews">
-          <motion.div whileHover={{ scale: 1.02 }} className="p-6 rounded-2xl bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 cursor-pointer">
+          <motion.div whileHover={{ scale: 1.02 }} className="p-6 rounded-2xl bg-linear-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 cursor-pointer">
             <h3 className="text-lg font-bold text-white mb-2">Leave a Review</h3>
             <p className="text-gray-400 text-sm">Share your experience with other clients</p>
           </motion.div>
