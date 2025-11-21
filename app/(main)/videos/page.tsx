@@ -63,7 +63,7 @@ export default function VideosPage() {
                 whileTap={{ scale: 0.95 }}
                 className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.id
-                    ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white shadow-lg shadow-pink-500/25'
+                    ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-pink-500/25'
                     : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white'
                 }`}
               >
@@ -90,7 +90,7 @@ export default function VideosPage() {
                     onClick={() => setPlayingVideo(video)}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 flex items-center justify-center shadow-2xl opacity-90 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-linear-to-r from-purple-600 to-pink-600 flex items-center justify-center shadow-2xl opacity-90 group-hover:opacity-100 transition-opacity"
                   >
                     <Play size={28} className="text-white ml-1 fill-white" />
                   </motion.button>

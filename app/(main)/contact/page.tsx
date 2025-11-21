@@ -83,7 +83,7 @@ export default function ContactPage() {
                       type="submit"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-semibold flex items-center justify-center gap-2"
+                      className="w-full py-4 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2"
                     >
                       <Send size={18} />
                       Send Message

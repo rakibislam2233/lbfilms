@@ -66,7 +66,7 @@ export default function PackagesPage() {
                   <div className="relative z-10 p-6">
                     {pkg.popular && (
                       <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20">
-                        <div className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white text-xs font-bold">
+                        <div className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-linear-to-r from-purple-600 to-pink-600 text-white text-xs font-bold">
                           <Sparkles size={12} />
                           MOST POPULAR
                         </div>
@@ -114,7 +114,7 @@ export default function PackagesPage() {
                         whileTap={{ scale: 0.98 }}
                         className={`w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 ${
                           pkg.popular
-                            ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 shadow-lg shadow-purple-500/25'
+                            ? 'bg-linear-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/25'
                             : 'bg-white/10 border border-white/20 hover:bg-white/20'
                         }`}
                       >
@@ -143,7 +143,7 @@ export default function PackagesPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-semibold"
+                  className="px-8 py-3 rounded-full bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold"
                 >
                   Contact Us
                 </motion.button>

@@ -1,13 +1,13 @@
 "use client";
 
-import logo from "@/assets/logo/lb-films.png";
-import ActiveLink from "@/components/pages/common/ActiveLink";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { AnimatePresence, motion } from "framer-motion";
-import { LogIn, Menu, X } from "lucide-react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, LogIn } from "lucide-react";
+import logo from "@/assets/logo/lb-films.png";
+import { ThemeToggle } from "@/components/theme-toggle";
+import ActiveLink from "@/components/pages/common/ActiveLink";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -70,7 +70,7 @@ const Navbar = () => {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <ThemeToggle />
-            <Link href="/login">
+            <Link href="/auth/login">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -157,7 +157,7 @@ const Navbar = () => {
                   transition={{ delay: navLinks.length * 0.1 }}
                   className="pt-4 space-y-3"
                 >
-                  <Link href="/login" onClick={() => setIsOpen(false)}>
+                  <Link href="/auth/login" onClick={() => setIsOpen(false)}>
                     <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 text-muted-foreground border border-border rounded-xl hover:bg-muted transition-colors">
                       <LogIn size={18} />
                       <span>Login</span>

@@ -205,7 +205,7 @@ export default function AboutPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-semibold"
+                  className="px-8 py-3 rounded-full bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold"
                 >
                   Book a Session
                 </motion.button>
