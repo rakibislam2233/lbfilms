@@ -76,7 +76,7 @@ const Hero = () => {
   }, [isAutoPlaying, nextSlide]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Background Images with Parallax */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -135,7 +135,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted backdrop-blur-sm border border-border mb-6"
             >
               <Sparkles size={16} className="text-purple-400" />
               <span className="text-sm font-medium text-white/90">
@@ -153,7 +153,7 @@ const Hero = () => {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-2 tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-2 tracking-tight">
                 {heroContent[currentIndex].heading}
               </h1>
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
@@ -172,7 +172,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10"
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
             >
               {heroContent[currentIndex].description}
             </motion.p>

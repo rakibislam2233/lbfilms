@@ -33,7 +33,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-black pt-20 pb-8 overflow-hidden">
+    <footer className="relative bg-background pt-20 pb-8 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
@@ -58,7 +58,7 @@ const Footer = () => {
                 />
               </div>
             </Link>
-            <p className="text-gray-400 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
               Capturing your precious moments with professional photography and
               videography services in Bangladesh.
             </p>
@@ -69,7 +69,7 @@ const Footer = () => {
                   href="#"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 transition-all"
+                  className="w-10 h-10 rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-purple-500/50 hover:bg-purple-500/10 transition-all"
                 >
                   <Icon size={18} />
                 </motion.a>
@@ -79,7 +79,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+            <h3 className="text-foreground font-semibold mb-6 flex items-center gap-2">
               <span className="w-8 h-px bg-linear-to-r from-purple-500 to-transparent" />
               Quick Links
             </h3>
@@ -88,7 +88,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
+                    className="text-muted-foreground hover:text-foreground hover:translate-x-1 transition-all duration-200 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -99,14 +99,14 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+            <h3 className="text-foreground font-semibold mb-6 flex items-center gap-2">
               <span className="w-8 h-px bg-linear-to-r from-pink-500 to-transparent" />
               Services
             </h3>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service}>
-                  <span className="text-gray-400 hover:text-white transition-colors cursor-pointer">
+                  <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
                     {service}
                   </span>
                 </li>
@@ -116,7 +116,7 @@ const Footer = () => {
 
           {/* Contact & Newsletter */}
           <div>
-            <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
+            <h3 className="text-foreground font-semibold mb-6 flex items-center gap-2">
               <span className="w-8 h-px bg-linear-to-r from-cyan-500 to-transparent" />
               Contact Info
             </h3>
@@ -125,32 +125,32 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-purple-400" />
                 </div>
-                <span className="text-gray-400">+880 1234-567890</span>
+                <span className="text-muted-foreground">+880 1234-567890</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center shrink-0">
                   <Mail size={14} className="text-pink-400" />
                 </div>
-                <span className="text-gray-400">info@lbfilms.com</span>
+                <span className="text-muted-foreground">info@lbfilms.com</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-cyan-400" />
                 </div>
-                <span className="text-gray-400">Dhaka, Bangladesh</span>
+                <span className="text-muted-foreground">Dhaka, Bangladesh</span>
               </li>
             </ul>
 
             {/* Newsletter */}
             <div>
-              <p className="text-white text-sm font-medium mb-3">
+              <p className="text-foreground text-sm font-medium mb-3">
                 Subscribe to Newsletter
               </p>
               <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors text-sm"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-muted border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-purple-500/50 transition-colors text-sm"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -165,9 +165,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10">
+        <div className="pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">
+            <p className="text-muted-foreground text-sm">
               © 2025 LB Films. All Rights Reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-500">

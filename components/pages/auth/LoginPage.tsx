@@ -26,13 +26,13 @@ export default function LoginPage() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-        <p className="text-gray-400">Sign in to your account to continue</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
+        <p className="text-muted-foreground">Sign in to your account to continue</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Email
           </label>
           <div className="relative">
@@ -44,13 +44,13 @@ export default function LoginPage() {
               type="email"
               placeholder="Enter your email"
               required
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-purple-500/50 transition-colors"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Password
           </label>
           <div className="relative">
@@ -62,7 +62,7 @@ export default function LoginPage() {
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               required
-              className="w-full pl-12 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+              className="w-full pl-12 pr-12 py-3 rounded-xl bg-muted border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-purple-500/50 transition-colors"
             />
             <button
               type="button"
@@ -78,9 +78,9 @@ export default function LoginPage() {
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              className="w-4 h-4 rounded bg-white/5 border-white/20 text-purple-500 focus:ring-purple-500/50"
+              className="w-4 h-4 rounded bg-muted border-border text-purple-500 focus:ring-purple-500/50"
             />
-            <span className="text-sm text-gray-400">Remember me</span>
+            <span className="text-sm text-muted-foreground">Remember me</span>
           </label>
           <Link
             href="/auth/forgot-password"
@@ -112,17 +112,17 @@ export default function LoginPage() {
       <div className="mt-8">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/10" />
+            <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-black text-gray-500">
+            <span className="px-4 bg-background text-muted-foreground">
               Or continue with
             </span>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-4">
-          <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors">
+          <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-muted border border-border text-foreground hover:bg-muted transition-colors">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -143,7 +143,7 @@ export default function LoginPage() {
             </svg>
             Google
           </button>
-          <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors">
+          <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-muted border border-border text-foreground hover:bg-muted transition-colors">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
             </svg>
@@ -152,7 +152,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <p className="text-center text-gray-400 mt-8">
+      <p className="text-center text-muted-foreground mt-8">
         Don&apos;t have an account?{" "}
         <Link
           href="/auth/register"

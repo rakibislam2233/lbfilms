@@ -64,7 +64,7 @@ export default function GalleryPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black pt-24 pb-16">
+    <main className="min-h-screen bg-background pt-24 pb-16">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
@@ -78,19 +78,19 @@ export default function GalleryPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6">
               <Camera size={16} className="text-purple-400" />
               <span className="text-sm font-medium text-white/80">
                 Portfolio Gallery
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
               Our{" "}
               <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Creative Work
               </span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Explore our complete portfolio of photography work across
               weddings, events, portraits, and more
             </p>
@@ -112,7 +112,7 @@ export default function GalleryPage() {
                 className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.id
                     ? "bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25"
-                    : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                    : "bg-muted text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
                 }`}
               >
                 {cat.name}
@@ -150,10 +150,10 @@ export default function GalleryPage() {
                       <span className="inline-block px-3 py-1 rounded-full bg-linear-to-r from-purple-500/80 to-pink-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
                         {project.category}
                       </span>
-                      <h3 className="text-lg font-bold text-white mb-1">
+                      <h3 className="text-lg font-bold text-foreground mb-1">
                         {project.title}
                       </h3>
-                      <p className="text-gray-400 text-sm flex items-center gap-1">
+                      <p className="text-muted-foreground text-sm flex items-center gap-1">
                         <MapPin size={12} />
                         {project.location}
                       </p>
@@ -179,7 +179,7 @@ export default function GalleryPage() {
 
           {filteredProjects.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-gray-500">
+              <p className="text-muted-foreground">
                 No projects found in this category
               </p>
             </div>
@@ -199,9 +199,9 @@ export default function GalleryPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
             >
-              <X size={24} className="text-white" />
+              <X size={24} className="text-foreground" />
             </button>
 
             {selectedProject.images.length > 1 && (
@@ -211,18 +211,18 @@ export default function GalleryPage() {
                     e.stopPropagation();
                     prevImage();
                   }}
-                  className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  className="absolute left-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
                 >
-                  <ChevronLeft size={24} className="text-white" />
+                  <ChevronLeft size={24} className="text-foreground" />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     nextImage();
                   }}
-                  className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  className="absolute right-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
                 >
-                  <ChevronRight size={24} className="text-white" />
+                  <ChevronRight size={24} className="text-foreground" />
                 </button>
               </>
             )}
@@ -248,13 +248,13 @@ export default function GalleryPage() {
               className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black to-transparent"
             >
               <div className="max-w-5xl mx-auto">
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl font-bold text-foreground mb-2">
                   {selectedProject.title}
                 </h3>
-                <p className="text-gray-300 mb-3">
+                <p className="text-muted-foreground mb-3">
                   {selectedProject.description}
                 </p>
-                <div className="flex items-center gap-6 text-gray-400 text-sm">
+                <div className="flex items-center gap-6 text-muted-foreground text-sm">
                   <span className="flex items-center gap-2">
                     <MapPin size={16} />
                     {selectedProject.location}
@@ -264,7 +264,7 @@ export default function GalleryPage() {
                     {new Date(selectedProject.date).toLocaleDateString()}
                   </span>
                   {selectedProject.images.length > 1 && (
-                    <span className="text-white">
+                    <span className="text-foreground">
                       {currentImageIndex + 1} / {selectedProject.images.length}
                     </span>
                   )}

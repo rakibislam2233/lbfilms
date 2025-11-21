@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogIn } from "lucide-react";
 import logo from "@/assets/logo/lb-films.png";
-import { ThemeToggle } from "@/components/theme-toggle";
 import ActiveLink from "@/components/pages/common/ActiveLink";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { AnimatePresence, motion } from "framer-motion";
+import { LogIn, Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -70,7 +70,7 @@ const Navbar = () => {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <ThemeToggle />
-            <Link href="/auth/login">
+            <Link href="/login">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -100,7 +100,7 @@ const Navbar = () => {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
+            className="md:hidden relative p-2 rounded-full bg-muted backdrop-blur-sm border border-border"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -111,7 +111,7 @@ const Navbar = () => {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X size={24} className="text-white" />
+                  <X size={24} className="text-foreground" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -121,7 +121,7 @@ const Navbar = () => {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu size={24} className="text-white" />
+                  <Menu size={24} className="text-foreground" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -139,7 +139,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
-            <div className="bg-black/90 backdrop-blur-xl border-t border-white/10">
+            <div className="bg-background/90 backdrop-blur-xl border-t border-border">
               <div className="px-4 py-6 space-y-2">
                 {navLinks.map((link, index) => (
                   <motion.div
@@ -157,14 +157,14 @@ const Navbar = () => {
                   transition={{ delay: navLinks.length * 0.1 }}
                   className="pt-4 space-y-3"
                 >
-                  <Link href="/auth/login" onClick={() => setIsOpen(false)}>
-                    <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 text-gray-300 border border-white/20 rounded-xl hover:bg-white/5 transition-colors">
+                  <Link href="/login" onClick={() => setIsOpen(false)}>
+                    <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 text-muted-foreground border border-border rounded-xl hover:bg-muted transition-colors">
                       <LogIn size={18} />
                       <span>Login</span>
                     </button>
                   </Link>
                   <Link href="/booking" onClick={() => setIsOpen(false)}>
-                    <button className="w-full px-4 py-3 mt-3 text-white font-semibold rounded-xl bg-linear-to-r from-purple-600 to-pink-600">
+                    <button className="w-full px-4 py-3 mt-3 text-foreground font-semibold rounded-xl bg-linear-to-r from-purple-600 to-pink-600">
                       Book Now
                     </button>
                   </Link>

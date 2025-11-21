@@ -56,19 +56,19 @@ const VideoShowcase = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6">
             <Film size={16} className="text-pink-400" />
             <span className="text-sm font-medium text-white/80">
               Video Portfolio
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Cinematic{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Video Work
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Watch our stunning cinematic films capturing the most precious
             moments of life
           </p>
@@ -90,7 +90,7 @@ const VideoShowcase = () => {
               className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeFilter === cat.id
                   ? "bg-linear-to-r from-purple-600  to-pink-600 text-white shadow-lg shadow-pink-500/25"
-                  : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                  : "bg-muted text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
               }`}
             >
               {cat.name}
@@ -150,10 +150,10 @@ const VideoShowcase = () => {
 
                 {/* Info */}
                 <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
+                  <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">
                     {video.title}
                   </h3>
-                  <div className="flex items-center justify-between text-gray-300 text-sm">
+                  <div className="flex items-center justify-between text-muted-foreground text-sm">
                     <span className="flex items-center gap-1">
                       <Eye size={14} />
                       {formatViews(video.views)} views
@@ -196,7 +196,7 @@ const VideoShowcase = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-3 cursor-pointer rounded-full border border-white/20 text-white hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3 cursor-pointer rounded-full border border-border text-foreground hover:bg-muted transition-colors"
             >
               View All Videos
               <motion.span
@@ -221,9 +221,9 @@ const VideoShowcase = () => {
         >
           <button
             onClick={() => setPlayingVideo(null)}
-            className="absolute top-4 right-4 z-50 p-3 cursor-pointer rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="absolute top-4 right-4 z-50 p-3 cursor-pointer rounded-full bg-muted hover:bg-muted transition-colors"
           >
-            <X size={24} className="text-white" />
+            <X size={24} className="text-foreground" />
           </button>
 
           <div
@@ -231,11 +231,11 @@ const VideoShowcase = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Placeholder for video - in production this would be an actual video player */}
-            <div className="w-full h-full bg-gray-900 flex items-center justify-center">
+            <div className="w-full h-full bg-background flex items-center justify-center">
               <div className="text-center">
-                <Film size={64} className="text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 text-lg">Video Player</p>
-                <p className="text-gray-500 text-sm mt-2">
+                <Film size={64} className="text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground text-lg">Video Player</p>
+                <p className="text-muted-foreground text-sm mt-2">
                   {playingVideo.title}
                 </p>
                 <p className="text-gray-600 text-xs mt-4">
@@ -247,10 +247,10 @@ const VideoShowcase = () => {
           </div>
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-foreground mb-2">
               {playingVideo.title}
             </h3>
-            <div className="flex items-center justify-center gap-4 text-gray-400 text-sm">
+            <div className="flex items-center justify-center gap-4 text-muted-foreground text-sm">
               <span>{playingVideo.duration}</span>
               <span>•</span>
               <span>{formatViews(playingVideo.views)} views</span>

@@ -33,20 +33,20 @@ const Packages = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6"
           >
             <Camera size={16} className="text-purple-400" />
             <span className="text-sm font-medium text-white/80">
               Photography Packages
             </span>
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Choose Your{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Perfect Package
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Professional photography packages tailored for every occasion. From
             intimate portraits to grand celebrations.
           </p>
@@ -86,7 +86,7 @@ const Packages = () => {
                   )}
 
                   {/* Package Title */}
-                  <h3 className="text-2xl font-bold text-white text-center mt-4 mb-4">
+                  <h3 className="text-2xl font-bold text-foreground text-center mt-4 mb-4">
                     {pkg.name}
                   </h3>
 
@@ -116,7 +116,7 @@ const Packages = () => {
                           initial={{ opacity: 0, x: -10 }}
                           animate={isInView ? { opacity: 1, x: 0 } : {}}
                           transition={{ delay: index * 0.1 + idx * 0.05 }}
-                          className="flex items-center gap-3 text-gray-300"
+                          className="flex items-center gap-3 text-muted-foreground"
                         >
                           <div className="shrink-0 w-5 h-5 rounded-full bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                             <Check size={12} className="text-white" />
@@ -128,11 +128,11 @@ const Packages = () => {
 
                     {/* Price */}
                     <div className="flex items-center justify-center mb-6">
-                      <div className="inline-flex items-baseline gap-1 px-6 py-1 rounded-full bg-linear-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 border border-white/10">
+                      <div className="inline-flex items-baseline gap-1 px-6 py-1 rounded-full bg-linear-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 border border-border">
                         <span className="text-xl font-bold bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
                           {pkg.price.toLocaleString()}
                         </span>
-                        <span className="text-gray-400 text-sm">TK</span>
+                        <span className="text-muted-foreground text-sm">TK</span>
                       </div>
                     </div>
                   </div>
@@ -145,10 +145,10 @@ const Packages = () => {
                         boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
                       }}
                       whileTap={{ scale: 0.98 }}
-                      className={`w-full cursor-pointer py-3.5 rounded-xl font-semibold text-white transition-all duration-300 ${
+                      className={`w-full cursor-pointer py-3.5 rounded-xl font-semibold text-foreground transition-all duration-300 ${
                         pkg.popular
                           ? "bg-linear-to-r from-purple-500 to-pink-500 "
-                          : "bg-white/10 border border-white/20 hover:bg-white/20"
+                          : "bg-muted border border-border hover:bg-muted"
                       }`}
                     >
                       Book Now
@@ -176,7 +176,7 @@ const Packages = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex cursor-pointer items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-white hover:bg-white/5 transition-colors"
+              className="inline-flex cursor-pointer items-center gap-2 px-8 py-3 rounded-full border border-border text-foreground hover:bg-muted transition-colors"
             >
               View All Packages
               <motion.span
