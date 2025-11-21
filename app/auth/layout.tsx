@@ -76,18 +76,16 @@ export default function AuthLayout({
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-8">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-10 h-10">
+            <Link href="/" className="flex items-center space-x-3 mb-6 h-16">
+              <div className="relative">
                 <Image
-                  src="/assets/logo/lb-films.png"
+                  src={logo}
                   alt="LB Films"
-                  fill
-                  className="object-contain"
+                  width={300}
+                  height={100}
+                  className="relative rounded-full"
                 />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                LB Films
-              </span>
             </Link>
           </div>
 

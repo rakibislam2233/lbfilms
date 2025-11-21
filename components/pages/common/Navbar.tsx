@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn } from "lucide-react";
 import logo from "@/assets/logo/lb-films.png";
-import { ThemeToggle } from "@/components/theme-toggle";
+// import { ThemeToggle } from "@/components/theme-toggle";
 import ActiveLink from "@/components/pages/common/ActiveLink";
 
 const navLinks = [
@@ -69,7 +69,7 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <Link href="/auth/login">
               <motion.button
                 whileHover={{ scale: 1.05 }}
