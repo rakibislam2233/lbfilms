@@ -15,6 +15,8 @@ import {
   Users,
   MessageCircle,
 } from "lucide-react";
+import Image from "next/image";
+import logo from "@/assets/logo/lb-films.png";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,14 +59,17 @@ const Sidebar = () => {
         }`}
       >
         <div className="p-6 border-b border-secondary-200">
-          <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-2 rounded-full">
-              <Camera className="h-6 w-6 text-white" />
+          <Link href="/" className="flex items-center space-x-3 mb-6 h-16">
+            <div className="relative">
+              <Image
+                src={logo}
+                alt="LB Films"
+                width={300}
+                height={100}
+                className="relative rounded-full"
+              />
             </div>
-            <span className="text-xl font-bold text-secondary-800">
-              LB <span className="text-primary-500">Films</span>
-            </span>
-          </div>
+          </Link>
         </div>
 
         <nav className="p-4">
