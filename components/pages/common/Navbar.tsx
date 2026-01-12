@@ -55,7 +55,7 @@ const Navbar = () => {
                 alt="LB Films"
                 width={300}
                 height={100}
-                className="relative rounded-full "
+                className="w-32 h-28 md:w-56 md:h-36 relative rounded-full "
               />
             </motion.div>
           </Link>
@@ -68,7 +68,7 @@ const Navbar = () => {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-3 shrink-0">
             {/* <ThemeToggle /> */}
             <Link href="/auth/login">
               <motion.button
@@ -87,7 +87,7 @@ const Navbar = () => {
                   boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-6 py-2.5 text-sm font-semibold text-white rounded-full overflow-hidden group cursor-pointer"
+                className="relative px-5 py-2.5 text-sm font-medium md:font-semibold text-white rounded-full overflow-hidden group cursor-pointer"
               >
                 <span className="absolute inset-0 bg-linear-to-r from-purple-600 to-pink-600" />
                 <span className="absolute inset-0 bg-linear-to-r from-purple-600 to-pink-600 blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
@@ -121,7 +121,7 @@ const Navbar = () => {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu size={24} className="text-foreground" />
+                  <Menu size={20} className="text-foreground" />
                 </motion.div>
               )}
             </AnimatePresence>
