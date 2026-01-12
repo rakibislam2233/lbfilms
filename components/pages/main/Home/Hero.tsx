@@ -250,7 +250,7 @@ const Hero = () => {
             className="group relative"
           >
             <div
-              className={`h-1 rounded-full transition-all duration-300 ${
+              className={`h-1 cursor-pointer rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? "w-12 bg-linear-to-r from-purple-600 to-pink-600"
                   : "w-6 bg-white/30 group-hover:bg-white/50"

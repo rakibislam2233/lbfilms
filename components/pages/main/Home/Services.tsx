@@ -88,7 +88,7 @@ const Services = () => {
             <Heart size={16} className="text-pink-400" />
             <span className="text-sm font-medium text-white/80">Why Choose Us</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             What Makes{' '}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               LB Films Special
@@ -114,7 +114,7 @@ const Services = () => {
                 className="group"
               >
                 <div
-                  className={`relative h-full p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl ${colors.glow}`}
+                  className={`relative h-full p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl cursor-pointer ${colors.glow}`}
                 >
                   {/* Icon */}
                   <div
@@ -126,9 +126,6 @@ const Services = () => {
                   {/* Content */}
                   <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
                   <p className="text-gray-400 leading-relaxed">{service.description}</p>
-
-                  {/* Hover Decoration */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-linear-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </motion.div>
             );
