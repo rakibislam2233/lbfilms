@@ -93,7 +93,7 @@ const Gallery = () => {
               Our Portfolio
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Recent{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Projects
@@ -158,7 +158,7 @@ const Gallery = () => {
 
                   {/* Content */}
                   <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="inline-block px-3 py-1 rounded-full bg-linear-to-r from-purple-500/80 to-cyan-500/80 text-white text-xs font-medium mb-2 w-fit capitalize">
+                    <span className="inline-block px-3 py-1 rounded-full bg-linear-to-r from-purple-500  to-pink-500 text-white text-xs font-medium mb-2 w-fit capitalize">
                       {project.category}
                     </span>
                     <h3 className="text-xl font-bold text-foreground mb-2">
@@ -210,7 +210,7 @@ const Gallery = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-border text-foreground hover:bg-muted transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3 text-sm md:text-base rounded-full border border-border text-foreground hover:bg-muted transition-colors"
             >
               View Full Gallery
               <motion.span
@@ -237,20 +237,20 @@ const Gallery = () => {
             {/* Close Button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
+              className="absolute top-4 cursor-pointer right-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
             >
               <X size={24} className="text-foreground" />
             </button>
 
             {/* Navigation */}
-            {selectedProject.images.length > 1 && (
+            {selectedProject?.images?.length > 1 && (
               <>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     prevImage();
                   }}
-                  className="absolute left-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
+                  className="absolute left-4 z-50 p-3 cursor-pointer rounded-full bg-muted hover:bg-muted transition-colors"
                 >
                   <ChevronLeft size={24} className="text-foreground" />
                 </button>
@@ -259,7 +259,7 @@ const Gallery = () => {
                     e.stopPropagation();
                     nextImage();
                   }}
-                  className="absolute right-4 z-50 p-3 rounded-full bg-muted hover:bg-muted transition-colors"
+                  className="absolute right-4 z-50 p-3 cursor-pointer rounded-full bg-muted hover:bg-muted transition-colors"
                 >
                   <ChevronRight size={24} className="text-foreground" />
                 </button>
@@ -276,8 +276,8 @@ const Gallery = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={selectedProject.images[currentImageIndex]}
-                alt={selectedProject.title}
+                src={selectedProject?.images[currentImageIndex]}
+                alt={selectedProject?.title}
                 fill
                 className="object-contain"
               />
@@ -294,7 +294,7 @@ const Gallery = () => {
                   {selectedProject.title}
                 </h3>
                 <p className="text-muted-foreground mb-3">
-                  {selectedProject.description}
+                  {selectedProject?.description}
                 </p>
                 <div className="flex items-center gap-6 text-muted-foreground text-sm">
                   <span className="flex items-center gap-2">
