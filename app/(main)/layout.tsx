@@ -1,6 +1,5 @@
 import Footer from "@/components/pages/common/Footer";
 import Navbar from "@/components/pages/common/Navbar";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
 import type { Metadata } from "next";
 import React from "react";
 
@@ -33,7 +32,6 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <Navbar />
       {children}
       <Footer />
-      <WhatsAppWidget />
     </main>
   );
 };

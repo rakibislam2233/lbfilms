@@ -40,7 +40,7 @@ const Packages = () => {
               Photography Packages
             </span>
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Choose Your{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Perfect Package
@@ -86,13 +86,13 @@ const Packages = () => {
                   )}
 
                   {/* Package Title */}
-                  <h3 className="text-2xl font-bold text-foreground text-center mt-4 mb-4">
+                  <h3 className="text-base md:text-xl font-bold text-foreground text-center mt-4 mb-4">
                     {pkg.name}
                   </h3>
 
                   {/* Image with Gradient Border */}
                   <div className="relative mb-6 rounded-2xl overflow-hidden p-0.5 bg-linear-to-br from-purple-500/50 via-pink-500/50 to-cyan-500/50">
-                    <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
+                    <div className="relative aspect-4/2 rounded-2xl overflow-hidden">
                       <Image
                         src={pkg.image}
                         alt={pkg.name}
@@ -118,8 +118,8 @@ const Packages = () => {
                           transition={{ delay: index * 0.1 + idx * 0.05 }}
                           className="flex items-center gap-3 text-muted-foreground"
                         >
-                          <div className="shrink-0 w-5 h-5 rounded-full bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                            <Check size={12} className="text-white" />
+                          <div className="shrink-0 size-4 rounded-full bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                            <Check size={10} className="text-white" />
                           </div>
                           <span className="text-sm">{feature}</span>
                         </motion.li>
@@ -132,7 +132,9 @@ const Packages = () => {
                         <span className="text-xl font-bold bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
                           {pkg.price.toLocaleString()}
                         </span>
-                        <span className="text-muted-foreground text-sm">TK</span>
+                        <span className="text-muted-foreground text-sm">
+                          TK
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -140,10 +142,6 @@ const Packages = () => {
                   {/* Book Now Button */}
                   <Link href={`/booking?package=${pkg.id}`}>
                     <motion.button
-                      whileHover={{
-                        scale: 1.02,
-                        boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
-                      }}
                       whileTap={{ scale: 0.98 }}
                       className={`w-full cursor-pointer py-3.5 rounded-xl font-semibold text-foreground transition-all duration-300 ${
                         pkg.popular

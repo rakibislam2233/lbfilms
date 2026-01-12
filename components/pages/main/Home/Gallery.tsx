@@ -315,7 +315,7 @@ const Gallery = () => {
             </motion.div>
 
             {/* Thumbnail Strip */}
-            {selectedProject.images.length > 1 && (
+            {selectedProject?.images.length > 1 && (
               <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-2">
                 {selectedProject.images.map((img, idx) => (
                   <button
@@ -324,7 +324,7 @@ const Gallery = () => {
                       e.stopPropagation();
                       setCurrentImageIndex(idx);
                     }}
-                    className={`relative w-16 h-12 rounded-lg overflow-hidden transition-all ${
+                    className={`relative w-16 h-12  cursor-pointer rounded-lg overflow-hidden transition-all ${
                       idx === currentImageIndex
                         ? "ring-2 ring-purple-500 scale-110"
                         : "opacity-50 hover:opacity-100"

@@ -1,5 +1,4 @@
 "use client";
-
 import { videos } from "@/data";
 import { motion, useInView } from "framer-motion";
 import { Clock, Eye, Film, Play, X } from "lucide-react";
@@ -62,7 +61,7 @@ const VideoShowcase = () => {
               Video Portfolio
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Cinematic{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Video Work
@@ -87,10 +86,10 @@ const VideoShowcase = () => {
               onClick={() => setActiveFilter(cat.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-2 rounded-full cursor-pointer text-sm font-medium transition-all duration-300 ${
                 activeFilter === cat.id
-                  ? "bg-linear-to-r from-purple-600  to-pink-600 text-white shadow-lg shadow-pink-500/25"
-                  : "bg-muted text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
+                  ? "bg-linear-to-r from-purple-600  to-pink-600 text-white"
+                  : "bg-muted text-muted-foreground  hover:bg-muted hover:text-foreground"
               }`}
             >
               {cat.name}
@@ -233,7 +232,10 @@ const VideoShowcase = () => {
             {/* Placeholder for video - in production this would be an actual video player */}
             <div className="w-full h-full bg-background flex items-center justify-center">
               <div className="text-center">
-                <Film size={64} className="text-muted-foreground mx-auto mb-4" />
+                <Film
+                  size={64}
+                  className="text-muted-foreground mx-auto mb-4"
+                />
                 <p className="text-muted-foreground text-lg">Video Player</p>
                 <p className="text-muted-foreground text-sm mt-2">
                   {playingVideo.title}

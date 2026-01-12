@@ -109,10 +109,10 @@ export default function GalleryPage() {
                 onClick={() => setActiveFilter(cat.id)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-6 py-2 cursor-pointer rounded-full text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.id
-                    ? "bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25"
-                    : "bg-muted text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
+                    ? "bg-linear-to-r from-purple-600 to-pink-600 text-white"
+                    : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
                 {cat.name}
