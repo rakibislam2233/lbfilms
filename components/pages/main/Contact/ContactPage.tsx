@@ -1,5 +1,17 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { contactSchema, type ContactFormData } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
@@ -13,13 +25,31 @@ import {
   Youtube,
 } from "lucide-react";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setTimeout(() => setSubmitted(true), 1000);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      serviceType: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    console.log("Contact data:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSubmitted(true);
   };
 
   return (
@@ -75,7 +105,7 @@ const ContactPage = () => {
                 </div>
               ) : (
                 <form
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmit(onSubmit)}
                   className="p-8 rounded-3xl bg-white/5 border border-white/10"
                 >
                   <h3 className="text-2xl font-bold text-white mb-6">
@@ -83,45 +113,107 @@ const ContactPage = () => {
                   </h3>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        required
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Your Email"
-                        required
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                      <div>
+                        <Label htmlFor="name">Your Name *</Label>
+                        <Input
+                          id="name"
+                          type="text"
+                          placeholder="Your Name"
+                          className="bg-white/5 border-white/10 text-white"
+                          {...register("name")}
+                        />
+                        {errors.name && (
+                          <p className="text-red-400 text-sm mt-1">
+                            {errors.name.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Your Email *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="Your Email"
+                          className="bg-white/5 border-white/10 text-white"
+                          {...register("email")}
+                        />
+                        {errors.email && (
+                          <p className="text-red-400 text-sm mt-1">
+                            {errors.email.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="Phone Number"
+                        className="bg-white/5 border-white/10 text-white"
+                        {...register("phone")}
                       />
                     </div>
-                    <input
-                      type="tel"
-                      placeholder="Phone Number"
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                    />
-                    <select className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 focus:outline-none focus:border-purple-500/50">
-                      <option value="">Select Service Type</option>
-                      <option value="wedding">Wedding Photography</option>
-                      <option value="corporate">Corporate Event</option>
-                      <option value="portrait">Portrait Session</option>
-                      <option value="product">Product Photography</option>
-                      <option value="other">Other</option>
-                    </select>
-                    <textarea
-                      placeholder="Your Message"
-                      rows={5}
-                      required
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
-                    />
+                    <div>
+                      <Label htmlFor="serviceType">Service Type</Label>
+                      <Controller
+                        name="serviceType"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
+                              <SelectValue placeholder="Select Service Type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="wedding">
+                                Wedding Photography
+                              </SelectItem>
+                              <SelectItem value="corporate">
+                                Corporate Event
+                              </SelectItem>
+                              <SelectItem value="portrait">
+                                Portrait Session
+                              </SelectItem>
+                              <SelectItem value="product">
+                                Product Photography
+                              </SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="message">Your Message *</Label>
+                      <Textarea
+                        id="message"
+                        placeholder="Your Message"
+                        className="bg-white/5 border-white/10 text-white min-h-[140px]"
+                        {...register("message")}
+                      />
+                      {errors.message && (
+                        <p className="text-red-400 text-sm mt-1">
+                          {errors.message.message}
+                        </p>
+                      )}
+                    </div>
                     <motion.button
                       type="submit"
+                      disabled={isSubmitting}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full py-4 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2"
+                      className="w-full py-4 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
                     >
-                      <Send size={18} />
-                      Send Message
+                      {isSubmitting ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <Send size={18} />
+                          Send Message
+                        </>
+                      )}
                     </motion.button>
                   </div>
                 </form>

@@ -1,21 +1,36 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordFormData,
+} from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function ForgotPasswordPage() {
-  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSent(true);
-    }, 1500);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    console.log("Forgot password data:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setSent(true);
   };
 
   if (sent) {
@@ -53,32 +68,34 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Email
-          </label>
+          <Label htmlFor="email">Email</Label>
           <div className="relative">
             <Mail
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10"
             />
-            <input
+            <Input
+              id="email"
               type="email"
               placeholder="Enter your email"
-              required
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+              className="pl-12 bg-white/5 border-white/10 text-white"
+              {...register("email")}
             />
           </div>
+          {errors.email && (
+            <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+          )}
         </div>
 
         <motion.button
           type="submit"
-          disabled={loading}
+          disabled={isSubmitting}
           whileTap={{ scale: 0.98 }}
           className="w-full py-3 rounded-xl cursor-pointer bg-linear-to-r  from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
         >
-          {loading ? (
+          {isSubmitting ? (
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
             <>

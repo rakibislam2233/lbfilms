@@ -2,23 +2,35 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { editProfileSchema, type EditProfileFormData } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { ArrowLeft, Camera, Mail, MapPin, Phone, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      router.push("/dashboard/profile");
-    }, 1500);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditProfileFormData>({
+    resolver: zodResolver(editProfileSchema),
+    defaultValues: {
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "+880 1234-567890",
+      address: "Dhaka, Bangladesh",
+    },
+  });
+
+  const onSubmit = async (data: EditProfileFormData) => {
+    console.log("Profile data:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    router.push("/dashboard/profile");
   };
 
   return (
@@ -32,7 +44,7 @@ export default function EditProfilePage() {
 
       <h1 className="text-3xl font-bold text-white">Edit Profile</h1>
 
-      <form onSubmit={handleSubmit} className="max-w-2xl space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl space-y-6">
         {/* Avatar */}
         <div className="flex items-center gap-6">
           <div className="relative">
@@ -63,10 +75,13 @@ export default function EditProfilePage() {
               <Input
                 id="name"
                 type="text"
-                defaultValue="John Doe"
                 className="pl-12 bg-white/5 border-white/10 text-white"
+                {...register("name")}
               />
             </div>
+            {errors.name && (
+              <p className="text-red-400 text-sm">{errors.name.message}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -78,10 +93,13 @@ export default function EditProfilePage() {
               <Input
                 id="email"
                 type="email"
-                defaultValue="john@example.com"
                 className="pl-12 bg-white/5 border-white/10 text-white"
+                {...register("email")}
               />
             </div>
+            {errors.email && (
+              <p className="text-red-400 text-sm">{errors.email.message}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Phone</Label>
@@ -93,8 +111,8 @@ export default function EditProfilePage() {
               <Input
                 id="phone"
                 type="tel"
-                defaultValue="+880 1234-567890"
                 className="pl-12 bg-white/5 border-white/10 text-white"
+                {...register("phone")}
               />
             </div>
           </div>
@@ -108,8 +126,8 @@ export default function EditProfilePage() {
               <Input
                 id="address"
                 type="text"
-                defaultValue="Dhaka, Bangladesh"
                 className="pl-12 bg-white/5 border-white/10 text-white"
+                {...register("address")}
               />
             </div>
           </div>
@@ -118,10 +136,10 @@ export default function EditProfilePage() {
         <div className="flex gap-3">
           <motion.button
             type="submit"
-            disabled={loading}
+            disabled={isSubmitting}
             className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium disabled:opacity-50"
           >
-            {loading ? "Saving..." : "Save Changes"}
+            {isSubmitting ? "Saving..." : "Save Changes"}
           </motion.button>
           <Link href="/dashboard/profile">
             <button

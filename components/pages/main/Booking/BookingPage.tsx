@@ -1,6 +1,18 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { getPackageById, packages } from "@/data";
+import { bookingSchema, type BookingFormData } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -12,18 +24,41 @@ import {
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 const BookingPage = () => {
   const searchParams = useSearchParams();
   const packageId = searchParams.get("package");
-  const [selectedPackage, setSelectedPackage] = useState(packageId || "");
   const [submitted, setSubmitted] = useState(false);
 
-  const selectedPkg = selectedPackage ? getPackageById(selectedPackage) : null;
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<BookingFormData>({
+    resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      packageId: packageId || "",
+      eventDate: "",
+      eventLocation: "",
+      notes: "",
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setTimeout(() => setSubmitted(true), 1500);
+  const selectedPackageId = watch("packageId");
+  const selectedPkg = selectedPackageId
+    ? getPackageById(selectedPackageId)
+    : null;
+
+  const onSubmit = async (data: BookingFormData) => {
+    console.log("Booking data:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setSubmitted(true);
   };
 
   if (submitted) {
@@ -87,7 +122,7 @@ const BookingPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -97,24 +132,51 @@ const BookingPage = () => {
                   <User size={18} className="text-purple-400" />
                   Personal Information
                 </h3>
-                <input
-                  type="text"
-                  placeholder="Full Name *"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address *"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number *"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                />
+                <div>
+                  <Label htmlFor="fullName">Full Name *</Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="Full Name"
+                    className="bg-white/5 border-white/10 text-white"
+                    {...register("fullName")}
+                  />
+                  {errors.fullName && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.fullName.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Email Address"
+                    className="bg-white/5 border-white/10 text-white"
+                    {...register("email")}
+                  />
+                  {errors.email && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="Phone Number"
+                    className="bg-white/5 border-white/10 text-white"
+                    {...register("phone")}
+                  />
+                  {errors.phone && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.phone.message}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Event Details */}
@@ -123,32 +185,64 @@ const BookingPage = () => {
                   <Camera size={18} className="text-pink-400" />
                   Event Details
                 </h3>
-                <select
-                  value={selectedPackage}
-                  onChange={(e) => setSelectedPackage(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
-                >
-                  <option value="" className="bg-gray-900">
-                    Select Package *
-                  </option>
-                  {packages.map((pkg) => (
-                    <option key={pkg.id} value={pkg.id} className="bg-gray-900">
-                      {pkg.name} - {pkg.price.toLocaleString()} TK
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="date"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
-                />
-                <input
-                  type="text"
-                  placeholder="Event Location *"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                />
+                <div>
+                  <Label htmlFor="packageId">Select Package *</Label>
+                  <Controller
+                    name="packageId"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
+                          <SelectValue placeholder="Select Package" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {packages.map((pkg) => (
+                            <SelectItem key={pkg.id} value={pkg.id}>
+                              {pkg.name} - {pkg.price.toLocaleString()} TK
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  {errors.packageId && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.packageId.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="eventDate">Event Date *</Label>
+                  <Input
+                    id="eventDate"
+                    type="date"
+                    className="bg-white/5 border-white/10 text-white"
+                    {...register("eventDate")}
+                  />
+                  {errors.eventDate && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.eventDate.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="eventLocation">Event Location *</Label>
+                  <Input
+                    id="eventLocation"
+                    type="text"
+                    placeholder="Event Location"
+                    className="bg-white/5 border-white/10 text-white"
+                    {...register("eventLocation")}
+                  />
+                  {errors.eventLocation && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.eventLocation.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -184,24 +278,29 @@ const BookingPage = () => {
                 <MessageSquare size={18} className="text-cyan-400" />
                 Additional Notes
               </h3>
-              <textarea
+              <Textarea
                 placeholder="Tell us more about your event, special requirements, or any questions..."
-                rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="bg-white/5 border-white/10 text-white"
+                {...register("notes")}
               />
             </div>
 
             {/* Submit Button */}
             <motion.button
               type="submit"
+              disabled={isSubmitting}
               whileHover={{
                 scale: 1.02,
                 boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
               }}
               whileTap={{ scale: 0.98 }}
-              className="w-full mt-8 py-4 rounded-xl bg-linear-to-r from-purple-600  to-pink-600 text-white font-semibold text-lg"
+              className="w-full mt-8 py-4 rounded-xl bg-linear-to-r from-purple-600  to-pink-600 text-white font-semibold text-lg disabled:opacity-50"
             >
-              Confirm Booking
+              {isSubmitting ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
+              ) : (
+                "Confirm Booking"
+              )}
             </motion.button>
 
             <p className="text-center text-gray-500 text-sm mt-4">

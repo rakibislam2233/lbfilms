@@ -1,23 +1,43 @@
 "use client";
 
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { registerSchema, type RegisterFormData } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      router.push("/auth/verify-otp");
-    }, 1500);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      agreeToTerms: false,
+    },
+  });
+
+  const agreeToTerms = watch("agreeToTerms");
+
+  const onSubmit = async (data: RegisterFormData) => {
+    console.log("Register data:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    router.push("/auth/verify-otp");
   };
 
   return (
@@ -29,75 +49,86 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Full Name
-          </label>
+          <Label htmlFor="name">Full Name</Label>
           <div className="relative">
             <User
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10"
             />
-            <input
+            <Input
+              id="name"
               type="text"
               placeholder="Enter your name"
-              required
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+              className="pl-12 bg-white/5 border-white/10 text-white"
+              {...register("name")}
             />
           </div>
+          {errors.name && (
+            <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Email
-          </label>
+          <Label htmlFor="email">Email</Label>
           <div className="relative">
             <Mail
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10"
             />
-            <input
+            <Input
+              id="email"
               type="email"
               placeholder="Enter your email"
-              required
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+              className="pl-12 bg-white/5 border-white/10 text-white"
+              {...register("email")}
             />
           </div>
+          {errors.email && (
+            <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Password
-          </label>
+          <Label htmlFor="password">Password</Label>
           <div className="relative">
             <Lock
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10"
             />
-            <input
+            <Input
+              id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Create a password"
-              required
-              className="w-full pl-12 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+              className="pl-12 pr-12 bg-white/5 border-white/10 text-white"
+              {...register("password")}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 z-10"
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+          {errors.password && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            required
-            className="w-4 h-4 mt-1 rounded bg-white/5 border-white/20 text-purple-500"
+        <div className="flex items-start gap-2">
+          <Checkbox
+            id="agreeToTerms"
+            checked={agreeToTerms}
+            onCheckedChange={(checked) =>
+              setValue("agreeToTerms", checked === true)
+            }
+            className="mt-1"
           />
-          <span className="text-sm text-gray-400">
+          <Label htmlFor="agreeToTerms" className="mb-0 cursor-pointer">
             I agree to the{" "}
             <Link href="#" className="text-purple-400 hover:underline">
               Terms
@@ -106,16 +137,19 @@ export default function RegisterPage() {
             <Link href="#" className="text-purple-400 hover:underline">
               Privacy Policy
             </Link>
-          </span>
-        </label>
+          </Label>
+        </div>
+        {errors.agreeToTerms && (
+          <p className="text-red-400 text-sm">{errors.agreeToTerms.message}</p>
+        )}
 
         <motion.button
           type="submit"
-          disabled={loading}
+          disabled={isSubmitting}
           whileTap={{ scale: 0.98 }}
           className="w-full py-3 rounded-xl cursor-pointer bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
         >
-          {loading ? (
+          {isSubmitting ? (
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
             <>
