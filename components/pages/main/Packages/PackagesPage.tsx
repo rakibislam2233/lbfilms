@@ -20,7 +20,7 @@ const PackagesPage = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="mt-16 text-center"
+        className="w-full max-w-7xl mx-auto mt-16 text-center"
       >
         <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
           <h3 className="text-2xl font-bold text-white mb-4">

@@ -68,24 +68,6 @@ export default function RegisterPage() {
 
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-2">
-            Phone
-          </label>
-          <div className="relative">
-            <Phone
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
-            />
-            <input
-              type="tel"
-              placeholder="Enter your phone"
-              required
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
             Password
           </label>
           <div className="relative">

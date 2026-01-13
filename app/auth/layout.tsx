@@ -60,14 +60,6 @@ export default function AuthLayout({
               cherished memories through stunning photography and videography.
             </motion.p>
           </div>
-
-          <div className="flex items-center gap-8 text-gray-400 text-sm">
-            <span>500+ Happy Clients</span>
-            <span>•</span>
-            <span>1000+ Projects</span>
-            <span>•</span>
-            <span>5.0 Rating</span>
-          </div>
         </div>
       </div>
 
