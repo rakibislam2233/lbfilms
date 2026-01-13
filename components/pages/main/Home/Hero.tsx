@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Sparkles, Video } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
@@ -137,7 +137,7 @@ const Hero = () => {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted backdrop-blur-sm border border-border mb-6"
             >
-              <Sparkles size={16} className="text-purple-400" />
+              <Video size={16} className="text-purple-400" />
               <span className="text-sm font-medium text-white/90">
                 {heroContent[currentIndex].subtitle}
               </span>

@@ -141,20 +141,6 @@ const Contact = () => {
                 </motion.a>
               ))}
             </div>
-
-            {/* WhatsApp CTA */}
-            <motion.a
-              href="https://wa.me/8801234567890"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.8 }}
-              className="mt-6 flex items-center justify-center gap-3 w-full py-4 rounded-2xl border border-border text-foreground font-semibold"
-            >
-              <MessageCircle size={20} />
-              Chat on WhatsApp
-            </motion.a>
           </motion.div>
 
           {/* Map */}

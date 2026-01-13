@@ -1,7 +1,4 @@
 'use client';
-
-'use client';
-
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Facebook, Instagram, Mail, Camera } from 'lucide-react';
