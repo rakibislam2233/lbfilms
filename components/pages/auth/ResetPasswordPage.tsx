@@ -34,10 +34,7 @@ export default function ResetPasswordPage() {
           Your password has been successfully updated.
         </p>
         <Link href="/auth/login">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            className="px-8 py-3 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold"
-          >
+          <motion.button className="px-8 py-3 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold">
             Sign In Now
           </motion.button>
         </Link>
@@ -102,7 +99,6 @@ export default function ResetPasswordPage() {
         <motion.button
           type="submit"
           disabled={loading}
-          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full py-3 rounded-xl cursor-pointer bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
         >

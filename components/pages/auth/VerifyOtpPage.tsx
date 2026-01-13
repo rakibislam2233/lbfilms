@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { ArrowRight, RotateCcw } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { motion } from "framer-motion";
+import { ArrowRight, RotateCcw } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -21,7 +21,7 @@ export default function VerifyOtpPage() {
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
@@ -31,7 +31,7 @@ export default function VerifyOtpPage() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      router.push('/dashboard');
+      router.push("/dashboard");
     }, 1500);
   };
 
@@ -43,7 +43,8 @@ export default function VerifyOtpPage() {
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Verify Email</h1>
         <p className="text-gray-400">
-          We've sent a 6-digit code to <span className="text-white">demo@example.com</span>
+          We've sent a 6-digit code to{" "}
+          <span className="text-white">demo@example.com</span>
         </p>
       </div>
 
@@ -52,7 +53,9 @@ export default function VerifyOtpPage() {
           {otp.map((digit, index) => (
             <input
               key={index}
-              ref={(el) => { inputRefs.current[index] = el; }}
+              ref={(el) => {
+                inputRefs.current[index] = el;
+              }}
               type="text"
               maxLength={1}
               value={digit}
@@ -66,7 +69,6 @@ export default function VerifyOtpPage() {
         <motion.button
           type="submit"
           disabled={loading || otp.some((d) => !d)}
-          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full py-3 rounded-xl cursor-pointer bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
         >
@@ -81,14 +83,22 @@ export default function VerifyOtpPage() {
 
         <div className="text-center">
           <p className="text-gray-400 text-sm mb-2">Didn't receive the code?</p>
-          <button type="button" className="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1 mx-auto">
+          <button
+            type="button"
+            className="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1 mx-auto"
+          >
             <RotateCcw size={14} /> Resend Code
           </button>
         </div>
       </form>
 
       <p className="text-center text-gray-500 text-sm mt-8">
-        <Link href="/auth/login" className="text-purple-400 hover:text-purple-300">Back to Login</Link>
+        <Link
+          href="/auth/login"
+          className="text-purple-400 hover:text-purple-300"
+        >
+          Back to Login
+        </Link>
       </p>
     </motion.div>
   );

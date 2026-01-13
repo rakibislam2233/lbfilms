@@ -1,14 +1,23 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Film, Plus, Edit, Trash2, Search, Play, Eye, Clock } from 'lucide-react';
-import Image from 'next/image';
-import { videos as demoVideos } from '@/data';
+import { videos as demoVideos } from "@/data";
+import { motion } from "framer-motion";
+import {
+  Clock,
+  Edit,
+  Eye,
+  Film,
+  Play,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function AdminVideosPage() {
   const [videoList] = useState(demoVideos);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredVideos = videoList.filter((video) =>
     video.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,13 +32,19 @@ export default function AdminVideosPage() {
           </h1>
           <p className="text-gray-400">Manage your video portfolio</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
+        >
           <Plus size={18} /> Add Video
         </motion.button>
       </div>
 
       <div className="relative max-w-md">
-        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+        <Search
+          size={18}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+        />
         <input
           type="text"
           placeholder="Search videos..."
@@ -49,7 +64,12 @@ export default function AdminVideosPage() {
             className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden"
           >
             <div className="relative aspect-video">
-              <Image src={video.thumbnail} alt={video.title} fill className="object-cover" />
+              <Image
+                src={video.thumbnail}
+                alt={video.title}
+                fill
+                className="object-cover"
+              />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
                   <Play size={20} className="text-white ml-1" />
@@ -63,9 +83,13 @@ export default function AdminVideosPage() {
               </div>
             </div>
             <div className="p-4">
-              <h3 className="text-white font-bold mb-2 line-clamp-1">{video.title}</h3>
+              <h3 className="text-white font-bold mb-2 line-clamp-1">
+                {video.title}
+              </h3>
               <div className="flex items-center justify-between text-gray-500 text-sm mb-4">
-                <span className="flex items-center gap-1"><Eye size={14} /> {video.views.toLocaleString()}</span>
+                <span className="flex items-center gap-1">
+                  <Eye size={14} /> {video.views.toLocaleString()}
+                </span>
                 <span>{new Date(video.date).toLocaleDateString()}</span>
               </div>
               <div className="flex gap-2">

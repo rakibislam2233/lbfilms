@@ -1,21 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  MessageCircle,
-  Star,
-  Search,
-  Edit,
-  Trash2,
-  Filter,
-  Plus,
-  User,
-  Eye,
   Check,
-  X,
+  Edit,
+  Eye,
+  Filter,
   Mail,
+  MessageCircle,
+  Plus,
+  Search,
+  Star,
+  Trash2,
+  User,
+  X,
 } from "lucide-react";
+import { useState } from "react";
 
 const AdminTestimonialsPage = () => {
   const [testimonials, setTestimonials] = useState([
@@ -107,7 +107,7 @@ const AdminTestimonialsPage = () => {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold text-secondary-800 flex items-center gap-3">
-            <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-3 rounded-lg">
+            <div className="bg-linear-to-r from-primary-500 to-primary-700 p-3 rounded-lg">
               <MessageCircle className="h-7 w-7 text-white" />
             </div>
             Testimonials Management
@@ -117,7 +117,7 @@ const AdminTestimonialsPage = () => {
           </p>
         </div>
 
-        <button className="bg-gradient-to-r from-primary-500 to-primary-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-800 transition-all flex items-center gap-2">
+        <button className="bg-linear-to-r from-primary-500 to-primary-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-800 transition-all flex items-center gap-2">
           <Plus className="h-5 w-5" />
           Add Testimonial
         </button>

@@ -1,34 +1,42 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Youtube } from 'lucide-react';
-import { useRef } from 'react';
+import { motion, useInView } from "framer-motion";
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Youtube,
+} from "lucide-react";
+import { useRef } from "react";
 
 const Contact = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Phone',
-      value: '+880 1234-567890',
-      href: 'tel:+8801234567890',
-      color: 'purple',
+      title: "Phone",
+      value: "+880 1234-567890",
+      href: "tel:+8801234567890",
+      color: "purple",
     },
     {
       icon: Mail,
-      title: 'Email',
-      value: 'info@lbfilms.com',
-      href: 'mailto:info@lbfilms.com',
-      color: 'pink',
+      title: "Email",
+      value: "info@lbfilms.com",
+      href: "mailto:info@lbfilms.com",
+      color: "pink",
     },
     {
       icon: MapPin,
-      title: 'Location',
-      value: 'Dhaka, Bangladesh',
-      href: '#',
-      color: 'cyan',
+      title: "Location",
+      value: "Dhaka, Bangladesh",
+      href: "#",
+      color: "cyan",
     },
   ];
 
@@ -40,7 +48,10 @@ const Contact = () => {
         <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        ref={ref}
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,10 +61,12 @@ const Contact = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6">
             <MessageCircle size={16} className="text-purple-400" />
-            <span className="text-sm font-medium text-white/80">Get In Touch</span>
+            <span className="text-sm font-medium text-white/80">
+              Get In Touch
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Let's Create{' '}
+            Let's Create{" "}
             <span className="bg-linear-to-r from-purple-500  to-pink-500 bg-clip-text text-transparent">
               Magic Together
             </span>
@@ -75,17 +88,17 @@ const Contact = () => {
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
                 const bgColor =
-                  item.color === 'purple'
-                    ? 'bg-purple-500/10'
-                    : item.color === 'pink'
-                    ? 'bg-pink-500/10'
-                    : 'bg-cyan-500/10';
+                  item.color === "purple"
+                    ? "bg-purple-500/10"
+                    : item.color === "pink"
+                    ? "bg-pink-500/10"
+                    : "bg-cyan-500/10";
                 const iconColor =
-                  item.color === 'purple'
-                    ? 'text-purple-400'
-                    : item.color === 'pink'
-                    ? 'text-pink-400'
-                    : 'text-cyan-400';
+                  item.color === "purple"
+                    ? "text-purple-400"
+                    : item.color === "pink"
+                    ? "text-pink-400"
+                    : "text-cyan-400";
 
                 return (
                   <motion.a
@@ -96,7 +109,9 @@ const Contact = () => {
                     transition={{ delay: 0.3 + index * 0.1 }}
                     className="flex items-center gap-4 p-4 rounded-2xl bg-muted border border-border hover:bg-muted transition-colors group"
                   >
-                    <div className={`w-12 h-12 rounded-xl ${bgColor} flex items-center justify-center`}>
+                    <div
+                      className={`w-12 h-12 rounded-xl ${bgColor} flex items-center justify-center`}
+                    >
                       <Icon size={22} className={iconColor} />
                     </div>
                     <div>
@@ -135,7 +150,6 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.8 }}
-              whileHover={{ scale: 1.02 }}
               className="mt-6 flex items-center justify-center gap-3 w-full py-4 rounded-2xl border border-border text-foreground font-semibold"
             >
               <MessageCircle size={20} />
@@ -158,17 +172,21 @@ const Contact = () => {
                 loading="lazy"
               />
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent pointer-events-none" />
 
               {/* Location Badge */}
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-black/80 backdrop-blur-sm border border-border">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                     <MapPin size={18} className="text-white" />
                   </div>
                   <div>
-                    <p className="text-foreground font-medium">LB Films Studio</p>
-                    <p className="text-sm text-muted-foreground">Dhaka, Bangladesh</p>
+                    <p className="text-foreground font-medium">
+                      LB Films Studio
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Dhaka, Bangladesh
+                    </p>
                   </div>
                 </div>
               </div>

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Calendar, MapPin, Eye } from 'lucide-react';
-import Link from 'next/link';
-import { orders, packages } from '@/data';
+import { orders, packages } from "@/data";
+import { motion } from "framer-motion";
+import { Calendar, Eye, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default function OrdersPage() {
   // Helper to get package name
   const getPackageName = (packageId: string) => {
     const pkg = packages.find((p) => p.id === packageId);
-    return pkg?.name || 'Unknown Package';
+    return pkg?.name || "Unknown Package";
   };
 
   return (
@@ -28,12 +28,18 @@ export default function OrdersPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-lg font-bold text-white">{getPackageName(order.packageId)}</h3>
-                  <span className={`text-xs px-3 py-1 rounded-full ${
-                    order.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                    order.status === 'confirmed' ? 'bg-blue-500/20 text-blue-400' :
-                    'bg-yellow-500/20 text-yellow-400'
-                  }`}>
+                  <h3 className="text-lg font-bold text-white">
+                    {getPackageName(order.packageId)}
+                  </h3>
+                  <span
+                    className={`text-xs px-3 py-1 rounded-full ${
+                      order.status === "completed"
+                        ? "bg-green-500/20 text-green-400"
+                        : order.status === "confirmed"
+                        ? "bg-blue-500/20 text-blue-400"
+                        : "bg-yellow-500/20 text-yellow-400"
+                    }`}
+                  >
                     {order.status}
                   </span>
                 </div>
@@ -50,7 +56,7 @@ export default function OrdersPage() {
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <p className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  <p className="text-xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                     {order.totalPrice.toLocaleString()} TK
                   </p>
                   <p className="text-gray-500 text-xs">Order #{order.id}</p>

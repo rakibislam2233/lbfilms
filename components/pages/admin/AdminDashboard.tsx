@@ -1,29 +1,29 @@
 "use client";
 
+import { getStats, orders } from "@/data";
 import { motion } from "framer-motion";
 import {
+  ArrowDownRight,
+  ArrowUpRight,
   Camera,
   ShoppingBag,
-  Users,
   TrendingUp,
-  ArrowUpRight,
-  ArrowDownRight,
+  Users,
 } from "lucide-react";
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
-import { orders, getStats } from "@/data";
 
 const revenueData = [
   { month: "Jan", revenue: 45000 },
@@ -125,7 +125,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`p-6 rounded-2xl bg-gradient-to-br ${bgGradient} to-transparent border border-white/10`}
+              className={`p-6 rounded-2xl bg-linear-to-br ${bgGradient} to-transparent border border-white/10`}
             >
               <div className="flex items-center justify-between">
                 <Icon size={24} className={iconColor} />

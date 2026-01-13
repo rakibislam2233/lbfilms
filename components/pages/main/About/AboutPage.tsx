@@ -78,7 +78,7 @@ const AboutPage = () => {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
               </div>
             </motion.div>
 
@@ -89,7 +89,7 @@ const AboutPage = () => {
             >
               <h2 className="text-3xl font-bold text-white mb-6">
                 Passionate About{" "}
-                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   Visual Storytelling
                 </span>
               </h2>
@@ -194,7 +194,7 @@ const AboutPage = () => {
             transition={{ delay: 0.8 }}
             className="mt-20 text-center"
           >
-            <div className="p-8 rounded-3xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 border border-white/10">
+            <div className="p-8 rounded-3xl bg-linear-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 border border-white/10">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Ready to Create Something Beautiful?
               </h3>

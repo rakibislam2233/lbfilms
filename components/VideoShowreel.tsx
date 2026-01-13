@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Volume2, VolumeX } from 'lucide-react';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from "framer-motion";
+import { Play } from "lucide-react";
+import { useRef } from "react";
 
 const VideoShowreel = () => {
   const ref = useRef(null);
@@ -13,7 +12,7 @@ const VideoShowreel = () => {
 
   // Function to open YouTube video
   const openYouTubeVideo = () => {
-    window.open('https://www.youtube.com/watch?v=example_video_id', '_blank');
+    window.open("https://www.youtube.com/watch?v=example_video_id", "_blank");
   };
 
   return (
@@ -34,7 +33,7 @@ const VideoShowreel = () => {
         <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
           {/* Video placeholder */}
           <div
-            className="relative aspect-video md:aspect-video bg-gradient-to-br from-primary-900 to-secondary-800 flex items-center justify-center cursor-pointer"
+            className="relative aspect-video md:aspect-video bg-linear-to-br from-primary-900 to-secondary-800 flex items-center justify-center cursor-pointer"
             onClick={openYouTubeVideo}
           >
             <img
@@ -50,9 +49,13 @@ const VideoShowreel = () => {
           </div>
 
           {/* Video info overlay */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 md:p-8">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">LB Films Showreel</h3>
-            <p className="text-sm md:text-base text-secondary-300">A compilation of our best work</p>
+          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4 md:p-8">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">
+              LB Films Showreel
+            </h3>
+            <p className="text-sm md:text-base text-secondary-300">
+              A compilation of our best work
+            </p>
           </div>
         </div>
       </div>

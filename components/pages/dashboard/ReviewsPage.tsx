@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Star, Plus } from 'lucide-react';
-import { reviews } from '@/data';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { reviews } from "@/data";
+import { motion } from "framer-motion";
+import { Plus, Star } from "lucide-react";
+import { useState } from "react";
 
 export default function ReviewsPage() {
   const [showForm, setShowForm] = useState(false);
   const [rating, setRating] = useState(5);
-  const userReviews = reviews.filter((r) => r.userId === 'user-1');
+  const userReviews = reviews.filter((r) => r.userId === "user-1");
 
   return (
     <div className="space-y-6">
@@ -19,35 +19,62 @@ export default function ReviewsPage() {
         <motion.button
           onClick={() => setShowForm(!showForm)}
           whileHover={{ scale: 1.05 }}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium flex items-center gap-2"
+          className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white text-sm font-medium flex items-center gap-2"
         >
           <Plus size={18} /> Write Review
         </motion.button>
       </div>
 
       {showForm && (
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-6 rounded-2xl bg-white/5 border border-white/10"
+        >
           <h3 className="text-lg font-bold text-white mb-4">Write a Review</h3>
           <form className="space-y-4">
             <div>
               <label className="block text-sm text-gray-400 mb-2">Rating</label>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <button key={star} type="button" onClick={() => setRating(star)}>
-                    <Star size={24} className={star <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'} />
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setRating(star)}
+                  >
+                    <Star
+                      size={24}
+                      className={
+                        star <= rating
+                          ? "text-yellow-400 fill-yellow-400"
+                          : "text-gray-600"
+                      }
+                    />
                   </button>
                 ))}
               </div>
             </div>
             <div className="space-y-2">
               <Label>Your Review</Label>
-              <Textarea rows={4} placeholder="Share your experience..." className="bg-white/5 border-white/10 text-white placeholder-gray-500 resize-none" />
+              <Textarea
+                rows={4}
+                placeholder="Share your experience..."
+                className="bg-white/5 border-white/10 text-white placeholder-gray-500 resize-none"
+              />
             </div>
             <div className="flex gap-3">
-              <motion.button type="submit" whileHover={{ scale: 1.02 }} className="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium">
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02 }}
+                className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium"
+              >
                 Submit Review
               </motion.button>
-              <button type="button" onClick={() => setShowForm(false)} className="px-6 py-2 rounded-xl bg-white/5 text-gray-400 hover:text-white">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="px-6 py-2 rounded-xl bg-white/5 text-gray-400 hover:text-white"
+              >
                 Cancel
               </button>
             </div>
@@ -73,15 +100,31 @@ export default function ReviewsPage() {
               <div className="flex items-center justify-between mb-3">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className={i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'} />
+                    <Star
+                      key={i}
+                      size={16}
+                      className={
+                        i < review.rating
+                          ? "text-yellow-400 fill-yellow-400"
+                          : "text-gray-600"
+                      }
+                    />
                   ))}
                 </div>
-                <span className={`text-xs px-3 py-1 rounded-full ${review.published ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
-                  {review.published ? 'Published' : 'Pending'}
+                <span
+                  className={`text-xs px-3 py-1 rounded-full ${
+                    review.published
+                      ? "bg-green-500/20 text-green-400"
+                      : "bg-yellow-500/20 text-yellow-400"
+                  }`}
+                >
+                  {review.published ? "Published" : "Pending"}
                 </span>
               </div>
               <p className="text-gray-300">{review.comment}</p>
-              <p className="text-gray-500 text-sm mt-3">{new Date(review.date).toLocaleDateString()}</p>
+              <p className="text-gray-500 text-sm mt-3">
+                {new Date(review.date).toLocaleDateString()}
+              </p>
             </motion.div>
           ))
         )}

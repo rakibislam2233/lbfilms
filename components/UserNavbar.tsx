@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Menu, X, User, Search, Bell, LogOut } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Bell, Menu, User, X } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const UserNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,24 +14,24 @@ const UserNavbar = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Packages', href: '#packages' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: "Home", href: "/" },
+    { name: "Gallery", href: "#gallery" },
+    { name: "Packages", href: "#packages" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
     <motion.nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white bg-opacity-90 backdrop-blur-xl py-3 shadow-md' 
-          : 'bg-transparent py-5'
+        isScrolled
+          ? "bg-white bg-opacity-90 backdrop-blur-xl py-3 shadow-md"
+          : "bg-transparent py-5"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -39,7 +39,7 @@ const UserNavbar = () => {
     >
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2">
-          <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-2 rounded-full">
+          <div className="bg-linear-to-r from-primary-500 to-primary-700 p-2 rounded-full">
             <User className="h-6 w-6 text-white" />
           </div>
           <span className="text-2xl font-bold text-secondary-800">
@@ -69,17 +69,34 @@ const UserNavbar = () => {
                 <User className="h-5 w-5 text-primary-600" />
               </button>
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <Link href="/user/profile" className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50">My Profile</Link>
-                <Link href="/user/orders" className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50">My Orders</Link>
-                <Link href="/user/reviews" className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50">My Reviews</Link>
-                <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Logout</button>
+                <Link
+                  href="/user/profile"
+                  className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50"
+                >
+                  My Profile
+                </Link>
+                <Link
+                  href="/user/orders"
+                  className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50"
+                >
+                  My Orders
+                </Link>
+                <Link
+                  href="/user/reviews"
+                  className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50"
+                >
+                  My Reviews
+                </Link>
+                <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                  Logout
+                </button>
               </div>
             </div>
           </div>
 
           {/* WhatsApp Button */}
-          <Link 
-            href="https://wa.me/8801234567890" 
+          <Link
+            href="https://wa.me/8801234567890"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp bg-whatsapp text-white px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-all flex items-center gap-2 text-sm"
@@ -90,15 +107,15 @@ const UserNavbar = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-4">
-          <Link 
-            href="https://wa.me/8801234567890" 
+          <Link
+            href="https://wa.me/8801234567890"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp bg-whatsapp text-white px-3 py-1 rounded-full text-xs"
           >
             <span>WhatsApp</span>
           </Link>
-          
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-secondary-700 focus:outline-none"
@@ -131,12 +148,29 @@ const UserNavbar = () => {
                 {link.name}
               </Link>
             ))}
-            
+
             <div className="pt-4 border-t border-secondary-200">
-              <Link href="/user/profile" className="block py-2 text-secondary-700">My Profile</Link>
-              <Link href="/user/orders" className="block py-2 text-secondary-700">My Orders</Link>
-              <Link href="/user/reviews" className="block py-2 text-secondary-700">My Reviews</Link>
-              <button className="w-full text-left py-2 text-red-600">Logout</button>
+              <Link
+                href="/user/profile"
+                className="block py-2 text-secondary-700"
+              >
+                My Profile
+              </Link>
+              <Link
+                href="/user/orders"
+                className="block py-2 text-secondary-700"
+              >
+                My Orders
+              </Link>
+              <Link
+                href="/user/reviews"
+                className="block py-2 text-secondary-700"
+              >
+                My Reviews
+              </Link>
+              <button className="w-full text-left py-2 text-red-600">
+                Logout
+              </button>
             </div>
           </div>
         </motion.div>

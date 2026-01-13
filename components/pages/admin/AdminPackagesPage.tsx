@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Package, Plus, Edit, Trash2, Search, X, Check } from "lucide-react";
-import { packages as demoPackages } from "@/data";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { packages as demoPackages } from "@/data";
+import { motion } from "framer-motion";
+import { Check, Edit, Package, Plus, Search, Trash2, X } from "lucide-react";
+import { useState } from "react";
 
 export default function AdminPackagesPage() {
   const [packageList, setPackageList] = useState(demoPackages);
@@ -28,8 +28,7 @@ export default function AdminPackagesPage() {
         </div>
         <motion.button
           onClick={() => setShowModal(true)}
-          whileHover={{ scale: 1.02 }}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
+          className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
         >
           <Plus size={18} /> Add Package
         </motion.button>
@@ -62,7 +61,7 @@ export default function AdminPackagesPage() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-white">{pkg.name}</h3>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mt-1">
+                  <p className="text-2xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mt-1">
                     {pkg.price.toLocaleString()} TK
                   </p>
                 </div>
@@ -155,7 +154,7 @@ export default function AdminPackagesPage() {
               >
                 Cancel
               </button>
-              <button className="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium">
+              <button className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium">
                 Add Package
               </button>
             </div>
