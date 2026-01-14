@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -58,19 +57,17 @@ const Sidebar = () => {
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <div className="p-6 border-b border-secondary-200">
-          <Link href="/" className="flex items-center space-x-3 mb-6 h-16">
-            <div className="relative">
-              <Image
-                src={logo}
-                alt="LB Films"
-                width={300}
-                height={100}
-                className="relative rounded-full"
-              />
-            </div>
-          </Link>
-        </div>
+        <Link href="/" className="flex items-center space-x-3 group">
+          <div className="relative">
+            <Image
+              src={logo}
+              alt="LB Films"
+              width={300}
+              height={100}
+              className="w-32 h-28 relative rounded-full "
+            />
+          </div>
+        </Link>
 
         <nav className="p-4">
           <ul className="space-y-2">

@@ -15,7 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
+import logo from "@/assets/logo/lb-films.png";
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Overview" },
   { href: "/dashboard/orders", icon: ShoppingBag, label: "My Orders" },
@@ -41,20 +41,14 @@ export default function DashboardLayout({
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-6 border-b border-white/10">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-10 h-10">
-                <Image
-                  src="/assets/logo/lb-films.png"
-                  alt="LB Films"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                LB Films
-              </span>
-            </Link>
+          <div className="flex items-center justify-center p-9 border-b border-white/10">
+            <Image
+              src={logo}
+              alt="LB Films"
+              width={300}
+              height={100}
+              className="w-full h-44  rounded-full absolute "
+            />
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden text-gray-400"
@@ -74,10 +68,10 @@ export default function DashboardLayout({
                   onClick={() => setSidebarOpen(false)}
                 >
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center gap-3 mt-2 px-4 py-3 rounded-xl transition-all border ${
                       isActive
-                        ? "bg-linear-to-r from-purple-600/20 to-pink-600/20 text-white border border-purple-500/30"
-                        : "text-gray-400 hover:bg-white/5 hover:text-white"
+                        ? "bg-linear-to-r from-purple-600/20 to-pink-600/20 text-white  border-purple-500/30"
+                        : "text-gray-400 hover:bg-white/5 hover:text-white border-transparent"
                     }`}
                   >
                     <Icon size={20} />
