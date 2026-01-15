@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { packages as demoPackages } from "@/data";
 import { motion } from "framer-motion";
@@ -12,10 +13,35 @@ export default function AdminPackagesPage() {
   const [packageList, setPackageList] = useState(demoPackages);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingPackage, setEditingPackage] = useState(null);
+
+  const categories = [
+    "all",
+    "wedding",
+    "portrait",
+    "corporate",
+    "event",
+    "birthday",
+    "product",
+  ];
 
   const filteredPackages = packageList.filter((pkg) =>
     pkg.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleAddPackage = () => {
+    setEditingPackage(null);
+    setShowModal(true);
+  };
+
+  const handleEditPackage = (pkg) => {
+    setEditingPackage(pkg);
+    setShowModal(true);
+  };
+
+  const handleDeletePackage = (id) => {
+    setPackageList(packageList.filter(pkg => pkg.id !== id));
+  };
 
   return (
     <div className="space-y-6">
@@ -27,7 +53,7 @@ export default function AdminPackagesPage() {
           <p className="text-gray-400">Manage photography packages</p>
         </div>
         <motion.button
-          onClick={() => setShowModal(true)}
+          onClick={handleAddPackage}
           className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
         >
           <Plus size={18} /> Add Package
@@ -89,10 +115,14 @@ export default function AdminPackagesPage() {
                 )}
               </div>
               <div className="flex gap-2">
-                <button className="flex-1 px-3 py-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-1 text-sm">
+                <button
+                  onClick={() => handleEditPackage(pkg)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-1 text-sm">
                   <Edit size={14} /> Edit
                 </button>
-                <button className="flex-1 px-3 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 flex items-center justify-center gap-1 text-sm">
+                <button
+                  onClick={() => handleDeletePackage(pkg.id)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 flex items-center justify-center gap-1 text-sm">
                   <Trash2 size={14} /> Delete
                 </button>
               </div>
@@ -109,7 +139,9 @@ export default function AdminPackagesPage() {
             className="w-full max-w-2xl rounded-2xl bg-gray-900 border border-white/10"
           >
             <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-xl font-bold text-white">Add New Package</h2>
+              <h2 className="text-xl font-bold text-white">
+                {editingPackage ? 'Edit Package' : 'Add New Package'}
+              </h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-white"
@@ -123,6 +155,7 @@ export default function AdminPackagesPage() {
                   <Label htmlFor="pkg-name">Name</Label>
                   <Input
                     id="pkg-name"
+                    defaultValue={editingPackage ? editingPackage.name : ''}
                     placeholder="Package name"
                     className="bg-white/5 border-white/10 text-white"
                   />
@@ -132,9 +165,40 @@ export default function AdminPackagesPage() {
                   <Input
                     id="pkg-price"
                     type="number"
+                    defaultValue={editingPackage ? editingPackage.price : ''}
                     placeholder="50000"
                     className="bg-white/5 border-white/10 text-white"
                   />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="pkg-duration">Duration</Label>
+                  <Input
+                    id="pkg-duration"
+                    defaultValue={editingPackage ? editingPackage.duration : ''}
+                    placeholder="e.g., 8 Hours"
+                    className="bg-white/5 border-white/10 text-white"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select defaultValue={editingPackage ? editingPackage.category : ''}>
+                    <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.slice(1).map((cat) => (
+                        <SelectItem
+                          key={cat}
+                          value={cat}
+                          className="bg-gray-900"
+                        >
+                          {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <div className="space-y-2">
@@ -142,6 +206,7 @@ export default function AdminPackagesPage() {
                 <Textarea
                   id="pkg-desc"
                   rows={3}
+                  defaultValue={editingPackage ? editingPackage.description : ''}
                   placeholder="Package description"
                   className="bg-white/5 border-white/10 text-white resize-none"
                 />
@@ -154,8 +219,10 @@ export default function AdminPackagesPage() {
               >
                 Cancel
               </button>
-              <button className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium">
-                Add Package
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium">
+                {editingPackage ? 'Update Package' : 'Add Package'}
               </button>
             </div>
           </motion.div>

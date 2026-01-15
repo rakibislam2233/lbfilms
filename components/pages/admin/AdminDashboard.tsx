@@ -1,5 +1,5 @@
 "use client";
-import { getStats, orders } from "@/data";
+import { getStats, orders, projects } from "@/data";
 import { motion } from "framer-motion";
 import {
   ArrowDownRight,
@@ -288,6 +288,43 @@ export default function AdminDashboard() {
                     }`}
                   >
                     {order.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recent Projects */}
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 className="text-lg font-bold text-white mb-6">Recent Projects</h3>
+          <div className="space-y-4">
+            {projects.slice(0, 5).map((project) => (
+              <div
+                key={project.id}
+                className="flex items-center justify-between p-4 rounded-xl bg-white/5"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <Camera size={18} className="text-purple-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">{project.title}</p>
+                    <p className="text-gray-500 text-sm">
+                      {project.location} •{" "}
+                      {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      project.featured
+                        ? "bg-purple-500/20 text-purple-400"
+                        : "bg-cyan-500/20 text-cyan-400"
+                    }`}
+                  >
+                    {project.featured ? "Featured" : project.category}
                   </span>
                 </div>
               </div>

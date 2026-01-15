@@ -1,5 +1,10 @@
 "use client";
 
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { projects as demoProjects } from "@/data";
 import { motion } from "framer-motion";
 import {
@@ -20,6 +25,15 @@ export default function AdminProjectsPage() {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
+  const [editingProject, setEditingProject] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    description: '',
+    location: '',
+    date: '',
+    featured: false
+  });
 
   const categories = [
     "all",
@@ -39,6 +53,36 @@ export default function AdminProjectsPage() {
     return matchesSearch && matchesFilter;
   });
 
+  const handleAddProject = () => {
+    setEditingProject(null);
+    setFormData({
+      title: '',
+      category: '',
+      description: '',
+      location: '',
+      date: '',
+      featured: false
+    });
+    setShowModal(true);
+  };
+
+  const handleEditProject = (project) => {
+    setEditingProject(project);
+    setFormData({
+      title: project.title,
+      category: project.category,
+      description: project.description,
+      location: project.location,
+      date: project.date,
+      featured: project.featured
+    });
+    setShowModal(true);
+  };
+
+  const handleDeleteProject = (id) => {
+    setProjectList(projectList.filter(project => project.id !== id));
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -49,7 +93,7 @@ export default function AdminProjectsPage() {
           <p className="text-gray-400">Manage your photography projects</p>
         </div>
         <motion.button
-          onClick={() => setShowModal(true)}
+          onClick={handleAddProject}
           className="px-4 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium flex items-center gap-2"
         >
           <Plus size={18} /> Add Project
@@ -73,17 +117,18 @@ export default function AdminProjectsPage() {
         </div>
         <div className="flex items-center gap-2">
           <Filter size={18} className="text-gray-500" />
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none"
-          >
-            {categories.map((cat) => (
-              <option key={cat} value={cat} className="bg-gray-900">
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </option>
-            ))}
-          </select>
+          <Select value={filter} onValueChange={(value) => setFilter(value)}>
+            <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
+              <SelectValue placeholder="Select a language" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat} className="bg-gray-900">
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -120,13 +165,21 @@ export default function AdminProjectsPage() {
               <h3 className="text-white font-bold mb-1">{project.title}</h3>
               <p className="text-gray-500 text-sm mb-4">
                 {project.location} •{" "}
-                {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                {new Date(project.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </p>
               <div className="flex gap-2">
-                <button className="flex-1 px-3 py-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-1 text-sm">
+                <button
+                  onClick={() => handleEditProject(project)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-1 text-sm">
                   <Edit size={14} /> Edit
                 </button>
-                <button className="flex-1 px-3 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 flex items-center justify-center gap-1 text-sm">
+                <button
+                  onClick={() => handleDeleteProject(project.id)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 flex items-center justify-center gap-1 text-sm">
                   <Trash2 size={14} /> Delete
                 </button>
               </div>
@@ -144,7 +197,9 @@ export default function AdminProjectsPage() {
             className="w-full max-w-2xl rounded-2xl bg-gray-900 border border-white/10"
           >
             <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-xl font-bold text-white">Add New Project</h2>
+              <h2 className="text-xl font-bold text-white">
+                {editingProject ? 'Edit Project' : 'Add New Project'}
+              </h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-white"
@@ -154,28 +209,83 @@ export default function AdminProjectsPage() {
             </div>
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">
-                    Title
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <Label htmlFor="project-title">Title</Label>
+                  <Input
+                    id="project-title"
                     type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
                     placeholder="Project title"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-500/50"
+                    className="bg-white/5 border-white/10 text-white"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">
-                    Category
-                  </label>
-                  <select className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none">
-                    {categories.slice(1).map((cat) => (
-                      <option key={cat} value={cat} className="bg-gray-900">
-                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                      </option>
-                    ))}
-                  </select>
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => setFormData({...formData, category: value})}
+                  >
+                    <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.slice(1).map((cat) => (
+                        <SelectItem
+                          key={cat}
+                          value={cat}
+                          className="bg-gray-900"
+                        >
+                          {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="project-description">Description</Label>
+                <Textarea
+                  id="project-description"
+                  rows={3}
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  placeholder="Project description"
+                  className="bg-white/5 border-white/10 text-white resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="project-location">Location</Label>
+                  <Input
+                    id="project-location"
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    placeholder="Project location"
+                    className="bg-white/5 border-white/10 text-white"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="project-date">Date</Label>
+                  <Input
+                    id="project-date"
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                    className="bg-white/5 border-white/10 text-white"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="featured"
+                  checked={formData.featured}
+                  onCheckedChange={(checked) => setFormData({...formData, featured: Boolean(checked)})}
+                />
+                <Label htmlFor="featured" className="text-sm">
+                  Featured Project
+                </Label>
               </div>
               <div>
                 <label className="block text-sm text-gray-400 mb-2">
@@ -196,8 +306,31 @@ export default function AdminProjectsPage() {
               >
                 Cancel
               </button>
-              <button className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium">
-                Add Project
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  if (editingProject) {
+                    // Update existing project
+                    setProjectList(projectList.map(p =>
+                      p.id === editingProject.id
+                        ? { ...p, ...formData }
+                        : p
+                    ));
+                  } else {
+                    // Add new project
+                    const newProject = {
+                      id: `proj-${Date.now()}`, // Generate a unique ID
+                      ...formData,
+                      images: [] // Placeholder - in a real app, you'd handle image uploads
+                    };
+                    setProjectList([...projectList, newProject]);
+                  }
+
+                  setShowModal(false);
+                }}
+                className="px-6 py-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 text-white font-medium">
+                {editingProject ? 'Update Project' : 'Add Project'}
               </button>
             </div>
           </motion.div>
