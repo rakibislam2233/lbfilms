@@ -1,13 +1,14 @@
 "use client";
 
+import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getPackageById, packages } from "@/data";
@@ -15,12 +16,12 @@ import { bookingSchema, type BookingFormData } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import {
-  Calendar,
-  Camera,
-  CheckCircle,
-  Clock,
-  MessageSquare,
-  User,
+    Calendar,
+    Camera,
+    CheckCircle,
+    Clock,
+    MessageSquare,
+    User,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -216,11 +217,18 @@ const BookingPage = () => {
                 </div>
                 <div>
                   <Label htmlFor="eventDate">Event Date *</Label>
-                  <Input
-                    id="eventDate"
-                    type="date"
-                    className="bg-white/5 border-white/10 text-white"
-                    {...register("eventDate")}
+                  <Controller
+                    name="eventDate"
+                    control={control}
+                    render={({ field }) => (
+                      <DatePicker
+                        date={field.value ? new Date(field.value) : undefined}
+                        setDate={(date) => {
+                          field.onChange(date ? date.toISOString().split('T')[0] : '');
+                        }}
+                        className="bg-white/5 border-white/10 text-white"
+                      />
+                    )}
                   />
                   {errors.eventDate && (
                     <p className="text-red-400 text-sm mt-1">

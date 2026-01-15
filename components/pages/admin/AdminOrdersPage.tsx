@@ -1,20 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { orders as demoOrders } from "@/data";
 import { motion } from "framer-motion";
 import {
-  ShoppingBag,
-  Search,
-  Filter,
-  Eye,
-  X,
-  Calendar,
-  MapPin,
-  User,
   Download,
+  Eye,
+  Filter,
+  Search,
+  ShoppingBag,
+  X
 } from "lucide-react";
-import { orders as demoOrders } from "@/data";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export default function AdminOrdersPage() {
   const [orderList, setOrderList] = useState(demoOrders);
@@ -58,7 +56,7 @@ export default function AdminOrdersPage() {
         <div className="relative flex-1">
           <Search
             size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none"
           />
           <Input
             type="text"
@@ -70,24 +68,17 @@ export default function AdminOrdersPage() {
         </div>
         <div className="flex items-center gap-2">
           <Filter size={18} className="text-gray-500" />
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none"
-          >
-            <option value="all" className="bg-gray-900">
-              All Status
-            </option>
-            <option value="pending" className="bg-gray-900">
-              Pending
-            </option>
-            <option value="confirmed" className="bg-gray-900">
-              Confirmed
-            </option>
-            <option value="completed" className="bg-gray-900">
-              Completed
-            </option>
-          </select>
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="w-[180px] bg-white/5 border-white/10 text-white">
+              <SelectValue placeholder="All Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="bg-gray-900">All Status</SelectItem>
+              <SelectItem value="pending" className="bg-gray-900">Pending</SelectItem>
+              <SelectItem value="confirmed" className="bg-gray-900">Confirmed</SelectItem>
+              <SelectItem value="completed" className="bg-gray-900">Completed</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -157,23 +148,19 @@ export default function AdminOrdersPage() {
                       >
                         <Eye size={16} />
                       </button>
-                      <select
+                      <Select
                         value={order.status}
-                        onChange={(e) =>
-                          handleStatusChange(order.id, e.target.value)
-                        }
-                        className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none"
+                        onValueChange={(value) => handleStatusChange(order.id, value)}
                       >
-                        <option value="pending" className="bg-gray-900">
-                          Pending
-                        </option>
-                        <option value="confirmed" className="bg-gray-900">
-                          Confirmed
-                        </option>
-                        <option value="completed" className="bg-gray-900">
-                          Completed
-                        </option>
-                      </select>
+                        <SelectTrigger className="w-[130px] bg-white/5 border-white/10 text-white text-xs h-8">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending" className="bg-gray-900 text-xs">Pending</SelectItem>
+                          <SelectItem value="confirmed" className="bg-gray-900 text-xs">Confirmed</SelectItem>
+                          <SelectItem value="completed" className="bg-gray-900 text-xs">Completed</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </td>
                 </tr>

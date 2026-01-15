@@ -12,11 +12,14 @@ import {
   Edit,
   Eye,
   Film,
+  ImageIcon,
+  Link,
   Play,
   Plus,
   Search,
   Trash2,
-  X
+  Upload,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -35,6 +38,7 @@ export default function AdminVideosPage() {
     videoUrl: '',
     date: new Date()
   });
+  const [uploadMethod, setUploadMethod] = useState<'file' | 'url'>('file');
 
   const categories = [
     "all",
@@ -83,6 +87,26 @@ export default function AdminVideosPage() {
     setVideoList(videoList.filter(video => video.id !== id));
   };
 
+  // Handle thumbnail file upload
+  const handleThumbnailUpload = (file: File | null) => {
+    if (!file) return;
+    
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      setFormData(prev => ({
+        ...prev,
+        thumbnail: result
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -104,14 +128,14 @@ export default function AdminVideosPage() {
       <div className="relative max-w-md">
         <Search
           size={18}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none"
         />
-        <input
+        <Input
           type="text"
           placeholder="Search videos..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+          className="w-full pl-12 bg-white/5 border-white/10 text-white placeholder-gray-500"
         />
       </div>
 
@@ -250,15 +274,88 @@ export default function AdminVideosPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="video-thumbnail">Thumbnail URL</Label>
-                <Input
-                  id="video-thumbnail"
-                  type="text"
-                  value={formData.thumbnail}
-                  onChange={(e) => setFormData({...formData, thumbnail: e.target.value})}
-                  placeholder="Thumbnail image URL"
-                  className="bg-white/5 border-white/10 text-white"
-                />
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="video-thumbnail">Thumbnail Image</Label>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setUploadMethod('file')}
+                      className={`px-3 py-1 rounded-lg text-xs flex items-center gap-1 transition-all ${
+                        uploadMethod === 'file'
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-white/5 text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <ImageIcon size={14} /> Upload File
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setUploadMethod('url')}
+                      className={`px-3 py-1 rounded-lg text-xs flex items-center gap-1 transition-all ${
+                        uploadMethod === 'url'
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-white/5 text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Link size={14} /> Use URL
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Thumbnail Preview */}
+                {formData.thumbnail && (
+                  <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-800 border-2 border-purple-500/30">
+                    <Image
+                      src={formData.thumbnail}
+                      alt="Thumbnail Preview"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 px-2 py-1 rounded bg-black/70 text-white text-xs">
+                      Preview
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({...formData, thumbnail: ''})}
+                      className="absolute top-2 left-2 p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                )}
+                
+                {uploadMethod === 'file' ? (
+                  <div className="space-y-2">
+                    <label className="block">
+                      <div className="relative border-2 border-dashed border-white/10 hover:border-purple-500/50 rounded-xl p-6 text-center cursor-pointer transition-all">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleThumbnailUpload(e.target.files?.[0] || null)}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                        <Upload className="mx-auto mb-2 text-purple-400" size={32} />
+                        <p className="text-white font-medium mb-1">Click to upload thumbnail</p>
+                        <p className="text-gray-400 text-sm">PNG, JPG, GIF, WebP</p>
+                      </div>
+                    </label>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <Input
+                      id="video-thumbnail"
+                      type="text"
+                      value={formData.thumbnail}
+                      onChange={(e) => setFormData({...formData, thumbnail: e.target.value})}
+                      placeholder="Paste thumbnail image URL (e.g., https://images.unsplash.com/photo-...)"
+                      className="bg-white/5 border-white/10 text-white"
+                    />
+                    {formData.thumbnail && !formData.thumbnail.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i) && !formData.thumbnail.startsWith('data:image') && (
+                      <p className="text-xs text-yellow-500">⚠ Make sure URL ends with .jpg, .png, .gif, or .webp</p>
+                    )}
+                    <p className="text-xs text-gray-500">This image will be shown before the video plays</p>
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="video-url">Video URL</Label>

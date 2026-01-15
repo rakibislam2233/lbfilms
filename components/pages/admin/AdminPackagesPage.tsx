@@ -4,16 +4,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { packages as demoPackages } from "@/data";
+import { packages as demoPackages, Package } from "@/data";
 import { motion } from "framer-motion";
-import { Check, Edit, Package, Plus, Search, Trash2, X } from "lucide-react";
+import { Check, Edit, Package as PackageIcon, Plus, Search, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
 export default function AdminPackagesPage() {
-  const [packageList, setPackageList] = useState(demoPackages);
+  const [packageList, setPackageList] = useState<Package[]>(demoPackages);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingPackage, setEditingPackage] = useState(null);
+  const [editingPackage, setEditingPackage] = useState<Package | null>(null);
 
   const categories = [
     "all",
@@ -34,12 +34,12 @@ export default function AdminPackagesPage() {
     setShowModal(true);
   };
 
-  const handleEditPackage = (pkg) => {
+  const handleEditPackage = (pkg: Package) => {
     setEditingPackage(pkg);
     setShowModal(true);
   };
 
-  const handleDeletePackage = (id) => {
+  const handleDeletePackage = (id: string) => {
     setPackageList(packageList.filter(pkg => pkg.id !== id));
   };
 
@@ -48,7 +48,7 @@ export default function AdminPackagesPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <Package className="text-green-400" /> Packages
+            <PackageIcon className="text-green-400" /> Packages
           </h1>
           <p className="text-gray-400">Manage photography packages</p>
         </div>
@@ -63,7 +63,7 @@ export default function AdminPackagesPage() {
       <div className="relative max-w-md">
         <Search
           size={18}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none"
         />
         <Input
           type="text"

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Star, Search } from 'lucide-react';
-import { reviews as demoReviews, users } from '@/data';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { reviews as demoReviews, users } from '@/data';
+import { motion } from 'framer-motion';
+import { Search, Star } from 'lucide-react';
+import { useState } from 'react';
 
 export default function AdminReviewsPage() {
   const [reviewList, setReviewList] = useState(demoReviews);
@@ -34,7 +35,7 @@ export default function AdminReviewsPage() {
       </div>
 
       <div className="relative max-w-md">
-        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none" />
         <Input
           type="text"
           placeholder="Search reviews..."
@@ -77,14 +78,18 @@ export default function AdminReviewsPage() {
                   <span className={`px-3 py-1 rounded-full text-xs ${review.published ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
                     {review.published ? 'Published' : 'Pending'}
                   </span>
-                  <select
+                  <Select
                     value={review.published ? 'published' : 'pending'}
-                    onChange={(e) => handlePublishToggle(review.id, e.target.value === 'published')}
-                    className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none"
+                    onValueChange={(value) => handlePublishToggle(review.id, value === 'published')}
                   >
-                    <option value="pending" className="bg-gray-900">Pending</option>
-                    <option value="published" className="bg-gray-900">Published</option>
-                  </select>
+                    <SelectTrigger className="w-[120px] bg-white/5 border-white/10 text-white text-sm h-8">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending" className="bg-gray-900 text-sm">Pending</SelectItem>
+                      <SelectItem value="published" className="bg-gray-900 text-sm">Published</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </motion.div>

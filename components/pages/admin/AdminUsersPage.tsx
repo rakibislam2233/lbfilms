@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { users as demoUsers } from "@/data";
 import { Edit, Eye, Filter, Search, Trash2, Users } from "lucide-react";
 import { useState } from "react";
@@ -31,7 +32,7 @@ export default function AdminUsersPage() {
         <div className="relative flex-1">
           <Search
             size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none"
           />
           <Input
             type="text"
@@ -43,21 +44,16 @@ export default function AdminUsersPage() {
         </div>
         <div className="flex items-center gap-2">
           <Filter size={18} className="text-gray-500" />
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none"
-          >
-            <option value="all" className="bg-gray-900">
-              All Roles
-            </option>
-            <option value="user" className="bg-gray-900">
-              Users
-            </option>
-            <option value="admin" className="bg-gray-900">
-              Admins
-            </option>
-          </select>
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="w-[150px] bg-white/5 border-white/10 text-white">
+              <SelectValue placeholder="All Roles" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="bg-gray-900">All Roles</SelectItem>
+              <SelectItem value="user" className="bg-gray-900">Users</SelectItem>
+              <SelectItem value="admin" className="bg-gray-900">Admins</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
