@@ -52,7 +52,7 @@ export default function ProfilePage() {
               {
                 icon: Calendar,
                 label: "Member Since",
-                value: new Date(user.joinedAt).toLocaleDateString(),
+                value: new Date(user.joinedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
               },
             ].map((item, index) => {
               const Icon = item.icon;

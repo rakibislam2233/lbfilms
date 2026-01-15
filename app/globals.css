@@ -5,7 +5,7 @@
   --foreground: #171717;
 
   /* Brand Colors */
-  --primary: #721011;
+  --primary: #A422E5;
   --primary-foreground: #ffffff;
   --primary-hover: #5a0d0e;
 
@@ -21,7 +21,7 @@
 
   --border: #e5e5e5;
   --input: #e5e5e5;
-  --ring: #721011;
+  --ring: #A422E5;
 
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
@@ -36,7 +36,7 @@
   --foreground: #ededed;
 
   /* Brand Colors */
-  --primary: #721011;
+  --primary: #A422E5;
   --primary-foreground: #ffffff;
   --primary-hover: #8a1314;
 
@@ -52,7 +52,7 @@
 
   --border: #262626;
   --input: #262626;
-  --ring: #721011;
+  --ring: #A422E5;
 
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;

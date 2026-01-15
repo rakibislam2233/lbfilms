@@ -59,7 +59,7 @@ export default function OrderDetailPage() {
         <div>
           <h1 className="text-3xl font-bold text-white">Order #{order.id}</h1>
           <p className="text-gray-400">
-            Placed on {new Date(order.date).toLocaleDateString()}
+            Placed on {new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
           </p>
         </div>
         <span
@@ -121,7 +121,7 @@ export default function OrderDetailPage() {
             <div className="flex justify-between">
               <span className="text-gray-400">Event Date</span>
               <span className="text-white">
-                {new Date(order.eventDate).toLocaleDateString()}
+                {new Date(order.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
               </span>
             </div>
             <div className="flex justify-between">

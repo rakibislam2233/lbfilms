@@ -46,7 +46,7 @@ export default function OrdersPage() {
                 <div className="flex flex-wrap gap-4 text-gray-400 text-sm">
                   <span className="flex items-center gap-1">
                     <Calendar size={14} />
-                    {new Date(order.eventDate).toLocaleDateString()}
+                    {new Date(order.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </span>
                   <span className="flex items-center gap-1">
                     <MapPin size={14} />

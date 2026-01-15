@@ -123,7 +123,7 @@ export default function ReviewsPage() {
               </div>
               <p className="text-gray-300">{review.comment}</p>
               <p className="text-gray-500 text-sm mt-3">
-                {new Date(review.date).toLocaleDateString()}
+                {new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
               </p>
             </motion.div>
           ))

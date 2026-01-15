@@ -71,7 +71,7 @@ export default function AdminReviewsPage() {
                     </div>
                   </div>
                   <p className="text-gray-300 mb-2">{review.comment}</p>
-                  <p className="text-gray-500 text-sm">{new Date(review.date).toLocaleDateString()}</p>
+                  <p className="text-gray-500 text-sm">{new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`px-3 py-1 rounded-full text-xs ${review.published ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>

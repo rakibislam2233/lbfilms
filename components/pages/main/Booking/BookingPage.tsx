@@ -289,12 +289,8 @@ const BookingPage = () => {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
-              }}
               whileTap={{ scale: 0.98 }}
-              className="w-full mt-8 py-4 rounded-xl bg-linear-to-r from-purple-600  to-pink-600 text-white font-semibold text-lg disabled:opacity-50"
+              className="w-full mt-8 py-3 cursor-pointer rounded-xl bg-linear-to-r from-purple-600  to-pink-600 text-white font-semibold text-lg disabled:opacity-50"
             >
               {isSubmitting ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />

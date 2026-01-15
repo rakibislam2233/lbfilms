@@ -130,7 +130,7 @@ export default function AdminOrdersPage() {
                   </td>
                   <td className="py-4 px-6 text-white">{order.packageId}</td>
                   <td className="py-4 px-6 text-gray-400">
-                    {new Date(order.eventDate).toLocaleDateString()}
+                    {new Date(order.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </td>
                   <td className="py-4 px-6 text-gray-400">{order.location}</td>
                   <td className="py-4 px-6 text-white font-medium">
@@ -218,7 +218,7 @@ export default function AdminOrdersPage() {
                 <div>
                   <p className="text-gray-500 text-sm">Event Date</p>
                   <p className="text-white">
-                    {new Date(selectedOrder.eventDate).toLocaleDateString()}
+                    {new Date(selectedOrder.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </p>
                 </div>
                 <div>
