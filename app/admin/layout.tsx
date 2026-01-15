@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-
+import logo from "@/assets/logo/lb-films.png";
 const navItems = [
   { href: "/admin", icon: Home, label: "Dashboard" },
   { href: "/admin/projects", icon: ImageIcon, label: "Projects" },
@@ -38,6 +38,7 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -48,23 +49,15 @@ export default function AdminLayout({
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-6 border-b border-white/5">
-            <Link href="/admin" className="flex items-center gap-3">
-              <div className="relative w-10 h-10">
-                <Image
-                  src="/assets/logo/lb-films.png"
-                  alt="LB Films"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div>
-                <span className="text-lg font-bold text-white">LB Films</span>
-                <span className="block text-xs text-purple-400">
-                  Admin Panel
-                </span>
-              </div>
-            </Link>
+          <div className="flex items-center justify-center p-9 border-b border-white/10">
+            <Image
+              src={logo}
+              alt="LB Films"
+              width={300}
+              height={100}
+              className="w-full h-44  rounded-full absolute cursor-pointer "
+              onClick={() => router.push("/")}
+            />
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden text-gray-400"
@@ -86,10 +79,10 @@ export default function AdminLayout({
                   onClick={() => setSidebarOpen(false)}
                 >
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center gap-3 mt-2 px-4 py-3 border-l-2 rounded-xl transition-all ${
                       isActive
-                        ? "bg-purple-600/20 text-purple-400 border-l-2 border-purple-500"
-                        : "text-gray-400 hover:bg-white/5 hover:text-white"
+                        ? "bg-purple-600/20 text-purple-400  border-purple-500"
+                        : "text-gray-400 hover:bg-white/5 hover:text-white border-transparent"
                     }`}
                   >
                     <Icon size={20} />

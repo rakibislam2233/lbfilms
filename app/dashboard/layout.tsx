@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import logo from "@/assets/logo/lb-films.png";
 const navItems = [
@@ -31,7 +31,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const router = useRouter();
   return (
     <div className="min-h-screen bg-black">
       {/* Sidebar */}
@@ -47,7 +47,8 @@ export default function DashboardLayout({
               alt="LB Films"
               width={300}
               height={100}
-              className="w-full h-44  rounded-full absolute "
+              onClick={() => router.push("/")}
+              className="w-full h-44  rounded-full absolute cursor-pointer "
             />
             <button
               onClick={() => setSidebarOpen(false)}
@@ -58,7 +59,7 @@ export default function DashboardLayout({
           </div>
 
           <nav className="flex-1 p-4 space-y-1">
-            {navItems.map((item) => {
+            {navItems?.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
               return (
