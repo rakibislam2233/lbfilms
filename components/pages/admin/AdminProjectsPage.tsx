@@ -120,7 +120,7 @@ export default function AdminProjectsPage() {
               <h3 className="text-white font-bold mb-1">{project.title}</h3>
               <p className="text-gray-500 text-sm mb-4">
                 {project.location} •{" "}
-                {new Date(project.date).toLocaleDateString()}
+                {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
               </p>
               <div className="flex gap-2">
                 <button className="flex-1 px-3 py-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center gap-1 text-sm">

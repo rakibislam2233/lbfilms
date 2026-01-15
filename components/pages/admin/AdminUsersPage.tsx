@@ -112,7 +112,7 @@ export default function AdminUsersPage() {
                     </span>
                   </td>
                   <td className="py-4 px-6 text-gray-400">
-                    {new Date(user.joinedDate).toLocaleDateString()}
+                    {new Date(user.joinedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </td>
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-2">

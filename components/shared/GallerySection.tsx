@@ -348,7 +348,7 @@ const GallerySection = ({
                   </span>
                   <span className="flex items-center gap-2">
                     <Calendar size={16} />
-                    {new Date(selectedProject.date).toLocaleDateString()}
+                    {new Date(selectedProject.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </span>
                   {selectedProject.images.length > 1 && (
                     <span className="text-foreground">
