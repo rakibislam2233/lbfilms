@@ -1,11 +1,11 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { videos as demoVideos } from "@/data";
+import { Video, VideoFormData } from "@/lib/types";
 import { motion } from "framer-motion";
 import {
   Clock,
@@ -16,24 +16,24 @@ import {
   Plus,
   Search,
   Trash2,
-  Upload,
-  X,
+  X
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function AdminVideosPage() {
-  const [videoList, setVideoList] = useState(demoVideos);
+  const [videoList, setVideoList] = useState<Video[]>(demoVideos);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingVideo, setEditingVideo] = useState(null);
-  const [formData, setFormData] = useState({
+  const [editingVideo, setEditingVideo] = useState<Video | null>(null);
+  const [formData, setFormData] = useState<VideoFormData>({
     title: '',
     category: '',
     views: 0,
     duration: '',
-    thumbnail: '',
-    videoUrl: ''
+    thumbnail: '', // This is for the video thumbnail
+    videoUrl: '',
+    date: new Date()
   });
 
   const categories = [
@@ -59,12 +59,13 @@ export default function AdminVideosPage() {
       views: 0,
       duration: '',
       thumbnail: '',
-      videoUrl: ''
+      videoUrl: '',
+      date: new Date()
     });
     setShowModal(true);
   };
 
-  const handleEditVideo = (video) => {
+  const handleEditVideo = (video: Video) => {
     setEditingVideo(video);
     setFormData({
       title: video.title,
@@ -72,12 +73,13 @@ export default function AdminVideosPage() {
       views: video.views,
       duration: video.duration,
       thumbnail: video.thumbnail,
-      videoUrl: video.videoUrl
+      videoUrl: video.videoUrl,
+      date: new Date(video.date) // Convert string to Date object
     });
     setShowModal(true);
   };
 
-  const handleDeleteVideo = (id) => {
+  const handleDeleteVideo = (id: string) => {
     setVideoList(videoList.filter(video => video.id !== id));
   };
 
@@ -204,7 +206,7 @@ export default function AdminVideosPage() {
                   <Label>Category</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => setFormData({...formData, category: value})}
+                    onValueChange={(value) => setFormData({...formData, category: value as Video['category']})}
                   >
                     <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
                       <SelectValue placeholder="Select Category" />
@@ -265,7 +267,16 @@ export default function AdminVideosPage() {
                   type="text"
                   value={formData.videoUrl}
                   onChange={(e) => setFormData({...formData, videoUrl: e.target.value})}
-                  placeholder="Video URL"
+                  placeholder="YouTube, Vimeo, or direct video URL (e.g., https://youtube.com/watch?v=...)"
+                  className="bg-white/5 border-white/10 text-white"
+                />
+                <p className="text-xs text-gray-500">Supports YouTube, Vimeo, and direct video links (.mp4, .webm)</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="video-date">Date</Label>
+                <DatePicker
+                  date={formData.date}
+                  setDate={(date) => setFormData({...formData, date: date || new Date()})}
                   className="bg-white/5 border-white/10 text-white"
                 />
               </div>
@@ -281,19 +292,37 @@ export default function AdminVideosPage() {
                 onClick={(e) => {
                   e.preventDefault();
 
+                  // Validate required fields
+                  if (!formData.title || !formData.category || !formData.videoUrl || !formData.thumbnail || !formData.duration) {
+                    alert('Please fill in all required fields');
+                    return;
+                  }
+
+                  // Format date as YYYY-MM-DD string to match the expected format
+                  const formatDate = (date: Date): string => {
+                    const d = new Date(date);
+                    const month = '' + (d.getMonth() + 1);
+                    const day = '' + d.getDate();
+                    const year = d.getFullYear();
+                    return year + '-' + month.padStart(2, '0') + '-' + day.padStart(2, '0');
+                  };
+
+                  const formattedDate = formatDate(formData.date);
+
                   if (editingVideo) {
                     // Update existing video
                     setVideoList(videoList.map(v =>
                       v.id === editingVideo.id
-                        ? { ...v, ...formData }
+                        ? { ...v, ...formData, category: formData.category as Video['category'], date: formattedDate }
                         : v
                     ));
                   } else {
                     // Add new video
-                    const newVideo = {
+                    const newVideo: Video = {
                       id: `vid-${Date.now()}`, // Generate a unique ID
                       ...formData,
-                      date: new Date().toISOString().split('T')[0] // Add current date
+                      category: formData.category as Video['category'],
+                      date: formattedDate // Use the selected date
                     };
                     setVideoList([...videoList, newVideo]);
                   }

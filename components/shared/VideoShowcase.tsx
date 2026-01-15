@@ -1,7 +1,8 @@
 "use client";
+import VideoPlayer from "@/components/VideoPlayer";
 import { videos } from "@/data";
 import { motion, useInView } from "framer-motion";
-import { Clock, Eye, Film, Play, X } from "lucide-react";
+import { Clock, Eye, Film, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
@@ -256,54 +257,11 @@ const VideoShowcase = ({
 
       {/* Video Player Modal */}
       {playingVideo && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
-          onClick={() => setPlayingVideo(null)}
-        >
-          <button
-            onClick={() => setPlayingVideo(null)}
-            className="absolute top-4 right-4 z-50 p-3 cursor-pointer rounded-full bg-muted hover:bg-muted transition-colors"
-          >
-            <X size={24} className="text-foreground" />
-          </button>
-
-          <div
-            className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Placeholder for video - in production this would be an actual video player */}
-            <div className="w-full h-full bg-background flex items-center justify-center">
-              <div className="text-center">
-                <Film
-                  size={64}
-                  className="text-muted-foreground mx-auto mb-4"
-                />
-                <p className="text-muted-foreground text-lg">Video Player</p>
-                <p className="text-muted-foreground text-sm mt-2">
-                  {playingVideo.title}
-                </p>
-                <p className="text-gray-600 text-xs mt-4">
-                  In production, this would embed the actual video from:{" "}
-                  {playingVideo.videoUrl}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-            <h3 className="text-xl font-bold text-foreground mb-2">
-              {playingVideo.title}
-            </h3>
-            <div className="flex items-center justify-center gap-4 text-muted-foreground text-sm">
-              <span>{playingVideo.duration}</span>
-              <span>•</span>
-              <span>{formatViews(playingVideo.views)} views</span>
-            </div>
-          </div>
-        </motion.div>
+        <VideoPlayer
+          videoUrl={playingVideo.videoUrl}
+          title={playingVideo.title}
+          onClose={() => setPlayingVideo(null)}
+        />
       )}
     </section>
   );

@@ -1,11 +1,13 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { projects as demoProjects } from "@/data";
+import { Project, ProjectFormData } from "@/lib/types";
 import { motion } from "framer-motion";
 import {
   Camera,
@@ -21,18 +23,19 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function AdminProjectsPage() {
-  const [projectList, setProjectList] = useState(demoProjects);
+  const [projectList, setProjectList] = useState<Project[]>(demoProjects);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
-  const [editingProject, setEditingProject] = useState(null);
-  const [formData, setFormData] = useState({
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [formData, setFormData] = useState<ProjectFormData>({
     title: '',
     category: '',
     description: '',
     location: '',
-    date: '',
-    featured: false
+    date: new Date(),
+    featured: false,
+    images: []
   });
 
   const categories = [
@@ -60,26 +63,28 @@ export default function AdminProjectsPage() {
       category: '',
       description: '',
       location: '',
-      date: '',
-      featured: false
+      date: new Date(),
+      featured: false,
+      images: []
     });
     setShowModal(true);
   };
 
-  const handleEditProject = (project) => {
+  const handleEditProject = (project: Project) => {
     setEditingProject(project);
     setFormData({
       title: project.title,
       category: project.category,
       description: project.description,
       location: project.location,
-      date: project.date,
-      featured: project.featured
+      date: new Date(project.date), // Convert string to Date object
+      featured: project.featured,
+      images: project.images // Include existing images
     });
     setShowModal(true);
   };
 
-  const handleDeleteProject = (id) => {
+  const handleDeleteProject = (id: string) => {
     setProjectList(projectList.filter(project => project.id !== id));
   };
 
@@ -224,7 +229,7 @@ export default function AdminProjectsPage() {
                   <Label>Category</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => setFormData({...formData, category: value})}
+                    onValueChange={(value) => setFormData({...formData, category: value as Project['category']})}
                   >
                     <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
                       <SelectValue placeholder="Select Category" />
@@ -268,11 +273,9 @@ export default function AdminProjectsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="project-date">Date</Label>
-                  <Input
-                    id="project-date"
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                  <DatePicker
+                    date={formData.date}
+                    setDate={(date) => setFormData({...formData, date: date || new Date()})}
                     className="bg-white/5 border-white/10 text-white"
                   />
                 </div>
@@ -287,15 +290,48 @@ export default function AdminProjectsPage() {
                   Featured Project
                 </Label>
               </div>
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">
-                  Images
-                </label>
-                <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center">
-                  <Upload size={32} className="text-gray-500 mx-auto mb-2" />
-                  <p className="text-gray-400">
-                    Drop images here or click to browse
-                  </p>
+              <div className="space-y-2">
+                <Label>Images</Label>
+                <div className="space-y-2">
+                  {formData.images.map((image, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Input
+                        type="text"
+                        value={image}
+                        onChange={(e) => {
+                          const newImages = [...formData.images];
+                          newImages[index] = e.target.value;
+                          setFormData({...formData, images: newImages});
+                        }}
+                        placeholder="Image URL (e.g., https://example.com/image.jpg)"
+                        className="bg-white/5 border-white/10 text-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newImages = formData.images.filter((_, i) => i !== index);
+                          setFormData({...formData, images: newImages});
+                        }}
+                        className="px-3 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        images: [...formData.images, '']
+                      });
+                    }}
+                    className="w-full py-6 rounded-xl border-2 border-dashed border-white/10 text-gray-400 hover:text-white hover:border-purple-500/50 flex items-center justify-center gap-2"
+                  >
+                    <Upload size={20} />
+                    Add Image URL
+                  </button>
+                  <p className="text-xs text-gray-500">You can use image URLs from Unsplash, Imgur, or any direct image link</p>
                 </div>
               </div>
             </div>
@@ -310,19 +346,37 @@ export default function AdminProjectsPage() {
                 onClick={(e) => {
                   e.preventDefault();
 
+                  // Validate required fields
+                  if (!formData.title || !formData.category || !formData.location || formData.images.length === 0) {
+                    alert('Please fill in all required fields and add at least one image');
+                    return;
+                  }
+
+                  // Format date as YYYY-MM-DD string to match the expected format
+                  const formatDate = (date: Date): string => {
+                    const d = new Date(date);
+                    const month = '' + (d.getMonth() + 1);
+                    const day = '' + d.getDate();
+                    const year = d.getFullYear();
+                    return year + '-' + month.padStart(2, '0') + '-' + day.padStart(2, '0');
+                  };
+
+                  const formattedDate = formatDate(formData.date);
+
                   if (editingProject) {
                     // Update existing project
                     setProjectList(projectList.map(p =>
                       p.id === editingProject.id
-                        ? { ...p, ...formData }
+                        ? { ...p, ...formData, category: formData.category as Project['category'], date: formattedDate }
                         : p
                     ));
                   } else {
                     // Add new project
-                    const newProject = {
+                    const newProject: Project = {
                       id: `proj-${Date.now()}`, // Generate a unique ID
                       ...formData,
-                      images: [] // Placeholder - in a real app, you'd handle image uploads
+                      category: formData.category as Project['category'],
+                      date: formattedDate, // Convert Date object to string
                     };
                     setProjectList([...projectList, newProject]);
                   }
